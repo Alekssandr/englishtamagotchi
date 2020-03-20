@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:binding="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="ordinaryCardViewModel"
+            type="com.szczecin.englishtamagotchi.viewmodel.OrdinaryCardViewModel" />
+
+        <import type="android.view.View" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:id="@+id/open_word"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="128dp"
+            android:text="@{ordinaryCardViewModel.translateWordOpen}"
+            binding:layout_constraintEnd_toEndOf="parent"
+            binding:layout_constraintHorizontal_bias="0.498"
+            binding:layout_constraintStart_toStartOf="parent"
+            binding:layout_constraintTop_toTopOf="parent"
+            tools:text="open word"/>
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="320dp"
+            android:text="@{ordinaryCardViewModel.translateWordClose}"
+            android:visibility="@{ordinaryCardViewModel.translateWordCloseVisibility ? View.VISIBLE : View.GONE}"
+            binding:layout_constraintEnd_toEndOf="parent"
+            binding:layout_constraintHorizontal_bias="0.498"
+            binding:layout_constraintStart_toStartOf="parent"
+            binding:layout_constraintTop_toTopOf="parent"
+            tools:text="close word"/>
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
+            android:text="Translate"
+            android:onClick="@{()->ordinaryCardViewModel.openWord()}"
+            binding:layout_constraintEnd_toEndOf="parent"
+            binding:layout_constraintStart_toStartOf="parent"
+            binding:layout_constraintTop_toBottomOf="@+id/open_word" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

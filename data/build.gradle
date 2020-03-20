@@ -1,0 +1,53 @@
+apply plugin: 'com.android.library'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion androidCompileSdkVersion
+    buildToolsVersion androidBuildToolsVersion
+
+    defaultConfig {
+        minSdkVersion androidMinSdkVersion
+        targetSdkVersion androidTargetSdkVersion
+        versionCode 1
+        versionName "0.0.1"
+        ext.rusEngTraslate = "rusEng/rusEngTraslate.json"
+        buildConfigField "String", "RU_ENG_TRANSLATE", "\"${ext.rusEngTraslate}\""
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+            minifyEnabled false
+        }
+
+        develop {
+            debuggable false
+            minifyEnabled false
+        }
+
+        beta {
+            debuggable false
+            minifyEnabled false
+        }
+
+        production {
+            debuggable false
+            minifyEnabled false
+        }
+    }
+}
+
+dependencies {
+    implementation project(':domain')
+    implementation domainDependencies.kotlin
+    implementation domainDependencies.rxKotlin
+    implementation domainDependencies.rxAndroid
+
+    implementation 'com.google.code.gson:gson:2.8.5'
+    testImplementation testDependencies.jUnit
+    testImplementation testDependencies.mockitoKotlin
+
+}
