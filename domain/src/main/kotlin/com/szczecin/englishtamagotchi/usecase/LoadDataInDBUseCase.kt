@@ -1,14 +1,18 @@
 package com.szczecin.englishtamagotchi.usecase
 
-import com.szczecin.englishtamagotchi.TranslateRepository
-import com.szczecin.englishtamagotchi.model.AppPluginsConfig
-import io.reactivex.Single
+import com.szczecin.englishtamagotchi.model.PairRusEng
+import com.szczecin.englishtamagotchi.repo.WordsBlockRepository
+import io.reactivex.Completable
 import javax.inject.Inject
 
-class GetTranslateUseCase @Inject constructor(
-    private val routeRepository: TranslateRepository
+class LoadDataInDBUseCase @Inject constructor(
+    private val wordsBlockRepository: WordsBlockRepository
+
 ) {
-    fun execute(): Single<AppPluginsConfig> = routeRepository.loadTranslate()
+    fun execute(pairRusEng: List<PairRusEng>): Completable =
+            wordsBlockRepository.insert(pairRusEng)
+
+//    }
 }
 
 //fun execute(id: String): Single<Pair<String,String>> = routeRepository.loadTranslate()

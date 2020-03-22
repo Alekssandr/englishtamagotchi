@@ -5,6 +5,7 @@ data class AppPluginsConfig(
 )
 
 data class PairRusEng(
-    val eng: String,
-    val rus: String
+    var id: Long = 0,
+    var eng: String = "",
+    var rus: String = ""
 )

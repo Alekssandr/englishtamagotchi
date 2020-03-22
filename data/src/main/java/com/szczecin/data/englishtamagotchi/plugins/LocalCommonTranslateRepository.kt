@@ -19,11 +19,11 @@ class LocalCommonTranslateRepository(private val context: Context): TranslateRep
 //        loadTranslate(context)
 //    }
 
-    override fun loadTranslate() : Single<AppPluginsConfig> {
+    override fun loadTranslate() : AppPluginsConfig {
         val jsonResponse = getJson(context, BuildConfig.RU_ENG_TRANSLATE)
         val appPluginsConfig: AppPluginsConfig = gson.fromJson(jsonResponse, AppPluginsConfig::class.java)
 
-        return Single.just(appPluginsConfig)
+        return appPluginsConfig
     }
 
     private fun getJson(context: Context, filePath: String): String {

@@ -16,4 +16,5 @@ abstract class MainActivitiesBinder {
     @ContributesAndroidInjector(modules = [MainActivitiesModule::class])
     @PerActivity
     abstract fun bindOrdinaryCardActivity(): OrdinaryCardActivity
+
 }
