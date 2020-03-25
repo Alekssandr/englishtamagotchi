@@ -10,6 +10,12 @@ import io.reactivex.Single
 class WordsBlockDataRepository(
     private val wordsBlockStorage: WordsBlockStorage
 ) : WordsBlockRepository {
+
+    override fun removeAll(): Completable = wordsBlockStorage.removeAll()
+
+    override fun removePairRusEng(eng: String): Completable =
+        wordsBlockStorage.removePairRusEng(eng)
+
     override fun getSizeOfWordsBlock(): Single<Int> =
         wordsBlockStorage.getSizeOfWordsBlock()
 
@@ -18,17 +24,10 @@ class WordsBlockDataRepository(
     }
 
     override fun insert(pairRusEng: List<PairRusEng>): Completable {
-        return  wordsBlockStorage.insertPairRusEng(pairRusEng)
+        return wordsBlockStorage.insertPairRusEng(pairRusEng)
     }
-//    override fun insert(pairRusEng: PairRusEng): Completable {
-//       return  wordsBlockStorage.insertPairRusEng(pairRusEng)
-//    }
 
     override fun getAll(): Single<List<PairRusEng>> =
         wordsBlockStorage.getWordsBlockList()
 
-
-
-//    override fun deleteById(voiceRecorderId: Int): Completable =
-//        wordsBlockStorage.deleteById(voiceRecorderId)
 }

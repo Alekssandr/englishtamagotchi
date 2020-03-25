@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.szczecin.data.englishtamagotchi.database.model.WordsBlockEntity
+import com.szczecin.data.englishtamagotchi.database.model.common.WordsCommonEntity
 import com.szczecin.englishtamagotchi.model.PairRusEng
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -25,6 +26,22 @@ interface WordsBlockDao {
     fun getSizeOfWordsBlock() : Single<Int>
 
 //    order by RANDOM() LIMIT 1
-//    @Query("DELETE FROM WordsBlockEntity WHERE id = :voiceRecorderId")
-//    fun deleteByVoiceRecorderId(voiceRecorderId: Int)
+    @Query("DELETE FROM WordsBlockEntity WHERE eng = :eng")
+    fun deleteRowByEng(eng: String) : Completable
+
+    @Query("DELETE FROM WordsBlockEntity")
+    fun deleteAll() : Completable
+
+    //common
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertCommon(pairRusEng: WordsCommonEntity) : Long
+
+    @Query("DELETE FROM WordsCommonEntity WHERE eng = :eng")
+    fun deleteRowByEngFromCommon(eng: String) : Completable
+
+    @Query("SELECT COUNT(*) from WordsCommonEntity")
+    fun getSizeOfCommon() : Single<Int>
+
+    @Query("SELECT * from WordsCommonEntity")
+    fun getWordsCommonList(): Single<List<WordsCommonEntity>>
 }

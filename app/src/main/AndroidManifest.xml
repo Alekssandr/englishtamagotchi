@@ -21,6 +21,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".view.OrdinaryCardChoiceActivity"/>
+        <activity android:name=".view.WordsWritingActivity"/>
     </application>
 
 </manifest>

@@ -1,18 +1,17 @@
-package com.szczecin.englishtamagotchi.usecase
+package com.szczecin.englishtamagotchi.usecase.common
 
 import com.szczecin.englishtamagotchi.model.PairRusEng
 import com.szczecin.englishtamagotchi.repo.WordsBlockRepository
+import com.szczecin.englishtamagotchi.repo.WordsCommonRepository
 import io.reactivex.Completable
 import javax.inject.Inject
 
-class LoadDataInDBUseCase @Inject constructor(
-    private val wordsBlockRepository: WordsBlockRepository
+class LoadDataInDBCommonUseCase @Inject constructor(
+    private val wordsCommonRepository: WordsCommonRepository
 
 ) {
     fun execute(pairRusEng: List<PairRusEng>): Completable =
-//        wordsBlockRepository.removeAll().doOnComplete {
-            wordsBlockRepository.insert(pairRusEng)
-//        }
+        wordsCommonRepository.insertCommon(pairRusEng)
 
 //    }
 }

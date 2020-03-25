@@ -2,14 +2,10 @@ package com.szczecin.data.englishtamagotchi.plugins
 
 import android.content.Context
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.szczecin.englishtamagotchi.TranslateRepository
 import com.szczecin.englishtamagotchi.data.BuildConfig
 import com.szczecin.englishtamagotchi.model.AppPluginsConfig
 import com.szczecin.englishtamagotchi.model.PairRusEng
-import com.szczecin.englishtamagotchi.model.Tutorial
-import io.reactivex.Single
-import java.util.*
 
 class LocalCommonTranslateRepository(private val context: Context): TranslateRepository {
 
@@ -18,6 +14,14 @@ class LocalCommonTranslateRepository(private val context: Context): TranslateRep
 //    init {
 //        loadTranslate(context)
 //    }
+
+    override fun loadTranslate20InCommon(numberStart: Int, addNewData: Int) : List<PairRusEng> {//
+        val jsonResponse = getJson(context, BuildConfig.RU_ENG_TRANSLATE)
+        val appPluginsConfig: AppPluginsConfig = gson.fromJson(jsonResponse, AppPluginsConfig::class.java)
+//        val startIndex = numberBlock * 10 * 2 - 20
+//        val startIndex = numberBlock * 5 - 5
+        return  appPluginsConfig.pairRusEng.subList(numberStart, numberStart + addNewData)//10
+    }
 
     override fun loadTranslate() : AppPluginsConfig {
         val jsonResponse = getJson(context, BuildConfig.RU_ENG_TRANSLATE)

@@ -1,16 +1,61 @@
 {
   "pairRusEng": [
     {
-      "eng": "few",
+      "eng": "few1",
       "rus": "немного"
     },
     {
       "eng": "hi",
-      "rus": "привеет"
+      "rus": "привет"
     },
     {
       "eng": "figure out",
       "rus": "выяснить"
+    },
+    {
+      "eng": "few",
+      "rus": "немного"
+    },
+    {
+      "eng": "hid1",
+      "rus": "привеет"
+    },
+    {
+      "eng": "figure oud2",
+      "rus": "выяснить"
+    },
+    {
+      "eng": "fews2",
+      "rus": "немного"
+    },
+    {
+      "eng": "his2",
+      "rus": "привеет"
+    },
+    {
+      "eng": "figure sout2",
+      "rus": "выяснить"
+    },
+    {
+      "eng": "hig2",
+      "rus": "привеет"
+    },
+    {
+      "eng": "figurek out3",
+      "rus": "выяснить"
+    },
+    {
+      "eng": "fedwl3",
+      "rus": "немного"
+    },
+    {
+      "eng": "hicd3",
+      "rus": "привеет"
+    },
+    {
+      "eng": "figure outz3",
+      "rus": "выяснить"
     }
+
   ]
 }

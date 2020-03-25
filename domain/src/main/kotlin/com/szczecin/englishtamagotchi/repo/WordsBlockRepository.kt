@@ -9,6 +9,8 @@ interface WordsBlockRepository {
     fun getAll(): Single<List<PairRusEng>>
     fun getTranslate(): Single<String>
     fun getSizeOfWordsBlock(): Single<Int>
+    fun removePairRusEng(eng: String): Completable
+    fun removeAll(): Completable
 
 //    fun deleteById(voiceRecorderId: Int): Completable
 }
