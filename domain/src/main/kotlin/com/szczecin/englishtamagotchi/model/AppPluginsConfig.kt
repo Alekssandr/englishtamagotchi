@@ -7,5 +7,6 @@ data class AppPluginsConfig(
 data class PairRusEng(
     var id: Long = 0,
     var eng: String = "",
-    var rus: String = ""
+    var rus: String = "",
+    var event: Int = 0
 )
