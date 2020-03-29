@@ -42,10 +42,13 @@ android {
 
 dependencies {
     implementation project(':domain')
-    implementation domainDependencies.kotlin
-    implementation domainDependencies.rxKotlin
-    implementation domainDependencies.rxAndroid
-
+    implementation dataDependencies.kotlin
+    implementation dataDependencies.rxKotlin
+    implementation dataDependencies.rxAndroid
+    api dataDependencies.roomRuntime
+    api dataDependencies.coroutines
+    kapt dataDependencies.roomCompiler
+    implementation dataDependencies.roomRxJava
     implementation 'com.google.code.gson:gson:2.8.5'
     testImplementation testDependencies.jUnit
     testImplementation testDependencies.mockitoKotlin

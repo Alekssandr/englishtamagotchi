@@ -27,12 +27,15 @@ class OrdinaryCardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setBinding()
         observeLifecycleIn(ordinaryCardViewModel)
+        val isEngToRus =intent.getBooleanExtra(ENG_TO_RUS, true)
+        ordinaryCardViewModel.setRusOrEng(isEngToRus)
     }
 
     private fun setBinding() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_ordinary_card)
         binding.ordinaryCardViewModel = ordinaryCardViewModel
         binding.lifecycleOwner = this@OrdinaryCardActivity
+
 
     }
 
