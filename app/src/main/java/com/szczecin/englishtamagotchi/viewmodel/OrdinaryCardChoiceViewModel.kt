@@ -32,6 +32,7 @@ class OrdinaryCardChoiceViewModel @Inject constructor(
     val blockNumber = MutableLiveData<String>()
     val blockWords: MutableList<PairRusEng> = mutableListOf()
     val openExercise = MutableLiveData<Boolean>()
+    val engTextForListen = MutableLiveData<String>()
 
     private val disposables = CompositeDisposable()
     var indexWord = 0
@@ -43,6 +44,7 @@ class OrdinaryCardChoiceViewModel @Inject constructor(
         loadCardsFromJSON()
     }
 
+    //удаление не работает!!!!
     private fun loadCardsFromJSON() {
         disposables += getDataFromJSONUseCase
             .fetchDataFromJSON(sharedPreferences.numberStart, addNewData)//
@@ -145,6 +147,10 @@ class OrdinaryCardChoiceViewModel @Inject constructor(
             }, onError = {
                 Log.e("Error", it.message ?: "")
             })
+    }
+
+    fun listen(){
+        engTextForListen.value = blockWords[indexWord].eng
     }
 
 

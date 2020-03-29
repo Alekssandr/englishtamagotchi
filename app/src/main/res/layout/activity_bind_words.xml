@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:binding="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="wordsBindViewModel"
+            type="com.szczecin.englishtamagotchi.viewmodel.WordsBindViewModel" />
+
+        <import type="android.view.View" />
+        <import type="androidx.databinding.adapters.Converters"/>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/buttonWordEngFirst"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
+            android:onClick="@{(view)->wordsBindViewModel.buttonEngClick(view)}"
+            binding:backgroundButtonColor = "@{wordsBindViewModel.wordEngFirstColor}"
+            android:text="@{wordsBindViewModel.wordEngFirst}"
+            binding:layout_constraintStart_toStartOf="parent"
+            binding:layout_constraintTop_toTopOf="parent"
+            tools:text="welcome" />
+
+        <Button
+            android:id="@+id/buttonWordRusFirst"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
+            android:onClick="@{(view)->wordsBindViewModel.buttonRusClick(view)}"
+            binding:backgroundButtonColor = "@{wordsBindViewModel.wordRusFirstColor}"
+            android:text="@{wordsBindViewModel.wordRusFirst}"
+            binding:layout_constraintStart_toStartOf="parent"
+            binding:layout_constraintTop_toBottomOf="@+id/view"
+            tools:text="добро пожаловать" />
+
+        <Button
+            android:id="@+id/buttonWordRusSecond"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:onClick="@{(view)->wordsBindViewModel.buttonRusClick(view)}"
+            binding:backgroundButtonColor = "@{wordsBindViewModel.wordRusSecondColor}"
+            android:text="@{wordsBindViewModel.wordRusSecond}"
+            binding:layout_constraintStart_toStartOf="parent"
+            binding:layout_constraintTop_toBottomOf="@+id/buttonWordRusFirst"
+            tools:text="добро пожа" />
+
+        <Button
+            android:id="@+id/buttonWordRusThird"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:onClick="@{(view)->wordsBindViewModel.buttonRusClick(view)}"
+            binding:backgroundButtonColor = "@{wordsBindViewModel.wordRusThirdColor}"
+            android:text="@{wordsBindViewModel.wordRusThird}"
+            binding:layout_constraintEnd_toStartOf="@+id/buttonWordRusFifth"
+            binding:layout_constraintStart_toEndOf="@+id/buttonWordRusFirst"
+            binding:layout_constraintTop_toBottomOf="@+id/buttonWordRusFirst"
+            tools:text="добро пожа" />
+
+        <Button
+            android:id="@+id/buttonWordRusFourth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:onClick="@{(view)->wordsBindViewModel.buttonRusClick(view)}"
+            binding:backgroundButtonColor = "@{wordsBindViewModel.wordRusFourthColor}"
+            android:text="@{wordsBindViewModel.wordRusFourth}"
+            binding:layout_constraintEnd_toEndOf="parent"
+            binding:layout_constraintStart_toEndOf="@+id/buttonWordRusThird"
+            binding:layout_constraintTop_toBottomOf="@+id/buttonWordRusFifth"
+            tools:text="добро пожа" />
+
+        <Button
+            android:id="@+id/buttonWordRusFifth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="8dp"
+            android:onClick="@{(view)->wordsBindViewModel.buttonRusClick(view)}"
+            binding:backgroundButtonColor = "@{wordsBindViewModel.wordRusFifthColor}"
+            android:text="@{wordsBindViewModel.wordRusFifth}"
+            binding:layout_constraintEnd_toEndOf="parent"
+            binding:layout_constraintTop_toBottomOf="@+id/view"
+            tools:text="добро пожаловать" />
+
+        <Button
+            android:id="@+id/buttonWordEngSecond"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="8dp"
+            android:onClick="@{(view)->wordsBindViewModel.buttonEngClick(view)}"
+            binding:backgroundButtonColor = "@{wordsBindViewModel.wordEngSecondColor}"
+            android:text="@{wordsBindViewModel.wordEngSecond}"
+            binding:layout_constraintEnd_toEndOf="parent"
+            binding:layout_constraintTop_toTopOf="parent"
+            tools:text="welcome" />
+
+        <Button
+            android:id="@+id/buttonWordEngThird"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:onClick="@{(view)->wordsBindViewModel.buttonEngClick(view)}"
+            binding:backgroundButtonColor = "@{wordsBindViewModel.wordEngThirdColor}"
+            android:text="@{wordsBindViewModel.wordEngThird}"
+            binding:layout_constraintEnd_toStartOf="@+id/buttonWordEngSecond"
+            binding:layout_constraintStart_toEndOf="@+id/buttonWordEngFirst"
+            binding:layout_constraintTop_toTopOf="parent"
+            tools:text="welcome" />
+
+        <Button
+            android:id="@+id/buttonWordEngFourth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:onClick="@{(view)->wordsBindViewModel.buttonEngClick(view)}"
+            binding:backgroundButtonColor = "@{wordsBindViewModel.wordEngFourthColor}"
+            android:text="@{wordsBindViewModel.wordEngFourth}"
+            binding:layout_constraintEnd_toStartOf="@+id/buttonWordEngThird"
+            binding:layout_constraintStart_toStartOf="@+id/buttonWordEngFirst"
+            binding:layout_constraintTop_toBottomOf="@+id/buttonWordEngFirst"
+            tools:text="welcome" />
+
+        <Button
+            android:id="@+id/buttonwWordEngFifth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:onClick="@{(view)->wordsBindViewModel.buttonEngClick(view)}"
+            binding:backgroundButtonColor = "@{wordsBindViewModel.wordEngFifthColor}"
+            android:text="@{wordsBindViewModel.wordEngFifth}"
+            binding:layout_constraintEnd_toEndOf="@+id/buttonWordEngSecond"
+            binding:layout_constraintStart_toEndOf="@+id/buttonWordEngThird"
+            binding:layout_constraintTop_toBottomOf="@+id/buttonWordEngSecond"
+            tools:text="welcome" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="32dp"
+            android:background="@color/divider"
+            binding:layout_constraintTop_toBottomOf="@+id/buttonwWordEngFifth" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

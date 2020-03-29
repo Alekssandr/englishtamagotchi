@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
                 openExerciseOneWord(false)
             }
             R.id.btn_writing -> startActivity(Intent(this, WordsWritingActivity::class.java))
+            R.id.btn_binding -> startActivity(Intent(this, BindWordsActivity::class.java))
         }
     }
 

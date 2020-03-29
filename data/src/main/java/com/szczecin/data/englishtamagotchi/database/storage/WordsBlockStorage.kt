@@ -21,7 +21,7 @@ class WordsBlockStorage(private val wordsBlockDao: WordsBlockDao) {
         wordsBlockDao.getWordsBlockList().map { Mapper().mapFromEntity(it) }
 
     fun getTranslate(): Single<String> =
-        wordsBlockDao.getWordTranslate("few")
+        wordsBlockDao.getWordTranslateEngToRus("few")
 
     fun getSizeOfWordsBlock(): Single<Int> =
         wordsBlockDao.getSizeOfWordsBlock()

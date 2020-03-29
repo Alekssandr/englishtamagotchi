@@ -20,7 +20,10 @@ interface WordsBlockDao {
     fun insert(pairRusEng: WordsBlockEntity) : Long
 
     @Query("SELECT rus from WordsBlockEntity WHERE eng = :eng")
-    fun getWordTranslate(eng: String): Single<String>
+    fun getWordTranslateEngToRus(eng: String): Single<String>
+
+    @Query("SELECT rus from WordsBlockEntity WHERE rus = :rus")
+    fun getWordTranslateRusToEng(rus: String): Single<String>
 
     @Query("SELECT COUNT(*) from WordsBlockEntity")
     fun getSizeOfWordsBlock() : Single<Int>
