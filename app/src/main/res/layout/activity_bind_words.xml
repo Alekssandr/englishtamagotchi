@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:binding="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="wordsBindViewModel"
+            type="com.szczecin.englishtamagotchi.viewmodel.WordsBindViewModel" />
+
+        <import type="android.view.View" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_pair_eng"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            binding:layout_constraintBottom_toBottomOf="parent"
+            binding:layout_constraintEnd_toStartOf="@+id/recycler_pair_rus"
+            binding:layout_constraintStart_toStartOf="parent"
+            binding:layout_constraintTop_toTopOf="parent"
+            binding:pairEngList="@{wordsBindViewModel.pairRusEngList}"
+            tools:listitem="@layout/bind_word_item" />
+
+<!--        <View-->
+<!--            android:id="@+id/view"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="1dp"-->
+<!--            android:layout_gravity="bottom"-->
+<!--            android:layout_marginTop="32dp"-->
+<!--            android:background="@color/divider"-->
+<!--            binding:layout_constraintTop_toBottomOf="@+id/recycler_pair_eng" />-->
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_pair_rus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="23dp"
+            android:layout_marginEnd="8dp"
+            android:foregroundGravity="bottom|center|center_horizontal"
+            binding:layout_constraintEnd_toEndOf="parent"
+            binding:layout_constraintStart_toEndOf="@+id/recycler_pair_eng"
+            binding:layout_constraintTop_toTopOf="parent"
+            binding:pairRusList="@{wordsBindViewModel.pairRusEngList}"
+            tools:listitem="@layout/bind_word_item" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

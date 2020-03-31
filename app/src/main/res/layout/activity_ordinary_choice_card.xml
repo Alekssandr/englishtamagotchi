@@ -7,7 +7,7 @@
 
         <variable
             name="ordinaryCardViewModel"
-            type="com.szczecin.englishtamagotchi.viewmodel.OrdinaryCardViewModel" />
+            type="com.szczecin.englishtamagotchi.viewmodel.OrdinaryCardChoiceViewModel" />
 
         <import type="android.view.View" />
 
@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="@{ordinaryCardViewModel.translateWordOpen}"
+            android:text="@{ordinaryCardViewModel.translateWordEng}"
             binding:layout_constraintEnd_toEndOf="parent"
             binding:layout_constraintHorizontal_bias="0.498"
             binding:layout_constraintStart_toStartOf="parent"
@@ -35,24 +35,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="@{ordinaryCardViewModel.translateWordClose}"
-            android:visibility="@{ordinaryCardViewModel.translateWordCloseVisibility ? View.VISIBLE : View.INVISIBLE}"
+            android:text="@{ordinaryCardViewModel.translateWordRus}"
             binding:layout_constraintEnd_toEndOf="parent"
             binding:layout_constraintHorizontal_bias="0.498"
             binding:layout_constraintStart_toStartOf="parent"
             binding:layout_constraintTop_toBottomOf="@+id/open_word"
             tools:text="close word" />
-
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:onClick="@{()->ordinaryCardViewModel.openWord()}"
-            android:text="open word"
-            binding:layout_constraintEnd_toEndOf="parent"
-            binding:layout_constraintStart_toStartOf="parent"
-            binding:layout_constraintTop_toBottomOf="@+id/textView3" />
 
 <!--        <Button-->
 <!--            android:id="@+id/button2"-->
@@ -80,34 +68,53 @@
             android:id="@+id/button4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
             android:onClick="@{()->ordinaryCardViewModel.next()}"
             android:text="next"
-            binding:layout_constraintEnd_toEndOf="@+id/button"
-            binding:layout_constraintStart_toStartOf="@+id/button"
-            binding:layout_constraintTop_toBottomOf="@+id/button" />
+            binding:layout_constraintEnd_toEndOf="parent"
+            binding:layout_constraintStart_toEndOf="@+id/textView3"
+            binding:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-<!--        <Button-->
-<!--            android:id="@+id/button3"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="32dp"-->
-<!--            android:onClick="@{()->ordinaryCardViewModel.next()}"-->
-<!--            android:text="Finish"-->
-<!--            binding:layout_constraintEnd_toEndOf="parent"-->
-<!--            binding:layout_constraintStart_toStartOf="parent"-->
-<!--            binding:layout_constraintTop_toBottomOf="@+id/button4" />-->
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:onClick="@{()->ordinaryCardViewModel.removeWord()}"
+            android:text="Remove Block"
+            binding:layout_constraintEnd_toStartOf="@+id/textView3"
+            binding:layout_constraintStart_toStartOf="parent"
+            binding:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-        <!--        <Button-->
-<!--            android:id="@+id/button2"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="32dp"-->
-<!--            android:onClick="@{()->ordinaryCardViewModel.removeWord()}"-->
-<!--            android:text="Remove Block"-->
-<!--            binding:layout_constraintEnd_toEndOf="parent"-->
-<!--            binding:layout_constraintStart_toStartOf="parent"-->
-<!--            binding:layout_constraintTop_toBottomOf="@+id/button4" />-->
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:onClick="@{()->ordinaryCardViewModel.addWordsToBlockDB()}"
+            android:text="Finish"
+            binding:layout_constraintEnd_toEndOf="parent"
+            binding:layout_constraintStart_toStartOf="parent"
+            binding:layout_constraintTop_toBottomOf="@+id/blockNumber" />
+
+        <TextView
+            android:id="@+id/blockNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@{ordinaryCardViewModel.blockNumber}"
+            binding:layout_constraintEnd_toStartOf="@+id/button4"
+            binding:layout_constraintStart_toEndOf="@+id/button2"
+            binding:layout_constraintTop_toBottomOf="@+id/button4" />
+
+        <Button
+            android:id="@+id/button_listen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{()->ordinaryCardViewModel.listen()}"
+            android:text="Послушать"
+            binding:layout_constraintEnd_toEndOf="parent"
+            binding:layout_constraintTop_toBottomOf="@+id/open_word" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,8 +12,11 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
 import javax.inject.Inject
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import androidx.databinding.BindingAdapter
 
-class OrdinaryCardViewModel @Inject constructor(
+
+class WordsWritingViewModel @Inject constructor(
     private val getWordsBlockUseCase: GetWordsBlockUseCase,
     private val schedulers: RxSchedulers
 ) : ViewModel(), LifecycleObserver {
@@ -21,14 +24,17 @@ class OrdinaryCardViewModel @Inject constructor(
     val translateWordOpen = MutableLiveData<String>()
     val translateWordClose = MutableLiveData<String>()
     val translateWordCloseVisibility = MutableLiveData<Boolean>()
-    val blockWords : MutableList<PairRusEng> = mutableListOf()
-    var isTranslateFromEng = true
+    val translateWordCorrectVisibility = MutableLiveData<Boolean>()
+    val translateWordInCorrectVisibility = MutableLiveData<Boolean>()
+    val clearEditText = MutableLiveData<Boolean>()
+    val blockWords: MutableList<PairRusEng> = mutableListOf()
+    var isTranslateFromEng = false
 
     private val disposables = CompositeDisposable()
     var indexWord = 0
 
-//подумать мб добавить, что если заходим в setRusOrEng значит переходить на следующий блок
-        //а нехт не надо.
+    //подумать мб добавить, что если заходим в setRusOrEng значит переходить на следующий блок
+    //а нехт не надо.
     //также бааг когда с анг на рус перехожу слово на англ внизу уже открыто
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun onCreate() {
@@ -36,36 +42,41 @@ class OrdinaryCardViewModel @Inject constructor(
         getAllWords()
     }
 
-    fun setRusOrEng(isFromEng: Boolean){
+    fun setRusOrEng(isFromEng: Boolean) {
         isTranslateFromEng = isFromEng
     }
 
     private fun loadBlock(index: Int) {
-        if(isTranslateFromEng){
-            translateWordOpen.value = blockWords[index].eng
-            translateWordClose.value = blockWords[index].rus
-        } else {
-            translateWordOpen.value = blockWords[index].rus
-            translateWordClose.value = blockWords[index].eng
-        }
+        translateWordOpen.value = blockWords[index].rus
+        translateWordClose.value = blockWords[index].eng
     }
 
     fun next() {
-        if(blockWords.size-1>indexWord) {
+        if (blockWords.size - 1 > indexWord) {
             translateWordCloseVisibility.value = false
+            translateWordInCorrectVisibility.value = false
+            translateWordCorrectVisibility.value = false
             indexWord++
             loadBlock(indexWord)
-        } else {
-            if(isTranslateFromEng) {
-                isTranslateFromEng = false
-                indexWord = 0
-                loadBlock(indexWord)
+            clearEditText.value = true
+        }
+    }
+
+    fun afterUserNameChange(s: CharSequence) {
+        if(s.length>=blockWords[indexWord].eng.length){
+            if(s.toString().equals(blockWords[indexWord].eng)){
+                isTranslateFromEng = true
             }
         }
     }
 
-    fun openWord() {
-        translateWordCloseVisibility.value = true
+    fun check() {
+        if(isTranslateFromEng){
+            translateWordCorrectVisibility.value = true
+        } else {
+            translateWordCloseVisibility.value = true
+            translateWordInCorrectVisibility.value = true
+        }
     }
 
     fun getAllWords() {
