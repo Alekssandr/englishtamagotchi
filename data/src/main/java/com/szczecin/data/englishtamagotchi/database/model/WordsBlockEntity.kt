@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "WordsBlockEntity")
 data class WordsBlockEntity(
-//    @PrimaryKey val id: Long = 0,
     @PrimaryKey @ColumnInfo val eng: String,
-    @ColumnInfo val rus: String
+    @ColumnInfo val rus: String,
+    @ColumnInfo val dayOfLearning: Int
 )

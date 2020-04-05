@@ -7,6 +7,7 @@ import io.reactivex.Single
 interface WordsBlockRepository {
     fun insert(pairRusEng: List<PairRusEng>) : Completable
     fun getAll(): Single<List<PairRusEng>>
+    fun getWordsBlockListBy(dayOfLearning: Int): Single<List<PairRusEng>>
     fun getTranslate(): Single<String>
     fun getSizeOfWordsBlock(): Single<Int>
     fun removePairRusEng(eng: String): Completable

@@ -59,7 +59,7 @@ class BindWordsEngItemsAdapter : RecyclerView.Adapter<BindWordsEngItemsAdapter.I
         if (index.event != RED && index.event != CHOICE) {
             previousPosition = DEFAULT
         }
-        stepsList[index.index].event = index.event
+        stepsList[index.index].dayOfLearning = index.event
         notifyItemChanged(index.index)
     }
 
@@ -68,19 +68,19 @@ class BindWordsEngItemsAdapter : RecyclerView.Adapter<BindWordsEngItemsAdapter.I
         fun bind(pairRusEng: PairRusEng) {
             this.binding.text = pairRusEng.eng
             when {
-                pairRusEng.event == GREY -> {
+                pairRusEng.dayOfLearning == GREY -> {
                     this.binding.buttonEng.setBackgroundColor(
                         ContextCompat.getColor(this.binding.buttonEng.context, R.color.grey)
                     )
                     this.binding.buttonEng.isEnabled = true
                 }
-                pairRusEng.event == GREEN -> {
+                pairRusEng.dayOfLearning == GREEN -> {
                     this.binding.buttonEng.setBackgroundColor(
                         ContextCompat.getColor(this.binding.buttonEng.context, R.color.green)
                     )
                     this.binding.buttonEng.isEnabled = false
                 }
-                pairRusEng.event == RED -> {
+                pairRusEng.dayOfLearning == RED -> {
                     this.binding.buttonEng.setBackgroundColor(
                         ContextCompat.getColor(this.binding.buttonEng.context, R.color.red)
                     )

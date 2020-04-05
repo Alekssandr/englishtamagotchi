@@ -20,6 +20,9 @@ class WordsBlockStorage(private val wordsBlockDao: WordsBlockDao) {
     fun getWordsBlockList(): Single<List<PairRusEng>> =
         wordsBlockDao.getWordsBlockList().map { Mapper().mapFromEntity(it) }
 
+    fun getWordsBlockListBy(dayOfLearning: Int): Single<List<PairRusEng>> =
+        wordsBlockDao.getWordsBlockListBy(dayOfLearning).map { Mapper().mapFromEntity(it) }
+
     fun getTranslate(): Single<String> =
         wordsBlockDao.getWordTranslateEngToRus("few")
 
@@ -46,11 +49,14 @@ class WordsBlockStorage(private val wordsBlockDao: WordsBlockDao) {
     fun removePairRusEngFromCommon(eng: String): Completable =
         wordsBlockDao.deleteRowByEngFromCommon(eng)
 
-    fun getSizeOfCommon(): Single<Int> =
-        wordsBlockDao.getSizeOfCommon()
+    fun getSizeOfCommonBy(dayOfLearning: Int): Single<Int> =
+        wordsBlockDao.getSizeOfCommonBy(dayOfLearning)
 
     fun getWordsCommonList(): Single<List<PairRusEng>> =
         wordsBlockDao.getWordsCommonList().map { Mapper().mapFromCommonEntity(it) }
+
+    fun getWordsCommonListBy(dayOfLearning: Int): Single<List<PairRusEng>> =
+        wordsBlockDao.getWordsCommonListBy(dayOfLearning).map { Mapper().mapFromCommonEntity(it) }
 
 
 }

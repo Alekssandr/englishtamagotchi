@@ -4,13 +4,11 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.szczecin.englishtamagotchi.model.PairRusEng
 import com.szczecin.englishtamagotchi.common.rx.RxSchedulers
+import com.szczecin.englishtamagotchi.model.WordsFilterParams
 import com.szczecin.englishtamagotchi.preferencies.SettingsPreferences
 import com.szczecin.englishtamagotchi.usecase.LoadDataInDBUseCase
 import com.szczecin.englishtamagotchi.usecase.RemoveWordsBlockUseCase
-import com.szczecin.englishtamagotchi.usecase.common.GetCommonWordsUseCase
-import com.szczecin.englishtamagotchi.usecase.common.GetDataFromJSONCommonUseCase
-import com.szczecin.englishtamagotchi.usecase.common.LoadDataInDBCommonUseCase
-import com.szczecin.englishtamagotchi.usecase.common.RemoveRowCommonUseCase
+import com.szczecin.englishtamagotchi.usecase.common.*
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
@@ -19,6 +17,7 @@ import javax.inject.Inject
 class OrdinaryCardChoiceViewModel @Inject constructor(
     private val getDataFromJSONUseCase: GetDataFromJSONCommonUseCase,
     private val getCommonWordsUseCase: GetCommonWordsUseCase,
+    private val getCommonWordsByDayUseCase: GetCommonWordsByDayUseCase,
     private val loadDataInDBUseCase: LoadDataInDBCommonUseCase,
     private val loadDataInBlockDBUseCase: LoadDataInDBUseCase,
     private val removeRowCommonUseCase: RemoveRowCommonUseCase,
@@ -36,7 +35,7 @@ class OrdinaryCardChoiceViewModel @Inject constructor(
 
     private val disposables = CompositeDisposable()
     var indexWord = 0
-    var addNewData = 5
+    var addNewData = sharedPreferences.dailyWords
 
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
@@ -44,10 +43,18 @@ class OrdinaryCardChoiceViewModel @Inject constructor(
         loadCardsFromJSON()
     }
 
-    //удаление не работает!!!!
+    //показать лист всех слов, которые учу
+    //не уверен что нужна вторая таблица которая полностью дублирует данные комана
     private fun loadCardsFromJSON() {
         disposables += getDataFromJSONUseCase
-            .fetchDataFromJSON(sharedPreferences.numberStart, addNewData)//
+            .fetchDataFromJSON(
+                WordsFilterParams(
+                    sharedPreferences.numberStart,
+                    addNewData,
+                    sharedPreferences.dailyWords,
+                    sharedPreferences.numberOfLearningDay
+                )
+            )
             .subscribeOn(schedulers.io())
             .observeOn(schedulers.mainThread())
             .subscribeBy(onSuccess = {
@@ -56,20 +63,27 @@ class OrdinaryCardChoiceViewModel @Inject constructor(
                 loadCardsToRoom(it)
                 sharedPreferences.numberStart = sharedPreferences.numberStart + addNewData
             }, onComplete = {
-                getAllWords()
+                getAllWordsByDayCommon()
             }, onError = {
                 Log.e("Error", it.message ?: "")
             })
     }
 
+    private fun setNumberOfRepeating(pairRusEng: List<PairRusEng>): List<PairRusEng> =
+        pairRusEng.apply {
+            forEach {
+                it.dayOfLearning = sharedPreferences.numberOfLearningDay
+            }
+        }
+
 
     private fun loadCardsToRoom(pairRusEng: List<PairRusEng>) {
         disposables += loadDataInDBUseCase
-            .execute(pairRusEng)
+            .execute(setNumberOfRepeating(pairRusEng))
             .subscribeOn(schedulers.io())
             .observeOn(schedulers.mainThread())
             .subscribeBy(onComplete = {
-                getAllWords()
+                getAllWordsByDayCommon()
             }, onError = {
                 Log.e("Error", it.message ?: "")
             })
@@ -86,18 +100,18 @@ class OrdinaryCardChoiceViewModel @Inject constructor(
                 indexWord++
                 loadBlock(indexWord)
             }
-            blockWords.size < 5 -> {
-                indexWord = 4
-                addNewData = 5 - blockWords.size
+            blockWords.size < sharedPreferences.newWordsPerDay -> {
+                indexWord = sharedPreferences.newWordsPerDay - 1
+                addNewData = sharedPreferences.newWordsPerDay - blockWords.size
                 loadCardsFromJSON()
             }
             else -> removeAllFromBlock()
         }
     }
 
-    private fun getAllWords() {
-        disposables += getCommonWordsUseCase
-            .execute()
+    private fun getAllWordsByDayCommon() {
+        disposables += getCommonWordsByDayUseCase
+            .execute(sharedPreferences.numberOfLearningDay)
             .subscribeOn(schedulers.io())
             .observeOn(schedulers.mainThread())
             .subscribeBy(onSuccess = {
@@ -111,6 +125,22 @@ class OrdinaryCardChoiceViewModel @Inject constructor(
             })
     }
 
+//    private fun getAllWords() {
+//        disposables += getCommonWordsUseCase
+//            .execute()
+//            .subscribeOn(schedulers.io())
+//            .observeOn(schedulers.mainThread())
+//            .subscribeBy(onSuccess = {
+//                blockWords.clear()
+//
+//                blockWords.addAll(it)
+//
+//                loadBlock(indexWord)
+//            }, onError = {
+//                Log.e("Error", it.message ?: "")
+//            })
+//    }
+
     fun removeWord() {
         disposables += removeRowCommonUseCase
             .execute(blockWords[indexWord].eng)
@@ -118,7 +148,7 @@ class OrdinaryCardChoiceViewModel @Inject constructor(
             .observeOn(schedulers.mainThread())
             .subscribeBy(onComplete = {
                 blockWords.removeAt(indexWord)
-                if (indexWord < 4) indexWord--
+                if (indexWord < sharedPreferences.newWordsPerDay - 1) indexWord--
                 next()
             }, onError = {
                 Log.e("Error", it.message ?: "")
@@ -138,6 +168,7 @@ class OrdinaryCardChoiceViewModel @Inject constructor(
     }
 
     fun addWordsToBlockDB() {
+        sharedPreferences.dailyWords = 0
         disposables += loadDataInBlockDBUseCase
             .execute(blockWords)
             .subscribeOn(schedulers.io())
@@ -149,7 +180,7 @@ class OrdinaryCardChoiceViewModel @Inject constructor(
             })
     }
 
-    fun listen(){
+    fun listen() {
         engTextForListen.value = blockWords[indexWord].eng
     }
 

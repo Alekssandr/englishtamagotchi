@@ -30,6 +30,8 @@ class OrdinaryCardViewModel @Inject constructor(
 //подумать мб добавить, что если заходим в setRusOrEng значит переходить на следующий блок
         //а нехт не надо.
     //также бааг когда с анг на рус перехожу слово на англ внизу уже открыто
+    //getAllWords поменять на по sharedPreferences.numberOfLearningDay. И сначала последний блок по большей цифре и так далее вниз.
+    //потом сделать функцию перемешивания???
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun onCreate() {
         translateWordCloseVisibility.value = false

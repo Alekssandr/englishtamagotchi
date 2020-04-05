@@ -11,14 +11,15 @@ class Mapper {
                 PairRusEng().run {
                     this.eng = it.eng
                     this.rus = it.rus
+                    this.dayOfLearning = it.dayOfLearning
                     add(this)
                 }
             }
         }
 
-    fun mapToEntity(pairRusEng: PairRusEng) = WordsBlockEntity(pairRusEng.eng, pairRusEng.rus)
+    fun mapToEntity(pairRusEng: PairRusEng) = WordsBlockEntity(pairRusEng.eng, pairRusEng.rus, pairRusEng.dayOfLearning)
 
-    fun mapCommonToEntity(pairRusEng: PairRusEng) = WordsCommonEntity(pairRusEng.eng, pairRusEng.rus)
+    fun mapCommonToEntity(pairRusEng: PairRusEng) = WordsCommonEntity(pairRusEng.eng, pairRusEng.rus, pairRusEng.dayOfLearning)
 
     fun mapFromCommonEntity(wordsCommonEntity: List<WordsCommonEntity>) =
         mutableListOf<PairRusEng>().apply {
@@ -26,6 +27,7 @@ class Mapper {
                 PairRusEng().run {
                     this.eng = it.eng
                     this.rus = it.rus
+                    this.dayOfLearning = it.dayOfLearning
                     add(this)
                 }
             }

@@ -16,6 +16,9 @@ interface WordsBlockDao {
     @Query("SELECT * from WordsBlockEntity order by RANDOM()")
     fun getWordsBlockList(): Single<List<WordsBlockEntity>>
 
+    @Query("SELECT * from WordsBlockEntity WHERE dayOfLearning = :dayOfLearning")
+    fun getWordsBlockListBy(dayOfLearning: Int): Single<List<WordsBlockEntity>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(pairRusEng: WordsBlockEntity) : Long
 
@@ -42,9 +45,12 @@ interface WordsBlockDao {
     @Query("DELETE FROM WordsCommonEntity WHERE eng = :eng")
     fun deleteRowByEngFromCommon(eng: String) : Completable
 
-    @Query("SELECT COUNT(*) from WordsCommonEntity")
-    fun getSizeOfCommon() : Single<Int>
+    @Query("SELECT COUNT(*) from WordsCommonEntity WHERE dayOfLearning = :dayOfLearning")
+    fun getSizeOfCommonBy(dayOfLearning: Int) : Single<Int>
 
     @Query("SELECT * from WordsCommonEntity")
     fun getWordsCommonList(): Single<List<WordsCommonEntity>>
+
+    @Query("SELECT * from WordsCommonEntity WHERE dayOfLearning = :dayOfLearning")
+    fun getWordsCommonListBy(dayOfLearning: Int): Single<List<WordsCommonEntity>>
 }
