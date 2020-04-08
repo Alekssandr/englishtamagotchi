@@ -23,11 +23,11 @@ class LocalCommonTranslateRepository(private val context: Context): TranslateRep
         return  appPluginsConfig.pairRusEng.subList(numberStart, numberStart + addNewData)//10
     }
 
-    override fun loadTranslate() : AppPluginsConfig {
+    override fun loadTranslate() : List<PairRusEng> {
         val jsonResponse = getJson(context, BuildConfig.RU_ENG_TRANSLATE)
         val appPluginsConfig: AppPluginsConfig = gson.fromJson(jsonResponse, AppPluginsConfig::class.java)
 
-        return appPluginsConfig
+        return appPluginsConfig.pairRusEng
     }
 
     private fun getJson(context: Context, filePath: String): String {

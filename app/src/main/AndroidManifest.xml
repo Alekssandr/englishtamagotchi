@@ -9,9 +9,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true" >
         <activity
-            android:name=".view.OrdinaryCardActivity"
+            android:name=".view.learning.OrdinaryCardActivity"
             android:label="@string/title_activity_ordinary_card"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".view.MainActivity">
@@ -22,8 +23,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.OrdinaryCardChoiceActivity"/>
-        <activity android:name=".view.WordsWritingActivity"/>
-        <activity android:name=".view.BindWordsActivity"/>
+        <activity android:name=".view.learning.WordsWritingActivity"/>
+        <activity android:name=".view.learning.BindWordsActivity"/>
+        <activity android:name=".view.common.CommonWordsActivity"/>
+        <activity android:name=".view.know.KnowTableActivity"/>
+        <activity android:name=".view.learn.LearnTableActivity"/>
+        <activity android:name=".view.learning.LearningActivity"/>
     </application>
 
 </manifest>

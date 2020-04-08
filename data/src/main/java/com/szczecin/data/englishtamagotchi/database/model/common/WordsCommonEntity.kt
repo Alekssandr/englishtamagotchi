@@ -8,5 +8,5 @@ import androidx.room.PrimaryKey
 data class WordsCommonEntity(
     @PrimaryKey @ColumnInfo val eng: String,
     @ColumnInfo val rus: String,
-    @ColumnInfo val dayOfLearning: Int
+    @ColumnInfo val isCheckbox: Boolean
 )

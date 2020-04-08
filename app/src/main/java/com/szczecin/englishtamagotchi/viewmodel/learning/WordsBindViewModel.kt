@@ -1,10 +1,7 @@
-package com.szczecin.englishtamagotchi.viewmodel
+package com.szczecin.englishtamagotchi.viewmodel.learning
 
 import android.util.Log
-import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.*
-import com.szczecin.englishtamagotchi.R
 import com.szczecin.englishtamagotchi.adapter.CHOICE
 import com.szczecin.englishtamagotchi.adapter.DEFAULT
 import com.szczecin.englishtamagotchi.adapter.GREEN
@@ -16,10 +13,7 @@ import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
-import io.reactivex.subjects.BehaviorSubject
-import java.util.*
 import javax.inject.Inject
-import kotlin.concurrent.schedule
 
 
 class WordsBindViewModel @Inject constructor(
@@ -31,7 +25,9 @@ class WordsBindViewModel @Inject constructor(
     val pairRusEngList: MutableLiveData<List<PairRusEng>> = MutableLiveData()
     val buttonEngColor = MutableLiveData<ButtonColorization>()
     val buttonRusColor = MutableLiveData<ButtonColorization>()
+    val uiClosed = MutableLiveData<Unit>()
     var previousButton = DEFAULT
+    var correctCount: Int = 0
 
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
@@ -58,15 +54,35 @@ class WordsBindViewModel @Inject constructor(
                 .observeOn(schedulers.mainThread())
                 .subscribe {
                     if(previousButton == DEFAULT){
-                        buttonEngColor.value = ButtonColorization(it, CHOICE)
+                        buttonEngColor.value =
+                            ButtonColorization(
+                                it,
+                                CHOICE
+                            )
                         previousButton = it
                     } else if(previousButton == it){
-                        buttonEngColor.value = ButtonColorization(it, GREEN)
-                        buttonRusColor.value =  ButtonColorization(it, GREEN)
+                        buttonEngColor.value =
+                            ButtonColorization(
+                                it,
+                                GREEN
+                            )
+                        buttonRusColor.value =
+                            ButtonColorization(
+                                it,
+                                GREEN
+                            )
                         previousButton = DEFAULT
                     } else {
-                        buttonEngColor.value = ButtonColorization(it, RED)
-                        buttonRusColor.value =  ButtonColorization(previousButton, RED)
+                        buttonEngColor.value =
+                            ButtonColorization(
+                                it,
+                                RED
+                            )
+                        buttonRusColor.value =
+                            ButtonColorization(
+                                previousButton,
+                                RED
+                            )
                         previousButton = DEFAULT
                     }
                 }
@@ -79,15 +95,36 @@ class WordsBindViewModel @Inject constructor(
                 .observeOn(schedulers.mainThread())
                 .subscribe {
                     if(previousButton == DEFAULT){
-                        buttonRusColor.value = ButtonColorization(it, CHOICE)
+                        buttonRusColor.value =
+                            ButtonColorization(
+                                it,
+                                CHOICE
+                            )
                         previousButton = it
                     } else if(previousButton == it){
-                        buttonEngColor.value = ButtonColorization(it, GREEN)
-                        buttonRusColor.value =  ButtonColorization(it, GREEN)
+                        correctCount = correctCount++
+                        buttonEngColor.value =
+                            ButtonColorization(
+                                it,
+                                GREEN
+                            )
+                        buttonRusColor.value =
+                            ButtonColorization(
+                                it,
+                                GREEN
+                            )
                         previousButton = DEFAULT
                     } else {
-                        buttonRusColor.value = ButtonColorization(it, RED)
-                        buttonEngColor.value =  ButtonColorization(previousButton, RED)
+                        buttonRusColor.value =
+                            ButtonColorization(
+                                it,
+                                RED
+                            )
+                        buttonEngColor.value =
+                            ButtonColorization(
+                                previousButton,
+                                RED
+                            )
                         previousButton = DEFAULT
                     }
                 }

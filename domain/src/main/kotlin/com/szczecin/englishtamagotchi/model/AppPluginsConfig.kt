@@ -8,5 +8,6 @@ data class PairRusEng(
     var id: Long = 0,
     var eng: String = "",
     var rus: String = "",
+    var isChecked: Boolean = false,
     var dayOfLearning: Int = 0
 )

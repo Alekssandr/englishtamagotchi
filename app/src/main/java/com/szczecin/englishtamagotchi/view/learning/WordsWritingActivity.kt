@@ -1,20 +1,22 @@
-package com.szczecin.englishtamagotchi.view
+package com.szczecin.englishtamagotchi.view.learning
 
-import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.szczecin.englishtamagotchi.R
 import com.szczecin.englishtamagotchi.common.ViewModelFactory
 import com.szczecin.englishtamagotchi.common.extensions.lifecircle.observeLifecycleIn
-import com.szczecin.englishtamagotchi.databinding.ActivityOrdinaryCardBinding
 import com.szczecin.englishtamagotchi.databinding.ActivityWordsWritingBinding
-import com.szczecin.englishtamagotchi.viewmodel.OrdinaryCardViewModel
-import com.szczecin.englishtamagotchi.viewmodel.WordsWritingViewModel
+import com.szczecin.englishtamagotchi.viewmodel.learning.WordsWritingViewModel
 import com.szczecin.pointofinterest.common.extensions.viewModel
 import dagger.android.AndroidInjection
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.activity_words_writing.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class WordsWritingActivity : AppCompatActivity() {
@@ -39,6 +41,14 @@ class WordsWritingActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_words_writing)
         binding.wordsWritingViewModel = wordsWritingViewModel
         binding.lifecycleOwner = this@WordsWritingActivity
+
+        wordsWritingViewModel.uiClosed.observe(this, Observer {
+            Toast.makeText(this,"умничка! Задание сделано!", Toast.LENGTH_LONG).show()
+            GlobalScope.launch(Dispatchers.Main) {
+                delay(1000)
+                finish()
+            }
+        })
     }
 
     private fun observeViewModel() {

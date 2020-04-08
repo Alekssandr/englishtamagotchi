@@ -7,7 +7,7 @@
 
         <variable
             name="wordsWritingViewModel"
-            type="com.szczecin.englishtamagotchi.viewmodel.WordsWritingViewModel" />
+            type="com.szczecin.englishtamagotchi.viewmodel.learning.WordsWritingViewModel" />
 
         <import type="android.view.View" />
 

@@ -9,5 +9,7 @@ interface WordsCommonRepository {
     fun getWordsCommonList(): Single<List<PairRusEng>>
     fun getWordsBlockListBy(dayOfLearning: Int): Single<List<PairRusEng>>
     fun getSizeOfCommonBy(numberOfLearningDay: Int): Single<Int>
+    fun getSizeOfCommon(): Single<Int>
     fun removePairRusEngFromCommon(eng: String): Completable
+    fun updateItemForCommon(eng: String, isCheckbox: Boolean): Completable
 }

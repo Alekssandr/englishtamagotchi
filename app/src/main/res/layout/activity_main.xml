@@ -27,69 +27,56 @@
                 android:layout_height="match_parent">
 
                 <Button
-                    android:id="@+id/btn_choose_card"
+                    android:id="@+id/btn_1000_words"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
                     android:layout_marginTop="32dp"
                     android:onClick="chooseCorrectExercise"
-                    android:text="choose card"
-                    binding:layout_constraintEnd_toEndOf="parent"
+                    android:text="1000 words"
                     binding:layout_constraintStart_toStartOf="parent"
                     binding:layout_constraintTop_toTopOf="parent" />
 
                 <Button
-                    android:id="@+id/btn_eng_rus"
+                    android:id="@+id/btn_know"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="16dp"
                     android:onClick="chooseCorrectExercise"
-                    android:text="eng - rus"
-                    binding:layout_constraintEnd_toEndOf="parent"
-                    binding:layout_constraintHorizontal_bias="0.501"
+                    android:text="Know"
                     binding:layout_constraintStart_toStartOf="parent"
-                    binding:layout_constraintTop_toBottomOf="@+id/btn_choose_card" />
+                    binding:layout_constraintTop_toBottomOf="@+id/btn_1000_words" />
 
                 <Button
-                    android:id="@+id/btn_rus_eng"
+                    android:id="@+id/btn_learn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="16dp"
                     android:onClick="chooseCorrectExercise"
-                    android:text="Rus - eng"
-                    binding:layout_constraintEnd_toEndOf="parent"
-                    binding:layout_constraintHorizontal_bias="0.503"
+                    android:text="Learn"
                     binding:layout_constraintStart_toStartOf="parent"
-                    binding:layout_constraintTop_toBottomOf="@+id/btn_eng_rus" />
+                    binding:layout_constraintTop_toBottomOf="@+id/btn_know" />
 
                 <Button
-                    android:id="@+id/btn_writing"
+                    android:id="@+id/btn_start_learning"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
                     android:onClick="chooseCorrectExercise"
-                    android:text="Writing"
-                    binding:layout_constraintEnd_toEndOf="parent"
-                    binding:layout_constraintHorizontal_bias="0.503"
+                    android:text="Start learning"
                     binding:layout_constraintStart_toStartOf="parent"
-                    binding:layout_constraintTop_toBottomOf="@+id/btn_rus_eng" />
+                    binding:layout_constraintTop_toBottomOf="@+id/new_words_per_day_10" />
 
-                <Button
-                    android:id="@+id/btn_binding"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
-                    android:onClick="chooseCorrectExercise"
-                    android:text="binding"
-                    binding:layout_constraintEnd_toEndOf="parent"
-                    binding:layout_constraintStart_toStartOf="parent"
-                    binding:layout_constraintTop_toBottomOf="@+id/btn_writing" />
 
                 <TextView
                     android:id="@+id/day_learning_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Day: "
-                    binding:layout_constraintBottom_toBottomOf="parent"
+                    binding:layout_constraintBottom_toBottomOf="@+id/new_words_per_day_10"
                     binding:layout_constraintEnd_toEndOf="parent"
                     binding:layout_constraintStart_toEndOf="@+id/new_words_per_day_10"
                     binding:layout_constraintTop_toBottomOf="@+id/textView5" />
@@ -99,7 +86,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@{mainViewModel.numberOfLearningDay.toString()}"
-                    binding:layout_constraintBottom_toBottomOf="parent"
+                    binding:layout_constraintBottom_toBottomOf="@+id/new_words_per_day_10"
                     binding:layout_constraintStart_toEndOf="@+id/day_learning_txt"
                     binding:layout_constraintTop_toBottomOf="@+id/textView5" />
 
@@ -135,15 +122,17 @@
                     binding:layout_constraintStart_toEndOf="@+id/new_words_per_day_10"
                     binding:layout_constraintTop_toTopOf="@+id/new_words_per_day_10" />
 
+
                 <TextView
                     android:id="@+id/textView5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="35dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="32dp"
                     android:text="New words per day:"
+                    binding:layout_constraintEnd_toEndOf="@+id/new_words_per_day_15"
                     binding:layout_constraintStart_toStartOf="parent"
-                    binding:layout_constraintTop_toBottomOf="@+id/btn_binding" />
+                    binding:layout_constraintTop_toBottomOf="@+id/btn_learn" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
 

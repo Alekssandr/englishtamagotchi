@@ -10,6 +10,7 @@ import io.reactivex.Single
 class WordsCommonDataRepository(
     private val wordsBlockStorage: WordsBlockStorage
 ) : WordsCommonRepository {
+
     override fun getWordsBlockListBy(dayOfLearning: Int): Single<List<PairRusEng>> =
         wordsBlockStorage.getWordsCommonListBy(dayOfLearning)
 
@@ -24,4 +25,10 @@ class WordsCommonDataRepository(
 
     override fun removePairRusEngFromCommon(eng: String): Completable =
         wordsBlockStorage.removePairRusEngFromCommon(eng)
+
+    //new
+    override fun getSizeOfCommon(): Single<Int> = wordsBlockStorage.getSizeOfCommon()
+    override fun updateItemForCommon(eng: String, isCheckbox: Boolean): Completable =
+        wordsBlockStorage.updateItemForCommon(eng, isCheckbox)
+
 }

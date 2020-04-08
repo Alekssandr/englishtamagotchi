@@ -8,13 +8,20 @@ import io.reactivex.Single
 
 class WordsBlockStorage(private val wordsBlockDao: WordsBlockDao) {
 
-    fun insertPairRusEng(pairRusEng: List<PairRusEng>): Completable  =
+    fun insertPairRusEng(pairRusEng: List<PairRusEng>): Completable =
         Completable.fromCallable {
             pairRusEng.forEach {
                 wordsBlockDao.insert(
                     Mapper().mapToEntity(it)
                 )
             }
+        }
+
+    fun insertKnowWord(pairRusEng: PairRusEng): Completable =
+        Completable.fromCallable {
+            wordsBlockDao.insert(
+                Mapper().mapToEntity(pairRusEng)
+            )
         }
 
     fun getWordsBlockList(): Single<List<PairRusEng>> =
@@ -37,7 +44,7 @@ class WordsBlockStorage(private val wordsBlockDao: WordsBlockDao) {
 
 
     //------------------COMMON---------------------------
-    fun insertCommon(pairRusEng: List<PairRusEng>): Completable  =
+    fun insertCommon(pairRusEng: List<PairRusEng>): Completable =
         Completable.fromCallable {
             pairRusEng.forEach {
                 wordsBlockDao.insertCommon(
@@ -50,13 +57,47 @@ class WordsBlockStorage(private val wordsBlockDao: WordsBlockDao) {
         wordsBlockDao.deleteRowByEngFromCommon(eng)
 
     fun getSizeOfCommonBy(dayOfLearning: Int): Single<Int> =
-        wordsBlockDao.getSizeOfCommonBy(dayOfLearning)
+//        wordsBlockDao.getSizeOfCommonBy(dayOfLearning)
+        Single.just(0)
 
     fun getWordsCommonList(): Single<List<PairRusEng>> =
         wordsBlockDao.getWordsCommonList().map { Mapper().mapFromCommonEntity(it) }
 
     fun getWordsCommonListBy(dayOfLearning: Int): Single<List<PairRusEng>> =
-        wordsBlockDao.getWordsCommonListBy(dayOfLearning).map { Mapper().mapFromCommonEntity(it) }
+//        wordsBlockDao.getWordsCommonListBy(dayOfLearning).map { Mapper().mapFromCommonEntity(it) }
+        Single.just(arrayListOf())
+
+    //new
+    fun getSizeOfCommon() = wordsBlockDao.getSizeOfCommon()
+
+    fun updateItemForCommon(eng: String, isCheckbox: Boolean) =
+        wordsBlockDao.changeItemForCommon(eng, isCheckbox)
+
+    //learn
+    fun insertLearnWords(pairRusEng: List<PairRusEng>): Completable =
+        Completable.fromCallable {
+            pairRusEng.forEach {
+                wordsBlockDao.insert(
+                    Mapper().mapLearnToEntity(it)
+                )
+            }
+        }
+
+    fun insertLearnWord(pairRusEng: PairRusEng): Completable =
+        Completable.fromCallable {
+            wordsBlockDao.insert(
+                Mapper().mapLearnToEntity(pairRusEng)
+            )
+        }
+
+    fun removeAllFromLearn(): Completable =
+        wordsBlockDao.deleteAllFromLearnTable()
+
+    fun getLearnList(): Single<List<PairRusEng>> =
+        wordsBlockDao.getLearnList().map { Mapper().mapFromLearnEntity(it) }
+
+    fun removeLearnPairRusEng(eng: String): Completable =
+        wordsBlockDao.deleteLearnRowByEng(eng)
 
 
 }

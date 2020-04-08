@@ -2,8 +2,10 @@ package com.szczecin.englishtamagotchi.di
 
 import com.szczecin.data.englishtamagotchi.database.repo.WordsBlockDataRepository
 import com.szczecin.data.englishtamagotchi.database.repo.common.WordsCommonDataRepository
+import com.szczecin.data.englishtamagotchi.database.repo.learn.LearnWordsDataRepository
 import com.szczecin.data.englishtamagotchi.database.storage.WordsBlockStorage
 import com.szczecin.englishtamagotchi.app.di.scopes.PerActivity
+import com.szczecin.englishtamagotchi.repo.LearnWordsRepository
 import com.szczecin.englishtamagotchi.repo.WordsBlockRepository
 import com.szczecin.englishtamagotchi.repo.WordsCommonRepository
 import dagger.Module
@@ -21,4 +23,9 @@ class MainActivitiesModule {
     @PerActivity
     fun provideWordsCommonRepository(wordsBlockStorage: WordsBlockStorage): WordsCommonRepository =
         WordsCommonDataRepository(wordsBlockStorage)
+
+    @Provides
+    @PerActivity
+    fun provideLearnWordsDataRepository(wordsBlockStorage: WordsBlockStorage): LearnWordsRepository =
+        LearnWordsDataRepository(wordsBlockStorage)
 }

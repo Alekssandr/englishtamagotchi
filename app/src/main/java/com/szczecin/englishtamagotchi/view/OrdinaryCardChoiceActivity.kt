@@ -14,6 +14,7 @@ import com.szczecin.englishtamagotchi.viewmodel.OrdinaryCardChoiceViewModel
 import com.szczecin.pointofinterest.common.extensions.viewModel
 import dagger.android.AndroidInjection
 import androidx.lifecycle.Observer
+import com.szczecin.englishtamagotchi.view.learning.OrdinaryCardActivity
 import kotlinx.android.synthetic.main.activity_ordinary_choice_card.*
 import java.util.*
 import javax.inject.Inject

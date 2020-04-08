@@ -13,7 +13,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
 import javax.inject.Inject
-
+//maybe remove?
 class OrdinaryCardChoiceViewModel @Inject constructor(
     private val getDataFromJSONUseCase: GetDataFromJSONCommonUseCase,
     private val getCommonWordsUseCase: GetCommonWordsUseCase,

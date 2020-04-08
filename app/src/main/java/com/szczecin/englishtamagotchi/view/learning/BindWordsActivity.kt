@@ -1,6 +1,7 @@
-package com.szczecin.englishtamagotchi.view
+package com.szczecin.englishtamagotchi.view.learning
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,7 +10,7 @@ import com.szczecin.englishtamagotchi.adapter.BindWordsEngItemsAdapter
 import com.szczecin.englishtamagotchi.common.ViewModelFactory
 import com.szczecin.englishtamagotchi.common.extensions.lifecircle.observeLifecycleIn
 import com.szczecin.englishtamagotchi.databinding.ActivityBindWordsBinding
-import com.szczecin.englishtamagotchi.viewmodel.WordsBindViewModel
+import com.szczecin.englishtamagotchi.viewmodel.learning.WordsBindViewModel
 import com.szczecin.pointofinterest.common.extensions.viewModel
 import dagger.android.AndroidInjection
 import androidx.lifecycle.Observer
@@ -19,9 +20,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.util.*
 import javax.inject.Inject
-import kotlin.concurrent.schedule
 
 class BindWordsActivity : AppCompatActivity() {
 
@@ -49,6 +48,14 @@ class BindWordsActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_bind_words)
         binding.wordsBindViewModel = wordsBindViewModel
         binding.lifecycleOwner = this@BindWordsActivity
+
+        wordsBindViewModel.uiClosed.observe(this, Observer {
+            Toast.makeText(this,"умничка! Задание сделано!", Toast.LENGTH_LONG).show()
+            GlobalScope.launch(Dispatchers.Main) {
+                delay(1000)
+                finish()
+            }
+        })
     }
 
     private fun initRecycler() {

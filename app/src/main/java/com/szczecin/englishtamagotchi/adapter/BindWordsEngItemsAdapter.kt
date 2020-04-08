@@ -1,5 +1,6 @@
 package com.szczecin.englishtamagotchi.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -8,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.szczecin.englishtamagotchi.R
 import com.szczecin.englishtamagotchi.databinding.BindWordItemBinding
 import com.szczecin.englishtamagotchi.model.PairRusEng
-import com.szczecin.englishtamagotchi.viewmodel.WordsBindViewModel
+import com.szczecin.englishtamagotchi.viewmodel.learning.WordsBindViewModel
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.bind_word_item.view.*

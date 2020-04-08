@@ -1,13 +1,10 @@
-package com.szczecin.englishtamagotchi.viewmodel
+package com.szczecin.englishtamagotchi.viewmodel.learning
 
 import android.util.Log
 import androidx.lifecycle.*
 import com.szczecin.englishtamagotchi.model.PairRusEng
-import com.szczecin.englishtamagotchi.usecase.GetDataFromJSONUseCase
 import com.szczecin.englishtamagotchi.usecase.GetWordsBlockUseCase
-import com.szczecin.englishtamagotchi.usecase.LoadDataInDBUseCase
 import com.szczecin.englishtamagotchi.common.rx.RxSchedulers
-import com.szczecin.englishtamagotchi.usecase.RemoveWordsBlockUseCase
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
@@ -21,6 +18,7 @@ class OrdinaryCardViewModel @Inject constructor(
     val translateWordOpen = MutableLiveData<String>()
     val translateWordClose = MutableLiveData<String>()
     val translateWordCloseVisibility = MutableLiveData<Boolean>()
+    val uiClosed = MutableLiveData<Unit>()
     val blockWords : MutableList<PairRusEng> = mutableListOf()
     var isTranslateFromEng = true
 
@@ -58,10 +56,12 @@ class OrdinaryCardViewModel @Inject constructor(
             indexWord++
             loadBlock(indexWord)
         } else {
+            uiClosed.postValue(Unit)
             if(isTranslateFromEng) {
-                isTranslateFromEng = false
-                indexWord = 0
-                loadBlock(indexWord)
+
+//                isTranslateFromEng = false
+//                indexWord = 0
+//                loadBlock(indexWord)
             }
         }
     }
