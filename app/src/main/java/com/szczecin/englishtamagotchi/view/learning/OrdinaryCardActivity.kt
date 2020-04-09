@@ -13,6 +13,7 @@ import com.szczecin.englishtamagotchi.viewmodel.learning.OrdinaryCardViewModel
 import com.szczecin.pointofinterest.common.extensions.viewModel
 import dagger.android.AndroidInjection
 import androidx.lifecycle.Observer
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -43,9 +44,9 @@ class OrdinaryCardActivity : AppCompatActivity() {
         binding.ordinaryCardViewModel = ordinaryCardViewModel
         binding.lifecycleOwner = this@OrdinaryCardActivity
         ordinaryCardViewModel.uiClosed.observe(this, Observer {
-            Toast.makeText(this,"умничка! Задание сделано!",Toast.LENGTH_LONG).show()
+            Snackbar.make(this.binding.root, "умничка! Задание сделано!", Snackbar.LENGTH_LONG).show()
             GlobalScope.launch(Dispatchers.Main) {
-                delay(1000)
+                delay(2000)
                 finish()
             }
         })

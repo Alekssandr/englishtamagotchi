@@ -22,6 +22,7 @@ const val RED = 2
 class BindWordsEngItemsAdapter : RecyclerView.Adapter<BindWordsEngItemsAdapter.ItemViewHolder>() {
 
     private var stepsList: List<PairRusEng> = emptyList()
+    private var stepsListShuffled: List<PairRusEng> = emptyList()
     private val publishSubjectItem = PublishSubject.create<Int>()
     var previousPosition = DEFAULT
 
@@ -37,31 +38,33 @@ class BindWordsEngItemsAdapter : RecyclerView.Adapter<BindWordsEngItemsAdapter.I
     }
 
     override fun getItemCount(): Int {
-        return stepsList.size
+        return stepsListShuffled.size
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        holder.bind(stepsList[position])
+        holder.bind(stepsListShuffled[position])
 
         holder.itemView.buttonEng.setOnClickListener {
             if (previousPosition == DEFAULT) {
-                publishSubjectItem.onNext(position)
+                publishSubjectItem.onNext(stepsList.indexOf(stepsListShuffled[position]))
                 previousPosition = position
             }
         }
     }
 
     fun update(items: List<PairRusEng>) {
-        this.stepsList = items
+        stepsList = items
+        this.stepsListShuffled = items.shuffled()
         notifyDataSetChanged()
     }
 
-    fun updateItem(index: WordsBindViewModel.ButtonColorization) {
-        if (index.event != RED && index.event != CHOICE) {
+    fun updateItem(pairRusEng: WordsBindViewModel.ButtonColorization) {
+        if (pairRusEng.event != RED && pairRusEng.event != CHOICE) {
             previousPosition = DEFAULT
         }
-        stepsList[index.index].dayOfLearning = index.event
-        notifyItemChanged(index.index)
+        val correctIndex = stepsListShuffled.indexOf(stepsList[pairRusEng.index])
+        stepsListShuffled[correctIndex].dayOfLearning = pairRusEng.event
+        notifyItemChanged(stepsListShuffled.indexOf(stepsList[pairRusEng.index]))
     }
 
     class ItemViewHolder(private val binding: BindWordItemBinding) :

@@ -8,6 +8,7 @@ import com.szczecin.englishtamagotchi.adapter.GREEN
 import com.szczecin.englishtamagotchi.adapter.RED
 import com.szczecin.englishtamagotchi.common.rx.RxSchedulers
 import com.szczecin.englishtamagotchi.model.PairRusEng
+import com.szczecin.englishtamagotchi.preferencies.SettingsPreferences
 import com.szczecin.englishtamagotchi.usecase.GetWordsBlockUseCase
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
@@ -25,10 +26,10 @@ class WordsBindViewModel @Inject constructor(
     val pairRusEngList: MutableLiveData<List<PairRusEng>> = MutableLiveData()
     val buttonEngColor = MutableLiveData<ButtonColorization>()
     val buttonRusColor = MutableLiveData<ButtonColorization>()
-    val uiClosed = MutableLiveData<Unit>()
+    val finishLesson = MutableLiveData<Unit>()
     var previousButton = DEFAULT
     var correctCount: Int = 0
-
+    var sizeOfList: Int = 0
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun onCreate() {
@@ -42,6 +43,7 @@ class WordsBindViewModel @Inject constructor(
             .observeOn(schedulers.mainThread())
             .subscribeBy(onSuccess = {
                 pairRusEngList.value = it
+                sizeOfList = it.size
             }, onError = {
                 Log.e("Error", it.message ?: "")
             })
@@ -61,6 +63,7 @@ class WordsBindViewModel @Inject constructor(
                             )
                         previousButton = it
                     } else if(previousButton == it){
+                        correctCount += 1
                         buttonEngColor.value =
                             ButtonColorization(
                                 it,
@@ -72,6 +75,7 @@ class WordsBindViewModel @Inject constructor(
                                 GREEN
                             )
                         previousButton = DEFAULT
+                        isFinish()
                     } else {
                         buttonEngColor.value =
                             ButtonColorization(
@@ -102,7 +106,7 @@ class WordsBindViewModel @Inject constructor(
                             )
                         previousButton = it
                     } else if(previousButton == it){
-                        correctCount = correctCount++
+                        correctCount += 1
                         buttonEngColor.value =
                             ButtonColorization(
                                 it,
@@ -114,6 +118,7 @@ class WordsBindViewModel @Inject constructor(
                                 GREEN
                             )
                         previousButton = DEFAULT
+                        isFinish()
                     } else {
                         buttonRusColor.value =
                             ButtonColorization(
@@ -128,6 +133,12 @@ class WordsBindViewModel @Inject constructor(
                         previousButton = DEFAULT
                     }
                 }
+    }
+
+    private fun isFinish(){
+        if(correctCount == sizeOfList){
+            finishLesson.postValue(Unit)
+        }
     }
 
     override fun onCleared() {
