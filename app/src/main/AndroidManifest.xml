@@ -29,6 +29,7 @@
         <activity android:name=".view.know.KnowTableActivity"/>
         <activity android:name=".view.learn.LearnTableActivity"/>
         <activity android:name=".view.learning.LearningActivity"/>
+        <activity android:name=".view.repeat.RepeatActivity"/>
     </application>
 
 </manifest>

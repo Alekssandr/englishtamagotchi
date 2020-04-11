@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:binding="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="repeatViewModel"
+            type="com.szczecin.englishtamagotchi.viewmodel.repeat.RepeatViewModel" />
+
+        <import type="android.view.View" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <Button
+            android:id="@+id/btn_word_open"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@{repeatViewModel.openedWord}"
+            binding:layout_constraintEnd_toEndOf="parent"
+            binding:layout_constraintStart_toStartOf="parent"
+            binding:layout_constraintTop_toTopOf="parent"
+            tools:text="russian word"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_repeat_words"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            binding:layout_constraintBottom_toBottomOf="parent"
+            binding:layout_constraintEnd_toEndOf="parent"
+            binding:layout_constraintStart_toStartOf="parent"
+            binding:layout_constraintTop_toBottomOf="@+id/btn_word_open"
+            binding:repeatList="@{repeatViewModel.pairRusEngList}"
+            tools:listitem="@layout/repeat_word_item" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

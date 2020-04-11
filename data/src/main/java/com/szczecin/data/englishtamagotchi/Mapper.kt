@@ -47,4 +47,16 @@ class Mapper {
                 }
             }
         }
+
+    fun mapFromLearnEntity2(wordsLeanringEntity: List<LearnWordsBlockEntity>) =
+        mutableListOf<PairRusEng>().apply {
+            wordsLeanringEntity.forEach {
+                PairRusEng().run {
+                    this.eng = it.eng
+                    this.rus = it.rus
+                    this.dayOfLearning = it.dayOfLearning
+                    add(this)
+                }
+            }
+        }.take(5)
 }

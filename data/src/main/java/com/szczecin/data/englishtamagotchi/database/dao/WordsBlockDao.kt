@@ -4,9 +4,10 @@ import androidx.room.*
 import com.szczecin.data.englishtamagotchi.database.model.WordsBlockEntity
 import com.szczecin.data.englishtamagotchi.database.model.common.WordsCommonEntity
 import com.szczecin.data.englishtamagotchi.database.model.learn.LearnWordsBlockEntity
-import com.szczecin.englishtamagotchi.model.PairRusEng
 import io.reactivex.Completable
 import io.reactivex.Single
+import io.reactivex.Observable
+
 
 @Dao
 interface WordsBlockDao {
@@ -58,6 +59,15 @@ interface WordsBlockDao {
 
     @Query("SELECT * from LearnWordsBlockEntity")
     fun getLearnList(): Single<List<LearnWordsBlockEntity>>
+
+    @Query("SELECT * from LearnWordsBlockEntity WHERE dayOfLearning = :dayOfLearning")
+    fun getLearnListByDayOfLearning(dayOfLearning: Int): Single<List<LearnWordsBlockEntity>>
+
+    @Query("SELECT * from LearnWordsBlockEntity WHERE dayOfLearning == 0 LIMIT :newWordsPerDay")
+    fun getLearnListToday(newWordsPerDay: Int): Observable<List<LearnWordsBlockEntity>>
+
+    @Query("UPDATE LearnWordsBlockEntity SET dayOfLearning = :dayOfLearning WHERE eng = :eng")
+    fun updateLearnListBy(eng: String, dayOfLearning: Int)
 
     @Query("DELETE FROM LearnWordsBlockEntity")
     fun deleteAllFromLearnTable() : Completable

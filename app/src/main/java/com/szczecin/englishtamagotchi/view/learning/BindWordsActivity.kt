@@ -1,5 +1,7 @@
 package com.szczecin.englishtamagotchi.view.learning
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -34,6 +36,7 @@ class BindWordsActivity : AppCompatActivity() {
 
     private lateinit var bindWordsEngItemsAdapter: BindWordsEngItemsAdapter
     private lateinit var bindWordsRusItemsAdapter: BindWordsRusItemsAdapter
+    private val intentBindWords = Intent()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +46,7 @@ class BindWordsActivity : AppCompatActivity() {
         observeLifecycleIn(wordsBindViewModel)
         initRecycler()
         observeViewModel()
+        intentBindWords.putExtra("activity_status", BIND)
     }
 
     private fun setBinding() {
@@ -54,6 +58,7 @@ class BindWordsActivity : AppCompatActivity() {
             Snackbar.make(this.binding.root, "умничка! Задание сделано!", Snackbar.LENGTH_LONG).show()
             GlobalScope.launch(Dispatchers.Main) {
                 delay(2000)
+                setResult(Activity.RESULT_OK, intentBindWords)
                 finish()
             }
         })

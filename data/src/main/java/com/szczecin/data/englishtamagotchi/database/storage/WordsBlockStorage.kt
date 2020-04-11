@@ -4,6 +4,7 @@ import com.szczecin.data.englishtamagotchi.Mapper
 import com.szczecin.data.englishtamagotchi.database.dao.WordsBlockDao
 import com.szczecin.englishtamagotchi.model.PairRusEng
 import io.reactivex.Completable
+import io.reactivex.Observable
 import io.reactivex.Single
 
 class WordsBlockStorage(private val wordsBlockDao: WordsBlockDao) {
@@ -83,6 +84,15 @@ class WordsBlockStorage(private val wordsBlockDao: WordsBlockDao) {
             }
         }
 
+    fun updateLearnWords(pairRusEng: List<PairRusEng>): Completable =
+        Completable.fromCallable {
+            pairRusEng.forEach {
+                wordsBlockDao.updateLearnListBy(
+                    Mapper().mapLearnToEntity(it).eng, Mapper().mapLearnToEntity(it).dayOfLearning
+                )
+            }
+        }
+
     fun insertLearnWord(pairRusEng: PairRusEng): Completable =
         Completable.fromCallable {
             wordsBlockDao.insert(
@@ -95,6 +105,21 @@ class WordsBlockStorage(private val wordsBlockDao: WordsBlockDao) {
 
     fun getLearnList(): Single<List<PairRusEng>> =
         wordsBlockDao.getLearnList().map { Mapper().mapFromLearnEntity(it) }
+
+    fun getLearnListBy(dayOfLearning: Int): Single<List<PairRusEng>> =
+        wordsBlockDao.getLearnListByDayOfLearning(dayOfLearning).map {
+            Mapper().mapFromLearnEntity(
+                it
+            )
+        }
+
+    fun getLearnListToday(newWordsPerDay: Int): Observable<List<PairRusEng>> =
+        wordsBlockDao.getLearnListToday(newWordsPerDay).map {
+            Mapper().mapFromLearnEntity(
+                it
+            )
+        }
+
 
     fun removeLearnPairRusEng(eng: String): Completable =
         wordsBlockDao.deleteLearnRowByEng(eng)

@@ -1,5 +1,7 @@
 package com.szczecin.englishtamagotchi.view.learning
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -28,6 +30,7 @@ class WordsWritingActivity : AppCompatActivity() {
     private val wordsWritingViewModel: WordsWritingViewModel by viewModel { factory }
 
     private lateinit var binding: ActivityWordsWritingBinding
+    private val intentWordsWriting = Intent()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +39,7 @@ class WordsWritingActivity : AppCompatActivity() {
         setBinding()
         observeLifecycleIn(wordsWritingViewModel)
         observeViewModel()
+        intentWordsWriting.putExtra("activity_status", WRITING)
     }
 
     private fun setBinding() {
@@ -47,6 +51,7 @@ class WordsWritingActivity : AppCompatActivity() {
             Snackbar.make(this.binding.root, "умничка! Задание сделано!", Snackbar.LENGTH_LONG).show()
             GlobalScope.launch(Dispatchers.Main) {
                 delay(2000)
+                setResult(Activity.RESULT_OK, intentWordsWriting)
                 finish()
             }
         })

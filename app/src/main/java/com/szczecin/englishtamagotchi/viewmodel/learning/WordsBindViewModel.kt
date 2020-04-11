@@ -9,16 +9,18 @@ import com.szczecin.englishtamagotchi.adapter.RED
 import com.szczecin.englishtamagotchi.common.rx.RxSchedulers
 import com.szczecin.englishtamagotchi.model.PairRusEng
 import com.szczecin.englishtamagotchi.preferencies.SettingsPreferences
-import com.szczecin.englishtamagotchi.usecase.GetWordsBlockUseCase
+import com.szczecin.englishtamagotchi.usecase.learn.GetLearnWordsByDayUseCase
+import com.szczecin.englishtamagotchi.usecase.learn.GetLearnWordsUseCase
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
-import io.reactivex.rxkotlin.subscribeBy
 import javax.inject.Inject
 
 
 class WordsBindViewModel @Inject constructor(
-    private val getWordsBlockUseCase: GetWordsBlockUseCase,
+    private val getLearnWordsUseCase: GetLearnWordsUseCase,
+    private val getLearnWordsByDayUseCase: GetLearnWordsByDayUseCase,
+    private val sharedPreferences: SettingsPreferences,
     private val schedulers: RxSchedulers
 ) : ViewModel(), LifecycleObserver {
 
@@ -37,16 +39,17 @@ class WordsBindViewModel @Inject constructor(
     }
 
     private fun getAllWords() {
-        disposables += getWordsBlockUseCase
-            .execute()
+        disposables += getLearnWordsByDayUseCase
+            .execute(sharedPreferences.newWordsPerDay)
             .subscribeOn(schedulers.io())
             .observeOn(schedulers.mainThread())
-            .subscribeBy(onSuccess = {
+            .subscribe({
                 pairRusEngList.value = it
                 sizeOfList = it.size
-            }, onError = {
-                Log.e("Error", it.message ?: "")
-            })
+            },
+                {
+                    Log.e("Error", it.message ?: "")
+                })
     }
 
     fun subscribeForItemClick(clickObserver: Observable<Int>) {
@@ -55,14 +58,14 @@ class WordsBindViewModel @Inject constructor(
                 .subscribeOn(schedulers.io())
                 .observeOn(schedulers.mainThread())
                 .subscribe {
-                    if(previousButton == DEFAULT){
+                    if (previousButton == DEFAULT) {
                         buttonEngColor.value =
                             ButtonColorization(
                                 it,
                                 CHOICE
                             )
                         previousButton = it
-                    } else if(previousButton == it){
+                    } else if (previousButton == it) {
                         correctCount += 1
                         buttonEngColor.value =
                             ButtonColorization(
@@ -98,14 +101,14 @@ class WordsBindViewModel @Inject constructor(
                 .subscribeOn(schedulers.io())
                 .observeOn(schedulers.mainThread())
                 .subscribe {
-                    if(previousButton == DEFAULT){
+                    if (previousButton == DEFAULT) {
                         buttonRusColor.value =
                             ButtonColorization(
                                 it,
                                 CHOICE
                             )
                         previousButton = it
-                    } else if(previousButton == it){
+                    } else if (previousButton == it) {
                         correctCount += 1
                         buttonEngColor.value =
                             ButtonColorization(
@@ -135,8 +138,8 @@ class WordsBindViewModel @Inject constructor(
                 }
     }
 
-    private fun isFinish(){
-        if(correctCount == sizeOfList){
+    private fun isFinish() {
+        if (correctCount == sizeOfList) {
             finishLesson.postValue(Unit)
         }
     }

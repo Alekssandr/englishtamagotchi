@@ -5,13 +5,17 @@ import androidx.lifecycle.*
 import com.szczecin.englishtamagotchi.model.PairRusEng
 import com.szczecin.englishtamagotchi.usecase.GetWordsBlockUseCase
 import com.szczecin.englishtamagotchi.common.rx.RxSchedulers
+import com.szczecin.englishtamagotchi.preferencies.SettingsPreferences
+import com.szczecin.englishtamagotchi.usecase.learn.GetLearnWordsByDayUseCase
+import com.szczecin.englishtamagotchi.usecase.learn.GetLearnWordsUseCase
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
 import javax.inject.Inject
 
 class OrdinaryCardViewModel @Inject constructor(
-    private val getWordsBlockUseCase: GetWordsBlockUseCase,
+    private val getLearnWordsByDayUseCase: GetLearnWordsByDayUseCase,
+    private val sharedPreferences: SettingsPreferences,
     private val schedulers: RxSchedulers
 ) : ViewModel(), LifecycleObserver {
 
@@ -19,14 +23,14 @@ class OrdinaryCardViewModel @Inject constructor(
     val translateWordClose = MutableLiveData<String>()
     val translateWordCloseVisibility = MutableLiveData<Boolean>()
     val uiClosed = MutableLiveData<Unit>()
-    val blockWords : MutableList<PairRusEng> = mutableListOf()
+    val blockWords: MutableList<PairRusEng> = mutableListOf()
     var isTranslateFromEng = true
 
     private val disposables = CompositeDisposable()
     var indexWord = 0
 
-//подумать мб добавить, что если заходим в setRusOrEng значит переходить на следующий блок
-        //а нехт не надо.
+    //подумать мб добавить, что если заходим в setRusOrEng значит переходить на следующий блок
+    //а нехт не надо.
     //также бааг когда с анг на рус перехожу слово на англ внизу уже открыто
     //getAllWords поменять на по sharedPreferences.numberOfLearningDay. И сначала последний блок по большей цифре и так далее вниз.
     //потом сделать функцию перемешивания???
@@ -36,12 +40,12 @@ class OrdinaryCardViewModel @Inject constructor(
         getAllWords()
     }
 
-    fun setRusOrEng(isFromEng: Boolean){
+    fun setRusOrEng(isFromEng: Boolean) {
         isTranslateFromEng = isFromEng
     }
 
     private fun loadBlock(index: Int) {
-        if(isTranslateFromEng){
+        if (isTranslateFromEng) {
             translateWordOpen.value = blockWords[index].eng
             translateWordClose.value = blockWords[index].rus
         } else {
@@ -51,13 +55,13 @@ class OrdinaryCardViewModel @Inject constructor(
     }
 
     fun next() {
-        if(blockWords.size-1>indexWord) {
+        if (blockWords.size - 1 > indexWord) {
             translateWordCloseVisibility.value = false
             indexWord++
             loadBlock(indexWord)
         } else {
             uiClosed.postValue(Unit)
-            if(isTranslateFromEng) {
+            if (isTranslateFromEng) {
 
 //                isTranslateFromEng = false
 //                indexWord = 0
@@ -71,15 +75,15 @@ class OrdinaryCardViewModel @Inject constructor(
     }
 
     fun getAllWords() {
-        disposables += getWordsBlockUseCase
-            .execute()
+        disposables += getLearnWordsByDayUseCase
+            .execute(sharedPreferences.newWordsPerDay)
             .subscribeOn(schedulers.io())
             .observeOn(schedulers.mainThread())
-            .subscribeBy(onSuccess = {
+            .subscribe({
                 blockWords.clear()
                 blockWords.addAll(it)
                 loadBlock(indexWord)
-            }, onError = {
+            }, {
                 Log.e("Error", it.message ?: "")
             })
     }

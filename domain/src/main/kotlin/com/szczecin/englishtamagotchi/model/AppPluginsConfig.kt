@@ -9,5 +9,6 @@ data class PairRusEng(
     var eng: String = "",
     var rus: String = "",
     var isChecked: Boolean = false,
-    var dayOfLearning: Int = 0
+    var dayOfLearning: Int = 0,
+    var buttonColor: String = ""
 )

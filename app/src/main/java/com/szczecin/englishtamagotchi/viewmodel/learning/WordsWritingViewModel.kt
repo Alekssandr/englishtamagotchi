@@ -5,6 +5,9 @@ import androidx.lifecycle.*
 import com.szczecin.englishtamagotchi.model.PairRusEng
 import com.szczecin.englishtamagotchi.usecase.GetWordsBlockUseCase
 import com.szczecin.englishtamagotchi.common.rx.RxSchedulers
+import com.szczecin.englishtamagotchi.preferencies.SettingsPreferences
+import com.szczecin.englishtamagotchi.usecase.learn.GetLearnWordsByDayUseCase
+import com.szczecin.englishtamagotchi.usecase.learn.GetLearnWordsUseCase
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
@@ -12,7 +15,9 @@ import javax.inject.Inject
 
 
 class WordsWritingViewModel @Inject constructor(
-    private val getWordsBlockUseCase: GetWordsBlockUseCase,
+    private val getLearnWordsUseCase: GetLearnWordsUseCase,
+    private val sharedPreferences: SettingsPreferences,
+    private val getLearnWordsByDayUseCase: GetLearnWordsByDayUseCase,
     private val schedulers: RxSchedulers
 ) : ViewModel(), LifecycleObserver {
 
@@ -61,15 +66,15 @@ class WordsWritingViewModel @Inject constructor(
     }
 
     fun afterUserNameChange(s: CharSequence) {
-        if(s.length>=blockWords[indexWord].eng.length){
-            if(s.toString().equals(blockWords[indexWord].eng)){
+        if (s.length >= blockWords[indexWord].eng.length) {
+            if (s.toString().equals(blockWords[indexWord].eng)) {
                 isTranslateFromEng = true
             }
         }
     }
 
     fun check() {
-        if(isTranslateFromEng){
+        if (isTranslateFromEng) {
             translateWordCorrectVisibility.value = true
         } else {
             translateWordCloseVisibility.value = true
@@ -78,15 +83,15 @@ class WordsWritingViewModel @Inject constructor(
     }
 
     fun getAllWords() {
-        disposables += getWordsBlockUseCase
-            .execute()
+        disposables += getLearnWordsByDayUseCase
+            .execute(sharedPreferences.newWordsPerDay)
             .subscribeOn(schedulers.io())
             .observeOn(schedulers.mainThread())
-            .subscribeBy(onSuccess = {
+            .subscribe({
                 blockWords.clear()
                 blockWords.addAll(it)
                 loadBlock(indexWord)
-            }, onError = {
+            }, {
                 Log.e("Error", it.message ?: "")
             })
     }
