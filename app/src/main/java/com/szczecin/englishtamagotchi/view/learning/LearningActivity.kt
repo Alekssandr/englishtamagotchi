@@ -11,15 +11,12 @@ import com.szczecin.englishtamagotchi.R
 import com.szczecin.englishtamagotchi.common.ViewModelFactory
 import com.szczecin.englishtamagotchi.common.extensions.lifecircle.observeLifecycleIn
 import com.szczecin.englishtamagotchi.databinding.ActivityLearningBinding
-import com.szczecin.englishtamagotchi.databinding.ActivityOrdinaryCardBinding
 import com.szczecin.englishtamagotchi.view.ENG_TO_RUS
-import com.szczecin.englishtamagotchi.view.repeat.RepeatActivity
+import com.szczecin.englishtamagotchi.view.repeat.RepeatingActivity
 import com.szczecin.englishtamagotchi.viewmodel.learning.LearningViewModel
-import com.szczecin.englishtamagotchi.viewmodel.learning.WordsBindViewModel
 import com.szczecin.pointofinterest.common.extensions.viewModel
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_learning.*
-import kotlinx.android.synthetic.main.activity_words_writing.*
 import javax.inject.Inject
 
 const val DEFAULT = -1
@@ -27,6 +24,7 @@ const val ENG_RUS = 0
 const val RUS_ENG = 1
 const val WRITING = 2
 const val BIND = 3
+const val CHOOSE = 4
 
 class LearningActivity : AppCompatActivity() {
 
@@ -74,11 +72,17 @@ class LearningActivity : AppCompatActivity() {
                 Intent(this, BindWordsActivity::class.java),
                 SECOND_ACTIVITY_REQUEST_CODE
             )
+            R.id.btn_choose -> startActivityForResult(
+                Intent(
+                    this,
+                    ChooseCorrectWordsActivity::class.java
+                ), SECOND_ACTIVITY_REQUEST_CODE
+            )
         }
     }
 
     fun repeatExercise(view: View) {
-        startActivity(Intent(this, RepeatActivity::class.java))
+        startActivity(Intent(this, RepeatingActivity::class.java))
     }
 
     private fun openExerciseOneWord(isEngToRus: Boolean) {
@@ -104,6 +108,9 @@ class LearningActivity : AppCompatActivity() {
                         ContextCompat.getColor(this, R.color.green)
                     )
                     BIND -> btn_binding.setBackgroundColor(
+                        ContextCompat.getColor(this, R.color.green)
+                    )
+                    CHOOSE -> btn_binding.setBackgroundColor(
                         ContextCompat.getColor(this, R.color.green)
                     )
                 }

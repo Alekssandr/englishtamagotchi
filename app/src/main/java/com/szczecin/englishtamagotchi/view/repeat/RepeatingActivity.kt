@@ -1,5 +1,6 @@
-package com.szczecin.englishtamagotchi.view
+package com.szczecin.englishtamagotchi.view.repeat
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
@@ -9,24 +10,30 @@ import androidx.databinding.DataBindingUtil
 import com.szczecin.englishtamagotchi.R
 import com.szczecin.englishtamagotchi.common.ViewModelFactory
 import com.szczecin.englishtamagotchi.common.extensions.lifecircle.observeLifecycleIn
-import com.szczecin.englishtamagotchi.databinding.ActivityOrdinaryChoiceCardBinding
 import com.szczecin.englishtamagotchi.viewmodel.OrdinaryCardChoiceViewModel
 import com.szczecin.pointofinterest.common.extensions.viewModel
 import dagger.android.AndroidInjection
 import androidx.lifecycle.Observer
+import com.google.android.material.snackbar.Snackbar
+import com.szczecin.englishtamagotchi.databinding.ActivityRepeatingBinding
 import com.szczecin.englishtamagotchi.view.learning.OrdinaryCardActivity
-import kotlinx.android.synthetic.main.activity_ordinary_choice_card.*
+import com.szczecin.englishtamagotchi.viewmodel.repeat.RepeatViewModel
+import kotlinx.android.synthetic.main.activity_repeating.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
-class OrdinaryCardChoiceActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
+class RepeatingActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     @Inject
     lateinit var factory: ViewModelFactory<OrdinaryCardChoiceViewModel>
 
-    private val ordinaryCardViewModel: OrdinaryCardChoiceViewModel by viewModel { factory }
+    private val repeatViewModel: RepeatViewModel by viewModel { factory }
 
-    private lateinit var binding: ActivityOrdinaryChoiceCardBinding
+    private lateinit var binding: ActivityRepeatingBinding
 
     private var tts: TextToSpeech? = null
 
@@ -35,23 +42,28 @@ class OrdinaryCardChoiceActivity : AppCompatActivity(), TextToSpeech.OnInitListe
         super.onCreate(savedInstanceState)
         setBinding()
         observeViewModel()
-        observeLifecycleIn(ordinaryCardViewModel)
+        observeLifecycleIn(repeatViewModel)
         tts = TextToSpeech(this, this)
     }
 
     private fun setBinding() {
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_ordinary_choice_card)
-        binding.ordinaryCardViewModel = ordinaryCardViewModel
-        binding.lifecycleOwner = this@OrdinaryCardChoiceActivity
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_repeating)
+        binding.repeatViewModel = repeatViewModel
+        binding.lifecycleOwner = this@RepeatingActivity
     }
 
     private fun observeViewModel() {
-        ordinaryCardViewModel.openExercise.observe(this, Observer {
-            startActivity(Intent(this, OrdinaryCardActivity::class.java))
+        repeatViewModel.finishLesson.observe(this, Observer {
+            Snackbar.make(this.binding.root, "умничка! Задание сделано!", Snackbar.LENGTH_LONG)
+                .show()
+            GlobalScope.launch(Dispatchers.Main) {
+                delay(2000)
+                finish()
+            }
         })
-        ordinaryCardViewModel.engTextForListen.observe(this, Observer {
-            speakOut(it)
-        })
+//        repeatViewModel.engTextForListen.observe(this, Observer {
+//            speakOut(it)
+//        })
     }
 
     override fun onInit(status: Int) {
@@ -61,7 +73,7 @@ class OrdinaryCardChoiceActivity : AppCompatActivity(), TextToSpeech.OnInitListe
             val result = tts!!.setLanguage(Locale.US)
 
             if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                Log.e("TTS","The Language specified is not supported!")
+                Log.e("TTS", "The Language specified is not supported!")
             } else {
                 button_listen?.isEnabled = true
             }
@@ -73,7 +85,7 @@ class OrdinaryCardChoiceActivity : AppCompatActivity(), TextToSpeech.OnInitListe
     }
 
     private fun speakOut(eng: String) {
-        tts?.speak(eng, TextToSpeech.QUEUE_FLUSH, null,"")
+        tts?.speak(eng, TextToSpeech.QUEUE_FLUSH, null, "")
     }
 
 }

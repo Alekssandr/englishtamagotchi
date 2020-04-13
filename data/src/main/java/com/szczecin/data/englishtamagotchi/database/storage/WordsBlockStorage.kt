@@ -106,6 +106,14 @@ class WordsBlockStorage(private val wordsBlockDao: WordsBlockDao) {
     fun getLearnList(): Single<List<PairRusEng>> =
         wordsBlockDao.getLearnList().map { Mapper().mapFromLearnEntity(it) }
 
+//    fun getLearnListRepeating(dayOfLearning: Int): Single<List<PairRusEng>> {
+//        when(dayOfLearning){
+//        }
+//        wordsBlockDao.getLearnListRepeating(daysOfRepeating).map { Mapper().mapFromLearnEntity(it) }
+//
+//    }
+
+
     fun getLearnListBy(dayOfLearning: Int): Single<List<PairRusEng>> =
         wordsBlockDao.getLearnListByDayOfLearning(dayOfLearning).map {
             Mapper().mapFromLearnEntity(

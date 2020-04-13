@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="ordinaryCardViewModel"
-            type="com.szczecin.englishtamagotchi.viewmodel.OrdinaryCardChoiceViewModel" />
+            name="repeatViewModel"
+            type="com.szczecin.englishtamagotchi.viewmodel.repeat.RepeatViewModel" />
 
         <import type="android.view.View" />
 
@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="@{ordinaryCardViewModel.translateWordEng}"
+            android:text="@{repeatViewModel.translateWordEng}"
             binding:layout_constraintEnd_toEndOf="parent"
             binding:layout_constraintHorizontal_bias="0.498"
             binding:layout_constraintStart_toStartOf="parent"
@@ -35,7 +35,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="@{ordinaryCardViewModel.translateWordRus}"
+            android:text="@{repeatViewModel.translateWordRus}"
+            android:visibility="@{repeatViewModel.translateWordCloseVisibility ? View.VISIBLE : View.INVISIBLE}"
             binding:layout_constraintEnd_toEndOf="parent"
             binding:layout_constraintHorizontal_bias="0.498"
             binding:layout_constraintStart_toStartOf="parent"
@@ -66,55 +67,54 @@
 
         <Button
             android:id="@+id/button4"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:onClick="@{()->ordinaryCardViewModel.next()}"
-            android:text="next"
+            android:onClick="@{()->repeatViewModel.repeatWordIn5days()}"
+            android:text="Know well"
             binding:layout_constraintEnd_toEndOf="parent"
             binding:layout_constraintStart_toEndOf="@+id/textView3"
-            binding:layout_constraintTop_toBottomOf="@+id/textView3" />
+            binding:layout_constraintTop_toTopOf="@+id/button2" />
 
         <Button
             android:id="@+id/button2"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:onClick="@{()->ordinaryCardViewModel.removeWord()}"
-            android:text="Remove Block"
+            android:onClick="@{()->repeatViewModel.moveWordFromRepeatingToLearn()}"
+            android:text="Don't remember"
             binding:layout_constraintEnd_toStartOf="@+id/textView3"
             binding:layout_constraintStart_toStartOf="parent"
-            binding:layout_constraintTop_toBottomOf="@+id/textView3" />
+            binding:layout_constraintTop_toBottomOf="@+id/btn_translate" />
 
         <Button
             android:id="@+id/button3"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:onClick="@{()->ordinaryCardViewModel.addWordsToBlockDB()}"
-            android:text="Finish"
-            binding:layout_constraintEnd_toEndOf="parent"
-            binding:layout_constraintStart_toStartOf="parent"
-            binding:layout_constraintTop_toBottomOf="@+id/blockNumber" />
-
-        <TextView
-            android:id="@+id/blockNumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="@{ordinaryCardViewModel.blockNumber}"
+            android:onClick="@{()->repeatViewModel.repeatWordIn3days()}"
+            android:text="Know good"
             binding:layout_constraintEnd_toStartOf="@+id/button4"
             binding:layout_constraintStart_toEndOf="@+id/button2"
-            binding:layout_constraintTop_toBottomOf="@+id/button4" />
+            binding:layout_constraintTop_toTopOf="@+id/button2" />
 
         <Button
             android:id="@+id/button_listen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{()->ordinaryCardViewModel.listen()}"
+            android:onClick="@{()->repeatViewModel.listen()}"
             android:text="Послушать"
             binding:layout_constraintEnd_toEndOf="parent"
             binding:layout_constraintTop_toBottomOf="@+id/open_word" />
+
+        <Button
+            android:id="@+id/btn_translate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:onClick="@{()->repeatViewModel.translateCloseWord()}"
+            android:text="Button"
+            binding:layout_constraintEnd_toEndOf="parent"
+            binding:layout_constraintStart_toStartOf="parent"
+            binding:layout_constraintTop_toBottomOf="@+id/textView3" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

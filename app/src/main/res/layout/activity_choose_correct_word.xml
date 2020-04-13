@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="repeatViewModel"
-            type="com.szczecin.englishtamagotchi.viewmodel.repeat.RepeatViewModel" />
+            name="chooseCorrectWordsViewModel"
+            type="com.szczecin.englishtamagotchi.viewmodel.learning.ChooseCorrectWordsViewModel" />
 
         <import type="android.view.View" />
 
@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="@{repeatViewModel.openedWord}"
+            android:text="@{chooseCorrectWordsViewModel.openedWord}"
             binding:layout_constraintEnd_toEndOf="parent"
             binding:layout_constraintStart_toStartOf="parent"
             binding:layout_constraintTop_toTopOf="parent"
@@ -37,7 +37,7 @@
             binding:layout_constraintEnd_toEndOf="parent"
             binding:layout_constraintStart_toStartOf="parent"
             binding:layout_constraintTop_toBottomOf="@+id/btn_word_open"
-            binding:repeatList="@{repeatViewModel.pairRusEngList}"
+            binding:chooseCorrectList="@{chooseCorrectWordsViewModel.pairRusEngList}"
             tools:listitem="@layout/repeat_word_item" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

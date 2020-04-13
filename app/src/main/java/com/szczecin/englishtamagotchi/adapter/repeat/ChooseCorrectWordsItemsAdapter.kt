@@ -14,8 +14,8 @@ import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.repeat_word_item.view.*
 
-class RepeatItemsAdapter :
-    RecyclerView.Adapter<RepeatItemsAdapter.ItemViewHolder>() {
+class ChooseCorrectWordsItemsAdapter :
+    RecyclerView.Adapter<ChooseCorrectWordsItemsAdapter.ItemViewHolder>() {
     private var repeatItemsList: List<PairRusEng> = emptyList()
     private val publishSubjectItem = PublishSubject.create<PairRusEng>()
     var previousPosition = DEFAULT

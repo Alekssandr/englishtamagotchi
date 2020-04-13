@@ -8,6 +8,7 @@ import com.szczecin.data.englishtamagotchi.database.dao.WordsBlockDao
 import com.szczecin.data.englishtamagotchi.database.repo.ProviderDataBase
 import com.szczecin.data.englishtamagotchi.database.repo.WordsBlockDatabase
 import com.szczecin.data.englishtamagotchi.database.repo.WordsBlockRoomDatabase
+import com.szczecin.data.englishtamagotchi.database.storage.RepeatingWordsStorage
 import com.szczecin.data.englishtamagotchi.database.storage.WordsBlockStorage
 import com.szczecin.englishtamagotchi.common.rx.RxSchedulers
 import com.szczecin.englishtamagotchi.preferencies.SettingsPreferences
@@ -38,6 +39,12 @@ class AppModule {
     @Provides
     fun provideVoiceRecorderStorage(voiceRecorderDao: WordsBlockDao): WordsBlockStorage =
         WordsBlockStorage(voiceRecorderDao)
+
+    @Singleton
+    @Provides
+    fun provideRepeatingWordsStorage(wordsBlockDao: WordsBlockDao): RepeatingWordsStorage =
+        RepeatingWordsStorage(wordsBlockDao)
+
 
     //    @Singleton
 //    @Provides

@@ -22,14 +22,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.OrdinaryCardChoiceActivity"/>
+        <activity android:name=".view.repeat.RepeatingActivity"/>
         <activity android:name=".view.learning.WordsWritingActivity"/>
         <activity android:name=".view.learning.BindWordsActivity"/>
         <activity android:name=".view.common.CommonWordsActivity"/>
         <activity android:name=".view.know.KnowTableActivity"/>
         <activity android:name=".view.learn.LearnTableActivity"/>
         <activity android:name=".view.learning.LearningActivity"/>
-        <activity android:name=".view.repeat.RepeatActivity"/>
+        <activity android:name=".view.learning.ChooseCorrectWordsActivity"/>
     </application>
 
 </manifest>

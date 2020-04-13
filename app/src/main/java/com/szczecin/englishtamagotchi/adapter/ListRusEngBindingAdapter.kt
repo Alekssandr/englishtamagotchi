@@ -4,7 +4,7 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.szczecin.englishtamagotchi.adapter.common.CommonWordsItemsAdapter
 import com.szczecin.englishtamagotchi.adapter.know.KnowLearnTableItemsAdapter
-import com.szczecin.englishtamagotchi.adapter.repeat.RepeatItemsAdapter
+import com.szczecin.englishtamagotchi.adapter.repeat.ChooseCorrectWordsItemsAdapter
 import com.szczecin.englishtamagotchi.model.PairRusEng
 
 @BindingAdapter("pairEngList")
@@ -47,10 +47,10 @@ fun RecyclerView.bindLearnTable(items: MutableList<PairRusEng>?) {
     }
 }
 
-@BindingAdapter("repeatList")
+@BindingAdapter("chooseCorrectList")
 fun RecyclerView.bindRepeatList(items: MutableList<PairRusEng>?) {
     items?.let {
-        val adapter = adapter as RepeatItemsAdapter
+        val adapter = adapter as ChooseCorrectWordsItemsAdapter
         adapter.update(items)
     }
 }

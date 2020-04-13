@@ -1,5 +1,7 @@
-package com.szczecin.englishtamagotchi.view.repeat
+package com.szczecin.englishtamagotchi.view.learning
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -7,12 +9,13 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.szczecin.englishtamagotchi.R
-import com.szczecin.englishtamagotchi.adapter.repeat.RepeatItemsAdapter
+import com.szczecin.englishtamagotchi.adapter.repeat.ChooseCorrectWordsItemsAdapter
 import com.szczecin.englishtamagotchi.common.ViewModelFactory
 import com.szczecin.englishtamagotchi.common.extensions.lifecircle.observeLifecycleIn
-import com.szczecin.englishtamagotchi.databinding.ActivityRepeatBinding
+import com.szczecin.englishtamagotchi.databinding.ActivityChooseCorrectWordBinding
+import com.szczecin.englishtamagotchi.viewmodel.learning.ChooseCorrectWordsViewModel
+import com.szczecin.englishtamagotchi.viewmodel.learning.RepeatingItemColor
 import com.szczecin.englishtamagotchi.viewmodel.repeat.RepeatViewModel
-import com.szczecin.englishtamagotchi.viewmodel.repeat.RepeatingItemColor
 import com.szczecin.pointofinterest.common.extensions.viewModel
 import dagger.android.AndroidInjection
 import kotlinx.coroutines.Dispatchers
@@ -23,36 +26,38 @@ import javax.inject.Inject
 
 const val SPAN_COUNT = 2
 
-class RepeatActivity : AppCompatActivity() {
+class ChooseCorrectWordsActivity : AppCompatActivity() {
 
     @Inject
     lateinit var factory: ViewModelFactory<RepeatViewModel>
 
-    private val repeatViewModel: RepeatViewModel by viewModel { factory }
+    private val chooseCorrectWordsViewModel: ChooseCorrectWordsViewModel by viewModel { factory }
 
-    private lateinit var binding: ActivityRepeatBinding
-    private lateinit var repeatItemsAdapter: RepeatItemsAdapter
-
+    private lateinit var binding: ActivityChooseCorrectWordBinding
+    private lateinit var chooseCorrectWordsItemsAdapter: ChooseCorrectWordsItemsAdapter
+    private val intentChooseCorrectWords = Intent()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setBinding()
-        observeLifecycleIn(repeatViewModel)
+        observeLifecycleIn(chooseCorrectWordsViewModel)
         initRecycler()
         observeViewModel()
+        intentChooseCorrectWords.putExtra("activity_status", CHOOSE)
     }
 
     private fun setBinding() {
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_repeat)
-        binding.repeatViewModel = repeatViewModel
-        binding.lifecycleOwner = this@RepeatActivity
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_choose_correct_word)
+        binding.chooseCorrectWordsViewModel = chooseCorrectWordsViewModel
+        binding.lifecycleOwner = this@ChooseCorrectWordsActivity
 
-        repeatViewModel.finishLesson.observe(this, Observer {
+        chooseCorrectWordsViewModel.finishLesson.observe(this, Observer {
             Snackbar.make(this.binding.root, "умничка! Задание сделано!", Snackbar.LENGTH_LONG)
                 .show()
             GlobalScope.launch(Dispatchers.Main) {
                 delay(2000)
+                setResult(Activity.RESULT_OK, intentChooseCorrectWords)
                 finish()
             }
         })
@@ -63,27 +68,27 @@ class RepeatActivity : AppCompatActivity() {
         val recyclerPairEng = binding.recyclerRepeatWords
         recyclerPairEng.apply {
             layoutManager = GridLayoutManager(context, SPAN_COUNT)
-            repeatItemsAdapter = RepeatItemsAdapter()
-            this.adapter = repeatItemsAdapter
-            repeatViewModel.subscribeForItemClick(repeatItemsAdapter.getClickItemObserver())
+            chooseCorrectWordsItemsAdapter = ChooseCorrectWordsItemsAdapter()
+            this.adapter = chooseCorrectWordsItemsAdapter
+            chooseCorrectWordsViewModel.subscribeForItemClick(chooseCorrectWordsItemsAdapter.getClickItemObserver())
         }
     }
 
     private fun observeViewModel() {
-        repeatViewModel.buttonEngColor.observe(this, Observer {
-            repeatItemsAdapter.updateItem(it)
+        chooseCorrectWordsViewModel.buttonEngColor.observe(this, Observer {
+            chooseCorrectWordsItemsAdapter.updateItem(it)
             if (it == RepeatingItemColor.RED) {
                 GlobalScope.launch(Dispatchers.Main) {
                     delay(1000)
-                    repeatItemsAdapter.updateItem(
+                    chooseCorrectWordsItemsAdapter.updateItem(
                         RepeatingItemColor.DEFAULT
                     )
                 }
             } else {
                 GlobalScope.launch(Dispatchers.Main) {
                     delay(1000)
-                    repeatViewModel.nextWords.postValue(Unit)
-                    repeatItemsAdapter.updateItem(
+                    chooseCorrectWordsViewModel.nextWords.postValue(Unit)
+                    chooseCorrectWordsItemsAdapter.updateItem(
                         RepeatingItemColor.DEFAULT
                     )
                 }

@@ -4,6 +4,7 @@ import androidx.room.*
 import com.szczecin.data.englishtamagotchi.database.model.WordsBlockEntity
 import com.szczecin.data.englishtamagotchi.database.model.common.WordsCommonEntity
 import com.szczecin.data.englishtamagotchi.database.model.learn.LearnWordsBlockEntity
+import com.szczecin.data.englishtamagotchi.database.model.repeating.RepeatingWordsEntity
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.Observable
@@ -60,6 +61,8 @@ interface WordsBlockDao {
     @Query("SELECT * from LearnWordsBlockEntity")
     fun getLearnList(): Single<List<LearnWordsBlockEntity>>
 
+
+
     @Query("SELECT * from LearnWordsBlockEntity WHERE dayOfLearning = :dayOfLearning")
     fun getLearnListByDayOfLearning(dayOfLearning: Int): Single<List<LearnWordsBlockEntity>>
 
@@ -84,6 +87,20 @@ interface WordsBlockDao {
     fun deleteRowByEng(eng: String) : Completable
 
 
-//    @Query("SELECT * from WordsCommonEntity WHERE dayOfLearning = :dayOfLearning")
-//    fun getWordsCommonListBy(dayOfLearning: Int): Single<List<WordsCommonEntity>>
+
+    //repeating
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(pairRusEng: RepeatingWordsEntity) : Long
+
+    @Query("SELECT * from RepeatingWordsEntity WHERE dayOfRepeating IN (:daysOfRepeating)")
+    fun getListRepeating(daysOfRepeating: MutableList<Int>): Single<List<LearnWordsBlockEntity>>
+
+    @Query("DELETE FROM RepeatingWordsEntity WHERE eng = :eng")
+    fun deleteRepeatingWordBy(eng: String) : Completable
+
+    @Query("UPDATE RepeatingWordsEntity SET dayOfRepeating = :daysOfRepeating WHERE eng = :eng")
+    fun updateDayOfRepeating(eng: String, daysOfRepeating: Int) : Completable
+
+    @Query("UPDATE RepeatingWordsEntity SET dayOfRepeating = :countIn5daysRepeating WHERE eng = :eng")
+    fun updateIn5DaysRepeatingBy(eng: String, countIn5daysRepeating: Int) : Completable
 }
