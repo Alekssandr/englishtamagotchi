@@ -29,7 +29,7 @@ const val SPAN_COUNT = 2
 class ChooseCorrectWordsActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var factory: ViewModelFactory<RepeatViewModel>
+    lateinit var factory: ViewModelFactory<ChooseCorrectWordsViewModel>
 
     private val chooseCorrectWordsViewModel: ChooseCorrectWordsViewModel by viewModel { factory }
 

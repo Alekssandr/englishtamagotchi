@@ -7,17 +7,18 @@ import android.speech.tts.TextToSpeech
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import com.google.android.material.snackbar.Snackbar
 import com.szczecin.englishtamagotchi.R
 import com.szczecin.englishtamagotchi.common.ViewModelFactory
 import com.szczecin.englishtamagotchi.common.extensions.lifecircle.observeLifecycleIn
+import com.szczecin.englishtamagotchi.databinding.ActivityRepeatingBinding
+import com.szczecin.englishtamagotchi.view.learning.CHOOSE
+import com.szczecin.englishtamagotchi.view.learning.REPEATING
 import com.szczecin.englishtamagotchi.viewmodel.OrdinaryCardChoiceViewModel
+import com.szczecin.englishtamagotchi.viewmodel.repeat.RepeatViewModel
 import com.szczecin.pointofinterest.common.extensions.viewModel
 import dagger.android.AndroidInjection
-import androidx.lifecycle.Observer
-import com.google.android.material.snackbar.Snackbar
-import com.szczecin.englishtamagotchi.databinding.ActivityRepeatingBinding
-import com.szczecin.englishtamagotchi.view.learning.OrdinaryCardActivity
-import com.szczecin.englishtamagotchi.viewmodel.repeat.RepeatViewModel
 import kotlinx.android.synthetic.main.activity_repeating.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -29,13 +30,15 @@ import javax.inject.Inject
 class RepeatingActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     @Inject
-    lateinit var factory: ViewModelFactory<OrdinaryCardChoiceViewModel>
+    lateinit var factory: ViewModelFactory<RepeatViewModel>
 
     private val repeatViewModel: RepeatViewModel by viewModel { factory }
 
     private lateinit var binding: ActivityRepeatingBinding
 
     private var tts: TextToSpeech? = null
+
+    private val intentRepeating = Intent()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -44,6 +47,8 @@ class RepeatingActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         observeViewModel()
         observeLifecycleIn(repeatViewModel)
         tts = TextToSpeech(this, this)
+        intentRepeating.putExtra("activity_status", REPEATING)
+
     }
 
     private fun setBinding() {
@@ -58,6 +63,7 @@ class RepeatingActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                 .show()
             GlobalScope.launch(Dispatchers.Main) {
                 delay(2000)
+                setResult(Activity.RESULT_OK, intentRepeating)
                 finish()
             }
         })

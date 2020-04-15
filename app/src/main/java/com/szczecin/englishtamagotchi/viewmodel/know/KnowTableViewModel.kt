@@ -2,14 +2,13 @@ package com.szczecin.englishtamagotchi.viewmodel.know
 
 import android.util.Log
 import androidx.lifecycle.*
+import com.szczecin.englishtamagotchi.common.rx.RxSchedulers
 import com.szczecin.englishtamagotchi.model.PairRusEng
 import com.szczecin.englishtamagotchi.usecase.GetWordsBlockUseCase
-import com.szczecin.englishtamagotchi.common.rx.RxSchedulers
-import com.szczecin.englishtamagotchi.usecase.LoadDataInDBUseCase
 import com.szczecin.englishtamagotchi.usecase.know.AddWordKnowUseCase
 import com.szczecin.englishtamagotchi.usecase.know.RemoveKnowItemUseCase
-import com.szczecin.englishtamagotchi.usecase.learn.AddLearnWordUseCase
-import com.szczecin.englishtamagotchi.usecase.learn.RemoveLearnItemUseCase
+import com.szczecin.englishtamagotchi.usecase.learn.table.AddLearnTableWordUseCase
+import com.szczecin.englishtamagotchi.usecase.learn.table.RemoveTableLearnItemUseCase
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
@@ -20,8 +19,8 @@ class KnowTableViewModel @Inject constructor(
     private val getWordsBlockUseCase: GetWordsBlockUseCase,
     private val removeKnowItemUseCase: RemoveKnowItemUseCase,
     private val addWordKnowUseCase: AddWordKnowUseCase,
-    private val addLearnWordUseCase: AddLearnWordUseCase,
-    private val removeLeanItemUseCase: RemoveLearnItemUseCase,
+    private val addLearnTableWordUseCase: AddLearnTableWordUseCase,
+    private val removeTableLearnItemUseCase: RemoveTableLearnItemUseCase,
     private val schedulers: RxSchedulers
 ) : ViewModel(), LifecycleObserver {
 
@@ -92,7 +91,7 @@ class KnowTableViewModel @Inject constructor(
     }
 
     private fun removeWordLearn(eng: String) {
-        disposables += removeLeanItemUseCase
+        disposables += removeTableLearnItemUseCase
             .execute(eng)
             .subscribeOn(schedulers.io())
             .observeOn(schedulers.mainThread())
@@ -117,7 +116,7 @@ class KnowTableViewModel @Inject constructor(
     }
 
     fun addWordToLearn() {
-        disposables += addLearnWordUseCase
+        disposables += addLearnTableWordUseCase
             .execute(pairRusEng)
             .subscribeOn(schedulers.io())
             .observeOn(schedulers.mainThread())

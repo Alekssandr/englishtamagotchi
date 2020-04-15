@@ -36,16 +36,11 @@ class LearnWordsDataRepository(
     override fun removeLearnPairRusEng(eng: String): Completable =
         wordsBlockStorage.removeLearnPairRusEng(eng)
 
-    //new
-    override fun getSizeOfCommon(): Single<Int> = wordsBlockStorage.getSizeOfCommon()
-
-
 
     //learn
     override fun insertLearnWords(pairRusEng: List<PairRusEng>): Completable =
         wordsBlockStorage.insertLearnWords(pairRusEng)
 
-    override fun removeAllFromLearn(): Completable =
-        wordsBlockStorage.removeAllFromLearn()
+    override fun getSizeOfLearning(): Single<Int> = wordsBlockStorage.getSizeOfLearning()
 
 }

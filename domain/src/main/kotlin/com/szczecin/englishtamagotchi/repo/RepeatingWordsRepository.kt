@@ -2,7 +2,6 @@ package com.szczecin.englishtamagotchi.repo
 
 import com.szczecin.englishtamagotchi.model.PairRusEng
 import io.reactivex.Completable
-import io.reactivex.Observable
 import io.reactivex.Single
 
 interface RepeatingWordsRepository {

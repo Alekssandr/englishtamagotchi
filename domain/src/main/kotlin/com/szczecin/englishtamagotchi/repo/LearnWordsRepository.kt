@@ -13,9 +13,7 @@ interface LearnWordsRepository {
     fun getLearnListToday(newWordsPerDay: Int): Observable<List<PairRusEng>>
     fun getWordsBlockListBy(dayOfLearning: Int): Single<List<PairRusEng>>
     fun getSizeOfCommonBy(numberOfLearningDay: Int): Single<Int>
-    fun getSizeOfCommon(): Single<Int>
+    fun getSizeOfLearning(): Single<Int>
     fun removeLearnPairRusEng(eng: String): Completable
     fun getLearnListBy(dayOfLearning: Int): Single<List<PairRusEng>>
-    fun removeAllFromLearn(): Completable
-
 }

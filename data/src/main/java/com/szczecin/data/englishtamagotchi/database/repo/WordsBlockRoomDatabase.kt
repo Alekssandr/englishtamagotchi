@@ -6,7 +6,7 @@ import com.szczecin.data.englishtamagotchi.database.dao.WordsBlockDao
 import com.szczecin.data.englishtamagotchi.database.model.WordsBlockEntity
 import com.szczecin.data.englishtamagotchi.database.model.common.WordsCommonEntity
 import com.szczecin.data.englishtamagotchi.database.model.learn.LearnWordsBlockEntity
-import com.szczecin.data.englishtamagotchi.database.model.learning_exercise.LearnWordsExerciseEntity
+import com.szczecin.data.englishtamagotchi.database.model.learning_exercise.LearnWordsTableEntity
 import com.szczecin.data.englishtamagotchi.database.model.repeating.RepeatingWordsEntity
 
 @Database(
@@ -14,7 +14,7 @@ import com.szczecin.data.englishtamagotchi.database.model.repeating.RepeatingWor
         WordsBlockEntity::class,
         WordsCommonEntity::class,
         LearnWordsBlockEntity::class,
-        LearnWordsExerciseEntity::class,
+        LearnWordsTableEntity::class,
         RepeatingWordsEntity::class
     ], version = 3, exportSchema = false
 )

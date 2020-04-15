@@ -9,7 +9,7 @@ import com.szczecin.englishtamagotchi.R
 import com.szczecin.englishtamagotchi.adapter.*
 import com.szczecin.englishtamagotchi.databinding.RepeatWordItemBinding
 import com.szczecin.englishtamagotchi.model.PairRusEng
-import com.szczecin.englishtamagotchi.viewmodel.repeat.RepeatingItemColor
+import com.szczecin.englishtamagotchi.viewmodel.learning.RepeatingItemColor
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.repeat_word_item.view.*

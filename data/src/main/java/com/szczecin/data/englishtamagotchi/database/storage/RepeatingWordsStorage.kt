@@ -17,16 +17,16 @@ class RepeatingWordsStorage(private val wordsBlockDao: WordsBlockDao) {
             }
         }
 
-    fun getRepeatingBy(dayOfLearning: Int): Single<List<PairRusEng>> {
-        val repeatingList: MutableList<Int> = mutableListOf(1)
-        if (dayOfLearning % 3 == 0) {
-            repeatingList.add(3)
-        }
-        if (dayOfLearning % 5 == 0) {
-            repeatingList.add(5)
-        }
-        return wordsBlockDao.getListRepeating(repeatingList)
-            .map { Mapper().mapFromLearnEntity(it) }
+    fun getRepeatingBy(dayOfLearning: Int): Single<List<PairRusEng>> {//4,5,6,7
+//        val repeatingList: MutableList<Int> = mutableListOf(1)
+//        if (dayOfLearning % 3 == 0) {
+//            repeatingList.add(3)
+//        }
+//        if (dayOfLearning % 5 == 0) {
+//            repeatingList.add(5)
+//        }
+        return wordsBlockDao.getListRepeating(dayOfLearning)
+            .map { Mapper().mapFromRepeatingEntity(it) }
     }
 
     //remove old 5(3 times repeating) and 1

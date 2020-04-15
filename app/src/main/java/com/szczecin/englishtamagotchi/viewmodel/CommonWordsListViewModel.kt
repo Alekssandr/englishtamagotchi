@@ -4,13 +4,12 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.szczecin.englishtamagotchi.common.rx.RxSchedulers
 import com.szczecin.englishtamagotchi.model.PairRusEng
-import com.szczecin.englishtamagotchi.usecase.GetWordsBlockUseCase
 import com.szczecin.englishtamagotchi.usecase.LoadDataInDBUseCase
 import com.szczecin.englishtamagotchi.usecase.common.GetDataFromJSONUseCase
 import com.szczecin.englishtamagotchi.usecase.common.GetCommonWordsUseCase
 import com.szczecin.englishtamagotchi.usecase.common.LoadDataInDBCommonUseCase
 import com.szczecin.englishtamagotchi.usecase.common.UpdateCommonItemUseCase
-import com.szczecin.englishtamagotchi.usecase.learn.FillLearnTableUseCase
+import com.szczecin.englishtamagotchi.usecase.learn.table.AddLearnTableListUseCase
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
@@ -22,9 +21,8 @@ class CommonWordsListViewModel @Inject constructor(
     private val getCommonWordsUseCase: GetCommonWordsUseCase,
     private val updateCommonItemUseCase: UpdateCommonItemUseCase,
     private val loadDataInBlockDBUseCase: LoadDataInDBUseCase,
-    private val fillLearnTableUseCase: FillLearnTableUseCase,
     private val loadDataInDBCommonUseCase: LoadDataInDBCommonUseCase,
-
+    private val addLearnTableWordUseCase: AddLearnTableListUseCase,
     private val schedulers: RxSchedulers
 ) : ViewModel(), LifecycleObserver {
 
@@ -123,7 +121,7 @@ class CommonWordsListViewModel @Inject constructor(
     }
 
     private fun fillLearnTable(learnWords: List<PairRusEng>) {
-        disposables += fillLearnTableUseCase
+        disposables += addLearnTableWordUseCase
             .execute(learnWords)
             .subscribeOn(schedulers.io())
             .observeOn(schedulers.mainThread())

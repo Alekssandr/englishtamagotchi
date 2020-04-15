@@ -3,6 +3,7 @@ package com.szczecin.data.englishtamagotchi
 import com.szczecin.data.englishtamagotchi.database.model.WordsBlockEntity
 import com.szczecin.data.englishtamagotchi.database.model.common.WordsCommonEntity
 import com.szczecin.data.englishtamagotchi.database.model.learn.LearnWordsBlockEntity
+import com.szczecin.data.englishtamagotchi.database.model.learning_exercise.LearnWordsTableEntity
 import com.szczecin.data.englishtamagotchi.database.model.repeating.RepeatingWordsEntity
 import com.szczecin.englishtamagotchi.model.PairRusEng
 
@@ -75,4 +76,21 @@ class Mapper {
                 }
             }
         }
+
+    //table learn
+    fun mapLearnTableToEntity(pairRusEng: PairRusEng) = LearnWordsTableEntity(pairRusEng.eng, pairRusEng.rus, pairRusEng.dayOfLearning)
+
+    fun mapFromLearnTableEntity(learnWordsTableEntity: List<LearnWordsTableEntity>) =
+        mutableListOf<PairRusEng>().apply {
+            learnWordsTableEntity.forEach {
+                PairRusEng().run {
+                    this.eng = it.eng
+                    this.rus = it.rus
+                    this.dayOfLearning = it.dayOfLearning
+                    add(this)
+                }
+            }
+        }
+
+
 }

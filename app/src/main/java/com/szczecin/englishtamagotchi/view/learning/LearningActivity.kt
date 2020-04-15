@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import com.google.android.material.snackbar.Snackbar
 import com.szczecin.englishtamagotchi.R
 import com.szczecin.englishtamagotchi.common.ViewModelFactory
 import com.szczecin.englishtamagotchi.common.extensions.lifecircle.observeLifecycleIn
@@ -17,6 +19,10 @@ import com.szczecin.englishtamagotchi.viewmodel.learning.LearningViewModel
 import com.szczecin.pointofinterest.common.extensions.viewModel
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_learning.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 const val DEFAULT = -1
@@ -25,6 +31,7 @@ const val RUS_ENG = 1
 const val WRITING = 2
 const val BIND = 3
 const val CHOOSE = 4
+const val REPEATING = 5
 
 class LearningActivity : AppCompatActivity() {
 
@@ -44,13 +51,20 @@ class LearningActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setBinding()
         observeLifecycleIn(learningViewModel)
+        openRepeatExercise()
+    }
+
+    private fun openRepeatExercise() {
+//        learningViewModel.updatedLearnedWords.observe(this, Observer {
+//            startActivity(Intent(this, RepeatingActivity::class.java))
+//        })
     }
 
     private fun setBinding() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_learning)
         binding.learningViewModel = learningViewModel
         binding.lifecycleOwner = this@LearningActivity
-
+//        learningViewModel.updatedLearnedWords.postValue(Unit)
     }
 
     fun chooseCorrectExercise(view: View) {
@@ -81,9 +95,9 @@ class LearningActivity : AppCompatActivity() {
         }
     }
 
-    fun repeatExercise(view: View) {
-        startActivity(Intent(this, RepeatingActivity::class.java))
-    }
+//    fun repeatExercise(view: View) {
+//        startActivity(Intent(this, RepeatingActivity::class.java))
+//    }
 
     private fun openExerciseOneWord(isEngToRus: Boolean) {
         startActivityForResult(Intent(this, OrdinaryCardActivity::class.java).apply {
@@ -114,10 +128,12 @@ class LearningActivity : AppCompatActivity() {
                         ContextCompat.getColor(this, R.color.green)
                     )
                 }
-                if (allTaskCount == 2) {
-                    learningViewModel.updatedLearnedWords.postValue(Unit)
-                }
+//                if (allTaskCount == 0) {
+//                    learningViewModel.updatedLearnedWords.postValue(Unit)
+//                }
             }
         }
+
+
     }
 }

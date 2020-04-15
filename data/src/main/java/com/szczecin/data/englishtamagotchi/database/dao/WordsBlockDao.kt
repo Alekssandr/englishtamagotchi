@@ -4,6 +4,7 @@ import androidx.room.*
 import com.szczecin.data.englishtamagotchi.database.model.WordsBlockEntity
 import com.szczecin.data.englishtamagotchi.database.model.common.WordsCommonEntity
 import com.szczecin.data.englishtamagotchi.database.model.learn.LearnWordsBlockEntity
+import com.szczecin.data.englishtamagotchi.database.model.learning_exercise.LearnWordsTableEntity
 import com.szczecin.data.englishtamagotchi.database.model.repeating.RepeatingWordsEntity
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -60,11 +61,9 @@ interface WordsBlockDao {
 
     @Query("SELECT * from LearnWordsBlockEntity")
     fun getLearnList(): Single<List<LearnWordsBlockEntity>>
-
-
-
-    @Query("SELECT * from LearnWordsBlockEntity WHERE dayOfLearning = :dayOfLearning")
-    fun getLearnListByDayOfLearning(dayOfLearning: Int): Single<List<LearnWordsBlockEntity>>
+//
+//    @Query("SELECT * from LearnWordsBlockEntity WHERE dayOfLearning = :dayOfLearning")
+//    fun getLearnListByDayOfLearning(dayOfLearning: Int): Single<List<LearnWordsBlockEntity>>
 
     @Query("SELECT * from LearnWordsBlockEntity WHERE dayOfLearning == 0 LIMIT :newWordsPerDay")
     fun getLearnListToday(newWordsPerDay: Int): Observable<List<LearnWordsBlockEntity>>
@@ -74,6 +73,9 @@ interface WordsBlockDao {
 
     @Query("DELETE FROM LearnWordsBlockEntity")
     fun deleteAllFromLearnTable() : Completable
+
+    @Query("SELECT COUNT(*) from LearnWordsBlockEntity")
+    fun getSizeOfLearning() : Single<Int>
 
 
     @Query("DELETE FROM LearnWordsBlockEntity WHERE eng = :eng")
@@ -92,8 +94,8 @@ interface WordsBlockDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(pairRusEng: RepeatingWordsEntity) : Long
 
-    @Query("SELECT * from RepeatingWordsEntity WHERE dayOfRepeating IN (:daysOfRepeating)")
-    fun getListRepeating(daysOfRepeating: MutableList<Int>): Single<List<LearnWordsBlockEntity>>
+    @Query("SELECT * from RepeatingWordsEntity WHERE dayOfRepeating <= :daysOfRepeating")
+    fun getListRepeating(daysOfRepeating: Int): Single<List<RepeatingWordsEntity>>
 
     @Query("DELETE FROM RepeatingWordsEntity WHERE eng = :eng")
     fun deleteRepeatingWordBy(eng: String) : Completable
@@ -103,4 +105,20 @@ interface WordsBlockDao {
 
     @Query("UPDATE RepeatingWordsEntity SET dayOfRepeating = :countIn5daysRepeating WHERE eng = :eng")
     fun updateIn5DaysRepeatingBy(eng: String, countIn5daysRepeating: Int) : Completable
+
+    //table learn
+    @Query("SELECT * from LearnWordsTableEntity")
+    fun getLearnTableList(): Single<List<LearnWordsTableEntity>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(pairRusEng: LearnWordsTableEntity) : Long
+
+    @Query("DELETE FROM LearnWordsTableEntity WHERE eng = :eng")
+    fun deleteLearnTableRowByEng(eng: String) : Completable
+
+    @Query("SELECT * from LearnWordsTableEntity WHERE dayOfLearning == 0 LIMIT :newWordsPerDay")//remove dayofle and limit for look
+    fun getLearnTableListToday(newWordsPerDay: Int): Observable<List<LearnWordsTableEntity>>
+
+    @Query("UPDATE LearnWordsTableEntity SET dayOfLearning = :dayOfLearning WHERE eng = :eng")
+    fun updateLearningTableBy(eng: String, dayOfLearning: Int) : Completable
 }

@@ -96,17 +96,16 @@
                     binding:layout_constraintTop_toBottomOf="@+id/btn_binding" />
 
 
-                <Button
-                    android:id="@+id/btn_repeating"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
-                    android:onClick="repeatExercise"
-                    android:text="Repeat"
-                    android:visibility="@{learningViewModel.repeatButtonVisibility ? View.VISIBLE : View.INVISIBLE}"
-                    binding:layout_constraintEnd_toEndOf="@+id/btn_choose"
-                    binding:layout_constraintStart_toStartOf="@+id/btn_choose"
-                    binding:layout_constraintTop_toBottomOf="@+id/btn_choose" />
+<!--                <Button-->
+<!--                    android:id="@+id/btn_repeating"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="32dp"-->
+<!--                    android:onClick="repeatExercise"-->
+<!--                    android:text="Repeat"-->
+<!--                    binding:layout_constraintEnd_toEndOf="@+id/btn_choose"-->
+<!--                    binding:layout_constraintStart_toStartOf="@+id/btn_choose"-->
+<!--                    binding:layout_constraintTop_toBottomOf="@+id/btn_choose" />-->
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

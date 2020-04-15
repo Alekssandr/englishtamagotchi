@@ -2,25 +2,27 @@ package com.szczecin.englishtamagotchi.viewmodel.learn
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.szczecin.englishtamagotchi.model.PairRusEng
 import com.szczecin.englishtamagotchi.common.rx.RxSchedulers
+import com.szczecin.englishtamagotchi.model.PairRusEng
 import com.szczecin.englishtamagotchi.usecase.know.AddWordKnowUseCase
 import com.szczecin.englishtamagotchi.usecase.know.RemoveKnowItemUseCase
-import com.szczecin.englishtamagotchi.usecase.learn.AddLearnWordUseCase
-import com.szczecin.englishtamagotchi.usecase.learn.GetLearnWordsUseCase
-import com.szczecin.englishtamagotchi.usecase.learn.RemoveLearnItemUseCase
+import com.szczecin.englishtamagotchi.usecase.learn.table.AddLearnTableWordUseCase
+import com.szczecin.englishtamagotchi.usecase.learn.table.GetLearnTableUseCase
+import com.szczecin.englishtamagotchi.usecase.learn.table.RemoveTableLearnItemUseCase
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
 import javax.inject.Inject
 
+//figure out when move words to LT
+//
 class LearnTableViewModel @Inject constructor(
-    private val getLearnWordsUseCase: GetLearnWordsUseCase,
-    private val removeLeanItemUseCase: RemoveLearnItemUseCase,
-    private val addLearnWordUseCase: AddLearnWordUseCase,
+    private val removeTableLearnItemUseCase: RemoveTableLearnItemUseCase,
+    private val addLearnTableWordUseCase: AddLearnTableWordUseCase,
     private val addWordKnowUseCase: AddWordKnowUseCase,
     private val removeKnowItemUseCase: RemoveKnowItemUseCase,
+    private val getLearnTableUseCase: GetLearnTableUseCase,
     private val schedulers: RxSchedulers
 ) : ViewModel(), LifecycleObserver {
 
@@ -41,7 +43,7 @@ class LearnTableViewModel @Inject constructor(
 
 
     fun getAllWords() {
-        disposables += getLearnWordsUseCase
+        disposables += getLearnTableUseCase
             .execute()
             .subscribeOn(schedulers.io())
             .observeOn(schedulers.mainThread())
@@ -77,7 +79,7 @@ class LearnTableViewModel @Inject constructor(
     }
 
     private fun removeWord(eng: String) {
-        disposables += removeLeanItemUseCase
+        disposables += removeTableLearnItemUseCase
             .execute(eng)
             .subscribeOn(schedulers.io())
             .observeOn(schedulers.mainThread())
@@ -102,7 +104,7 @@ class LearnTableViewModel @Inject constructor(
     }
 
     fun addWordToLearn() {
-        disposables += addLearnWordUseCase
+        disposables += addLearnTableWordUseCase
             .execute(pairRusEng)
             .subscribeOn(schedulers.io())
             .observeOn(schedulers.mainThread())

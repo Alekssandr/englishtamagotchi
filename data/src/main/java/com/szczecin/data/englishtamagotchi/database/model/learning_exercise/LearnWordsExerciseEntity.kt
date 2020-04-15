@@ -4,8 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "LearnWordsExerciseEntity")
-data class LearnWordsExerciseEntity(
+@Entity(tableName = "LearnWordsTableEntity")
+data class LearnWordsTableEntity(
     @PrimaryKey @ColumnInfo val eng: String,
     @ColumnInfo val rus: String,
     @ColumnInfo val dayOfLearning: Int

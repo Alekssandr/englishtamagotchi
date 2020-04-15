@@ -95,13 +95,12 @@ class WordsBlockStorage(private val wordsBlockDao: WordsBlockDao) {
 
     fun insertLearnWord(pairRusEng: PairRusEng): Completable =
         Completable.fromCallable {
+            pairRusEng.dayOfLearning = 0
             wordsBlockDao.insert(
                 Mapper().mapLearnToEntity(pairRusEng)
             )
         }
 
-    fun removeAllFromLearn(): Completable =
-        wordsBlockDao.deleteAllFromLearnTable()
 
     fun getLearnList(): Single<List<PairRusEng>> =
         wordsBlockDao.getLearnList().map { Mapper().mapFromLearnEntity(it) }
@@ -113,14 +112,15 @@ class WordsBlockStorage(private val wordsBlockDao: WordsBlockDao) {
 //
 //    }
 
+//
+//    fun getLearnListBy(dayOfLearning: Int): Single<List<PairRusEng>> =
+//        wordsBlockDao.getLearnListByDayOfLearning(dayOfLearning).map {
+//            Mapper().mapFromLearnEntity(
+//                it
+//            )
+//        }
 
-    fun getLearnListBy(dayOfLearning: Int): Single<List<PairRusEng>> =
-        wordsBlockDao.getLearnListByDayOfLearning(dayOfLearning).map {
-            Mapper().mapFromLearnEntity(
-                it
-            )
-        }
-
+    //don't get new words when click on the don;t know, - only words from repeating why?
     fun getLearnListToday(newWordsPerDay: Int): Observable<List<PairRusEng>> =
         wordsBlockDao.getLearnListToday(newWordsPerDay).map {
             Mapper().mapFromLearnEntity(
@@ -133,4 +133,43 @@ class WordsBlockStorage(private val wordsBlockDao: WordsBlockDao) {
         wordsBlockDao.deleteLearnRowByEng(eng)
 
 
+    //table learning
+    fun insertTableLearnWords(pairRusEng: List<PairRusEng>): Completable =
+        Completable.fromCallable {
+            pairRusEng.forEach {
+                wordsBlockDao.insert(
+                    Mapper().mapLearnTableToEntity(it)
+                )
+            }
+        }
+
+
+    fun removeAllFromTableLearn(): Completable =
+        wordsBlockDao.deleteAllFromLearnTable()
+
+    fun getLearnTableList(): Single<List<PairRusEng>> =
+        wordsBlockDao.getLearnTableList().map { Mapper().mapFromLearnTableEntity(it) }
+
+    fun insertLearnTableWord(pairRusEng: PairRusEng): Completable =
+        Completable.fromCallable {
+            wordsBlockDao.insert(
+                Mapper().mapLearnTableToEntity(pairRusEng)
+            )
+        }
+
+    fun removeItemFromLearnTable(eng: String): Completable =
+        wordsBlockDao.deleteLearnTableRowByEng(eng)
+
+    fun getLearnTableListToday(maxLearningWords: Int): Observable<List<PairRusEng>> =
+        wordsBlockDao.getLearnTableListToday(maxLearningWords).map {
+            Mapper().mapFromLearnTableEntity(
+                it
+            )
+        }
+
+    fun updateLearningTableBy(eng: String, dayOfLearning: Int) : Completable =
+    wordsBlockDao.updateLearningTableBy(eng, dayOfLearning)
+
+    //learning
+    fun getSizeOfLearning() = wordsBlockDao.getSizeOfLearning()
 }
