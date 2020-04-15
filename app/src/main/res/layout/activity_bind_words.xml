@@ -7,7 +7,7 @@
 
         <variable
             name="wordsBindViewModel"
-            type="com.szczecin.englishtamagotchi.viewmodel.WordsBindViewModel" />
+            type="com.szczecin.englishtamagotchi.viewmodel.learning.WordsBindViewModel" />
 
         <import type="android.view.View" />
 

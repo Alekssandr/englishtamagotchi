@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:binding="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="learningViewModel"
+            type="com.szczecin.englishtamagotchi.viewmodel.learning.LearningViewModel" />
+
+        <import type="android.view.View" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.MainActivity">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <!--                <Button-->
+                <!--                    android:id="@+id/btn_choose_card"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginTop="32dp"-->
+                <!--                    android:onClick="chooseCorrectExercise"-->
+                <!--                    android:text="choose card"-->
+                <!--                    binding:layout_constraintEnd_toEndOf="parent"-->
+                <!--                    binding:layout_constraintStart_toStartOf="parent"-->
+                <!--                    binding:layout_constraintTop_toTopOf="parent" />-->
+
+                <Button
+                    android:id="@+id/btn_eng_rus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:onClick="chooseCorrectExercise"
+                    android:text="eng - rus"
+                    binding:layout_constraintEnd_toEndOf="parent"
+                    binding:layout_constraintHorizontal_bias="0.501"
+                    binding:layout_constraintStart_toStartOf="parent"
+                    binding:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/btn_rus_eng"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:onClick="chooseCorrectExercise"
+                    android:text="Rus - eng"
+                    binding:layout_constraintEnd_toEndOf="parent"
+                    binding:layout_constraintHorizontal_bias="0.503"
+                    binding:layout_constraintStart_toStartOf="parent"
+                    binding:layout_constraintTop_toBottomOf="@+id/btn_eng_rus" />
+
+                <Button
+                    android:id="@+id/btn_writing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:onClick="chooseCorrectExercise"
+                    android:text="Writing"
+                    binding:layout_constraintEnd_toEndOf="parent"
+                    binding:layout_constraintHorizontal_bias="0.503"
+                    binding:layout_constraintStart_toStartOf="parent"
+                    binding:layout_constraintTop_toBottomOf="@+id/btn_rus_eng" />
+
+                <Button
+                    android:id="@+id/btn_binding"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:onClick="chooseCorrectExercise"
+                    android:text="binding"
+                    binding:layout_constraintEnd_toEndOf="parent"
+                    binding:layout_constraintStart_toStartOf="parent"
+                    binding:layout_constraintTop_toBottomOf="@+id/btn_writing" />
+
+                <Button
+                    android:id="@+id/btn_choose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:onClick="chooseCorrectExercise"
+                    android:text="Choose"
+                    binding:layout_constraintEnd_toEndOf="parent"
+                    binding:layout_constraintStart_toStartOf="parent"
+                    binding:layout_constraintTop_toBottomOf="@+id/btn_binding" />
+
+
+<!--                <Button-->
+<!--                    android:id="@+id/btn_repeating"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="32dp"-->
+<!--                    android:onClick="repeatExercise"-->
+<!--                    android:text="Repeat"-->
+<!--                    binding:layout_constraintEnd_toEndOf="@+id/btn_choose"-->
+<!--                    binding:layout_constraintStart_toStartOf="@+id/btn_choose"-->
+<!--                    binding:layout_constraintTop_toBottomOf="@+id/btn_choose" />-->
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

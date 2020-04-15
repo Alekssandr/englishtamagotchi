@@ -1,5 +1,6 @@
 package com.szczecin.englishtamagotchi.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -8,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.szczecin.englishtamagotchi.R
 import com.szczecin.englishtamagotchi.databinding.BindWordItemBinding
 import com.szczecin.englishtamagotchi.model.PairRusEng
-import com.szczecin.englishtamagotchi.viewmodel.WordsBindViewModel
+import com.szczecin.englishtamagotchi.viewmodel.learning.WordsBindViewModel
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.bind_word_item.view.*
@@ -21,6 +22,7 @@ const val RED = 2
 class BindWordsEngItemsAdapter : RecyclerView.Adapter<BindWordsEngItemsAdapter.ItemViewHolder>() {
 
     private var stepsList: List<PairRusEng> = emptyList()
+    private var stepsListShuffled: List<PairRusEng> = emptyList()
     private val publishSubjectItem = PublishSubject.create<Int>()
     var previousPosition = DEFAULT
 
@@ -36,31 +38,33 @@ class BindWordsEngItemsAdapter : RecyclerView.Adapter<BindWordsEngItemsAdapter.I
     }
 
     override fun getItemCount(): Int {
-        return stepsList.size
+        return stepsListShuffled.size
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        holder.bind(stepsList[position])
+        holder.bind(stepsListShuffled[position])
 
         holder.itemView.buttonEng.setOnClickListener {
             if (previousPosition == DEFAULT) {
-                publishSubjectItem.onNext(position)
+                publishSubjectItem.onNext(stepsList.indexOf(stepsListShuffled[position]))
                 previousPosition = position
             }
         }
     }
 
     fun update(items: List<PairRusEng>) {
-        this.stepsList = items
+        stepsList = items
+        this.stepsListShuffled = items.shuffled()
         notifyDataSetChanged()
     }
 
-    fun updateItem(index: WordsBindViewModel.ButtonColorization) {
-        if (index.event != RED && index.event != CHOICE) {
+    fun updateItem(pairRusEng: WordsBindViewModel.ButtonColorization) {
+        if (pairRusEng.event != RED && pairRusEng.event != CHOICE) {
             previousPosition = DEFAULT
         }
-        stepsList[index.index].event = index.event
-        notifyItemChanged(index.index)
+        val correctIndex = stepsListShuffled.indexOf(stepsList[pairRusEng.index])
+        stepsListShuffled[correctIndex].dayOfLearning = pairRusEng.event
+        notifyItemChanged(stepsListShuffled.indexOf(stepsList[pairRusEng.index]))
     }
 
     class ItemViewHolder(private val binding: BindWordItemBinding) :
@@ -68,19 +72,19 @@ class BindWordsEngItemsAdapter : RecyclerView.Adapter<BindWordsEngItemsAdapter.I
         fun bind(pairRusEng: PairRusEng) {
             this.binding.text = pairRusEng.eng
             when {
-                pairRusEng.event == GREY -> {
+                pairRusEng.dayOfLearning == GREY -> {
                     this.binding.buttonEng.setBackgroundColor(
                         ContextCompat.getColor(this.binding.buttonEng.context, R.color.grey)
                     )
                     this.binding.buttonEng.isEnabled = true
                 }
-                pairRusEng.event == GREEN -> {
+                pairRusEng.dayOfLearning == GREEN -> {
                     this.binding.buttonEng.setBackgroundColor(
                         ContextCompat.getColor(this.binding.buttonEng.context, R.color.green)
                     )
                     this.binding.buttonEng.isEnabled = false
                 }
-                pairRusEng.event == RED -> {
+                pairRusEng.dayOfLearning == RED -> {
                     this.binding.buttonEng.setBackgroundColor(
                         ContextCompat.getColor(this.binding.buttonEng.context, R.color.red)
                     )

@@ -7,5 +7,6 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "WordsCommonEntity")
 data class WordsCommonEntity(
     @PrimaryKey @ColumnInfo val eng: String,
-    @ColumnInfo val rus: String
+    @ColumnInfo val rus: String,
+    @ColumnInfo val isCheckbox: Boolean
 )

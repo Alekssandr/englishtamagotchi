@@ -8,5 +8,8 @@ data class PairRusEng(
     var id: Long = 0,
     var eng: String = "",
     var rus: String = "",
-    var event: Int = 0
+    var isChecked: Boolean = false,
+    var dayOfLearning: Int = 0,
+    var countIn5daysRepeating: Int = 0,
+    var buttonColor: String = ""
 )

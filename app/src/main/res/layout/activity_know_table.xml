@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:binding="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="knowTableViewModel"
+            type="com.szczecin.englishtamagotchi.viewmodel.know.KnowTableViewModel" />
+
+        <import type="android.view.View" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_learn_knows_words"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            binding:knowWordsList="@{knowTableViewModel.knowList}"
+            binding:layout_constraintBottom_toBottomOf="parent"
+            binding:layout_constraintEnd_toEndOf="parent"
+            binding:layout_constraintStart_toStartOf="parent"
+            tools:listitem="@layout/common_list_item"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

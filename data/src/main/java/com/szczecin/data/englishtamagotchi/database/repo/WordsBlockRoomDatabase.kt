@@ -5,12 +5,18 @@ import androidx.room.RoomDatabase
 import com.szczecin.data.englishtamagotchi.database.dao.WordsBlockDao
 import com.szczecin.data.englishtamagotchi.database.model.WordsBlockEntity
 import com.szczecin.data.englishtamagotchi.database.model.common.WordsCommonEntity
+import com.szczecin.data.englishtamagotchi.database.model.learn.LearnWordsBlockEntity
+import com.szczecin.data.englishtamagotchi.database.model.learning_exercise.LearnWordsTableEntity
+import com.szczecin.data.englishtamagotchi.database.model.repeating.RepeatingWordsEntity
 
 @Database(
     entities = [
         WordsBlockEntity::class,
-        WordsCommonEntity::class
-    ], version = 2, exportSchema = false
+        WordsCommonEntity::class,
+        LearnWordsBlockEntity::class,
+        LearnWordsTableEntity::class,
+        RepeatingWordsEntity::class
+    ], version = 3, exportSchema = false
 )
 abstract class WordsBlockRoomDatabase : RoomDatabase() {
     abstract fun wordsBlockDao(): WordsBlockDao

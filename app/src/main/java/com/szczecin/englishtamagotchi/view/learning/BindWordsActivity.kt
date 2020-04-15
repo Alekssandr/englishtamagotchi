@@ -1,6 +1,9 @@
-package com.szczecin.englishtamagotchi.view
+package com.szczecin.englishtamagotchi.view.learning
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,19 +12,18 @@ import com.szczecin.englishtamagotchi.adapter.BindWordsEngItemsAdapter
 import com.szczecin.englishtamagotchi.common.ViewModelFactory
 import com.szczecin.englishtamagotchi.common.extensions.lifecircle.observeLifecycleIn
 import com.szczecin.englishtamagotchi.databinding.ActivityBindWordsBinding
-import com.szczecin.englishtamagotchi.viewmodel.WordsBindViewModel
+import com.szczecin.englishtamagotchi.viewmodel.learning.WordsBindViewModel
 import com.szczecin.pointofinterest.common.extensions.viewModel
 import dagger.android.AndroidInjection
 import androidx.lifecycle.Observer
+import com.google.android.material.snackbar.Snackbar
 import com.szczecin.englishtamagotchi.adapter.BindWordsRusItemsAdapter
 import com.szczecin.englishtamagotchi.adapter.RED
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.util.*
 import javax.inject.Inject
-import kotlin.concurrent.schedule
 
 class BindWordsActivity : AppCompatActivity() {
 
@@ -34,6 +36,7 @@ class BindWordsActivity : AppCompatActivity() {
 
     private lateinit var bindWordsEngItemsAdapter: BindWordsEngItemsAdapter
     private lateinit var bindWordsRusItemsAdapter: BindWordsRusItemsAdapter
+    private val intentBindWords = Intent()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,12 +46,23 @@ class BindWordsActivity : AppCompatActivity() {
         observeLifecycleIn(wordsBindViewModel)
         initRecycler()
         observeViewModel()
+        intentBindWords.putExtra("activity_status", BIND)
     }
 
     private fun setBinding() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_bind_words)
         binding.wordsBindViewModel = wordsBindViewModel
         binding.lifecycleOwner = this@BindWordsActivity
+
+        wordsBindViewModel.finishLesson.observe(this, Observer {
+            Snackbar.make(this.binding.root, "умничка! Задание сделано!", Snackbar.LENGTH_LONG).show()
+            GlobalScope.launch(Dispatchers.Main) {
+                delay(2000)
+                setResult(Activity.RESULT_OK, intentBindWords)
+                finish()
+            }
+        })
+
     }
 
     private fun initRecycler() {
