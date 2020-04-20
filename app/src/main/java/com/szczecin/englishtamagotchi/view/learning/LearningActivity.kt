@@ -32,6 +32,7 @@ const val WRITING = 2
 const val BIND = 3
 const val CHOOSE = 4
 const val REPEATING = 5
+const val LEARNING = 6
 
 class LearningActivity : AppCompatActivity() {
 
@@ -45,6 +46,7 @@ class LearningActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLearningBinding
 
+    private val intentLearning = Intent()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -52,6 +54,7 @@ class LearningActivity : AppCompatActivity() {
         setBinding()
         observeLifecycleIn(learningViewModel)
         openRepeatExercise()
+        intentLearning.putExtra("activity_status", LEARNING)
     }
 
     private fun openRepeatExercise() {
@@ -128,6 +131,9 @@ class LearningActivity : AppCompatActivity() {
                         ContextCompat.getColor(this, R.color.green)
                     )
                 }
+                intentLearning.putExtra("completed_tasks", allTaskCount)
+                setResult(Activity.RESULT_OK, intentLearning)
+
 //                if (allTaskCount == 0) {
 //                    learningViewModel.updatedLearnedWords.postValue(Unit)
 //                }

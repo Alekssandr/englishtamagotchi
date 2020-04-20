@@ -1,0 +1,883 @@
+{
+  "pairRusEng": [
+    {
+      "eng": "a few",
+      "rus": "немного"
+    },
+    {
+      "eng": "a few minutes",
+      "rus": "несколько минут"
+    },
+    {
+      "eng": "a few times",
+      "rus": "несколько раз"
+    },
+    {
+      "eng": "a few years",
+      "rus": "несколько лет"
+    },
+    {
+      "eng": "a good idea",
+      "rus": "хорошая идея"
+    },
+    {
+      "eng": "That’s a good idea!",
+      "rus": "Это хорошая идея!"
+    },
+    {
+      "eng": "agree with sb",
+      "rus": "согласен с кем-либо"
+    },
+    {
+      "eng": "a little",
+      "rus": "немного"
+    },
+    {
+      "eng": "a little help",
+      "rus": "небольшая помощь"
+    },
+    {
+      "eng": "a little money",
+      "rus": "немного денег"
+    },
+    {
+      "eng": "a little sugar",
+      "rus": "немного сахара"
+    },
+    {
+      "eng": "a lot",
+      "rus": "много"
+    },
+    {
+      "eng": "a lot to do",
+      "rus": "много дел"
+    },
+    {
+      "eng": "a lot of sth",
+      "rus": "много чего"
+    },
+    {
+      "eng": "all day",
+      "rus": "весь день"
+    },
+    {
+      "eng": "all night",
+      "rus": "всю ночь"
+    },
+    {
+      "eng": "all over the world",
+      "rus": "по всему миру"
+    },
+    {
+      "eng": "anything else",
+      "rus": "что-нибудь еще"
+    },
+    {
+      "eng": "anyone else",
+      "rus": "кто-нибудь еще"
+    },
+    {
+      "eng": "a period of time",
+      "rus": "Период времени"
+    },
+    {
+      "eng": "around the world",
+      "rus": "во всем мире"
+    },
+    {
+      "eng": "arrive at",
+      "rus": "прибыть в ..."
+    },
+    {
+      "eng": "arrive in...",
+      "rus": "прибывает в..."
+    },
+    {
+      "eng": "ask for sth",
+      "rus": "попросить что-нибудь"
+    },
+    {
+      "eng": "at home",
+      "rus": "дома"
+    },
+    {
+      "eng": "at school",
+      "rus": "в школе"
+    },
+    {
+      "eng": "at the beginning of sth",
+      "rus": "в начале этого"
+    },
+    {
+      "eng": "at the end",
+      "rus": "в конце"
+    },
+    {
+      "eng": "at the end of sth",
+      "rus": "в конце концов"
+    },
+    {
+      "eng": "at the moment",
+      "rus": "В данный момент"
+    },
+    {
+      "eng": "at the same time",
+      "rus": "в то же время"
+    },
+    {
+      "eng": "at the weekend",
+      "rus": "в выходные"
+    },
+    {
+      "eng": "at university",
+      "rus": "в университете"
+    },
+    {
+      "eng": "at work",
+      "rus": "на работе"
+    },
+
+    {
+      "eng": "away from sb/sth",
+      "rus": "далеко от кого-либо"
+    },
+    {
+      "eng": "bad for sb/sth",
+      "rus": "плохо для кого-то"
+    },
+    {
+      "eng": "bad news",
+      "rus": "плохие новости"
+    },
+    {
+      "eng": "bad thing",
+      "rus": "плохо"
+    },
+    {
+      "eng": "the bad things about sth",
+      "rus": "плохие вещи о чем-то"
+    },
+    {
+      "eng": "because of",
+      "rus": "из-за"
+    },
+    {
+      "eng": "begin with sth",
+      "rus": "начать с чего"
+    },
+    {
+      "eng": "be going to do sth",
+      "rus": "собираюсь сделать что-нибудь"
+    },
+    {
+      "eng": "best friend",
+      "rus": "лучший друг"
+    },
+    {
+      "eng": "car park",
+      "rus": "автостоянка"
+    },
+    {
+      "eng": "cell phone",
+      "rus": "мобильный телефон"
+    },
+    {
+      "eng": "city center",
+      "rus": "центр города"
+    },
+    {
+      "eng": "in the city center",
+      "rus": "в центре города"
+    },
+
+    {
+      "eng": "come from",
+      "rus": "родом из"
+    },
+    {
+      "eng": "come into sth",
+      "rus": "входить в"
+    },
+    {
+      "eng": "He came into the room",
+      "rus": "Он вошел в комнату"
+    },
+    {
+      "eng": "differences between A and B",
+      "rus": "различия между А и В"
+    },
+    {
+      "eng": "difficult for sb",
+      "rus": "трудно для кого-л"
+    },
+    {
+      "eng": "every week",
+      "rus": "каждую неделю"
+    },
+    {
+      "eng": "every year",
+      "rus": "каждый год"
+    },
+    {
+      "eng": "excuse me",
+      "rus": "извините"
+    },
+    {
+      "eng": "family member",
+      "rus": "член семьи"
+    },
+    {
+      "eng": "find out",
+      "rus": "выяснить"
+    },
+
+    {
+      "eng": "for a long time",
+      "rus": "в течении долгого времени"
+    },
+    {
+      "eng": "a long time",
+      "rus": "долгое время"
+    },
+    {
+      "eng": "for a moment",
+      "rus": "на мгновение"
+    },
+    {
+      "eng": "for example",
+      "rus": "например"
+    },
+    {
+      "eng": "for lunch",
+      "rus": "на обед"
+    },
+    {
+      "eng": "for many years",
+      "rus": "на протяжении многих лет"
+    },
+    {
+      "eng": "get married",
+      "rus": "жениться"
+    },
+    {
+      "eng": "get off the bus",
+      "rus": "выйти из автобуса"
+    },
+    {
+      "eng": "I’m getting off here",
+      "rus": "Я ухожу отсюда"
+    },
+    {
+      "eng": "get on well with smb",
+      "rus": "ладить c кем-либо"
+    },
+
+    {
+      "eng": "get on the bus",
+      "rus": "попасть на автобус"
+    },
+    {
+      "eng": "get ready for sth",
+      "rus": "будьте готовы к чему-либо"
+    },
+    {
+      "eng": "get up",
+      "rus": "вставай"
+    },
+    {
+      "eng": "go back to",
+      "rus": "возвращаться"
+    },
+    {
+      "eng": "go home",
+      "rus": "идти домой"
+    },
+    {
+      "eng": "go into sth",
+      "rus": "идти в"
+    },
+    {
+      "eng": "She went into her room",
+      "rus": "Она вошла в свою комнату"
+    },
+    {
+      "eng": "Good morning",
+      "rus": "Доброе утро"
+    },
+    {
+      "eng": "Good afternoon",
+      "rus": "Добрый день"
+    },
+
+    {
+      "eng": "Good evening",
+      "rus": "Добрый вечер"
+    },
+    {
+      "eng": "good news",
+      "rus": "хорошие новости"
+    },
+    {
+      "eng": "thing",
+      "rus": "вещь"
+    },
+    {
+      "eng": "go out",
+      "rus": "выходить"
+    },
+    {
+      "eng": "go to bed",
+      "rus": "идти в кровать"
+    },
+    {
+      "eng": "go to school",
+      "rus": "идти в школу"
+    },
+    {
+      "eng": "go to work",
+      "rus": "идти на работу"
+    },
+    {
+      "eng": "grow up",
+      "rus": "расти"
+    },
+    {
+      "eng": "Guess what",
+      "rus": "Угадай, что"
+    },
+
+    {
+      "eng": "half an hour",
+      "rus": "полчаса"
+    },
+    {
+      "eng": "hard work",
+      "rus": "тяжелая работа"
+    },
+    {
+      "eng": "have fun",
+      "rus": "веселиться"
+    },
+    {
+      "eng": "have got",
+      "rus": "иметь"
+    },
+    {
+      "eng": "have time for sth",
+      "rus": "есть время для чего-л."
+    },
+    {
+      "eng": "high school",
+      "rus": "старшая школа"
+    },
+    {
+      "eng": "How about?",
+      "rus": "Как насчет?"
+    },
+    {
+      "eng": "How are you?",
+      "rus": "Как ваши дела?"
+    },
+    {
+      "eng": "How long?",
+      "rus": "Сколько?"
+    },
+
+    {
+      "eng": "How many?",
+      "rus": "Как много?"
+    },
+    {
+      "eng": "How much?",
+      "rus": "Сколько?"
+    },
+    {
+      "eng": "How often?",
+      "rus": "Как часто?"
+    },
+    {
+      "eng": "I guess",
+      "rus": "я предполагаю"
+    },
+    {
+      "eng": "important",
+      "rus": "важно"
+    },
+    {
+      "eng": "in front of",
+      "rus": "перед"
+    },
+    {
+      "eng": "in fact",
+      "rus": "на самом деле"
+    },
+    {
+      "eng": "in summer",
+      "rus": "летом"
+    },
+    {
+      "eng": "in winter",
+      "rus": "зимой"
+    },
+
+    {
+      "eng": "in the center",
+      "rus": "в центре"
+    },
+    {
+      "eng": "in the country",
+      "rus": "в стране"
+    },
+    {
+      "eng": "I live in the country",
+      "rus": "Я живу в стране."
+    },
+    {
+      "eng": "the best",
+      "rus": "лучший"
+    },
+    {
+      "eng": "in the future",
+      "rus": "в будущем"
+    },
+    {
+      "eng": "in the morning",
+      "rus": "утром"
+    },
+    {
+      "eng": "in the afternoon",
+      "rus": "после полудня"
+    },
+    {
+      "eng": "in the evening",
+      "rus": "вечером"
+    },
+    {
+      "eng": "in the north",
+      "rus": "на севере"
+    },
+
+    {
+      "eng": "in the south",
+      "rus": "на юге"
+    },
+    {
+      "eng": "in the east",
+      "rus": "на востоке"
+    },
+    {
+      "eng": "in the west",
+      "rus": "на Западе"
+    },
+    {
+      "eng": "in the past",
+      "rus": "в прошлом"
+    },
+    {
+      "eng": "in the street",
+      "rus": "на улице"
+    },
+    {
+      "eng": "in the summer",
+      "rus": "летом"
+    },
+    {
+      "eng": "in the winter",
+      "rus": "зимой"
+    },
+    {
+      "eng": "in town",
+      "rus": "в городе"
+    },
+    {
+      "eng": "It takes",
+      "rus": "Это занимает"
+    },
+    {
+      "eng": "What kind of music do you like?",
+      "rus": "Какую музыку ты любишь?"
+    },
+    {
+      "eng": "know how to do sth",
+      "rus": "знать, как это сделатье"
+    },
+    {
+      "eng": "last time",
+      "rus": "последний раз"
+    },
+    {
+      "eng": "last year",
+      "rus": "прошлый год"
+    },
+    {
+      "eng": "last month",
+      "rus": "прошлый месяц"
+    },
+    {
+      "eng": "last summer",
+      "rus": "прошлое лето"
+    },
+    {
+      "eng": "last week",
+      "rus": "прошлая неделя"
+    },
+    {
+      "eng": "last weekend",
+      "rus": "прошлые выходные"
+    },
+    {
+      "eng": "listen to",
+      "rus": "слушать"
+    },
+
+    {
+      "eng": "live with",
+      "rus": "жить с"
+    },
+    {
+      "eng": "living room",
+      "rus": "гостинная"
+    },
+    {
+      "eng": "look at",
+      "rus": "посмотрите на"
+    },
+    {
+      "eng": "look for",
+      "rus": "искать"
+    },
+    {
+      "eng": "look like",
+      "rus": "похожи на"
+    },
+    {
+      "eng": "lots of",
+      "rus": "множество"
+    },
+    {
+      "eng": "millions of",
+      "rus": "миллионы"
+    },
+    {
+      "eng": "mobile phone",
+      "rus": "мобильный телефон"
+    },
+    {
+      "eng": "more than",
+      "rus": "больше, чем"
+    },
+
+    {
+      "eng": "next time",
+      "rus": "в следующий раз"
+    },
+    {
+      "eng": "next year",
+      "rus": "Следующий год"
+    },
+    {
+      "eng": "next month",
+      "rus": "следующий месяц"
+    },
+    {
+      "eng": "next week",
+      "rus": "на следующей неделе"
+    },
+    {
+      "eng": "no problem",
+      "rus": "нет проблем"
+    },
+    {
+      "eng": "of course",
+      "rus": "конечно"
+    },
+    {
+      "eng": "once a",
+      "rus": "один раз"
+    },
+    {
+      "eng": "once a month",
+      "rus": "раз в месяц"
+    },
+
+    {
+      "eng": "on the left",
+      "rus": "налево"
+    },
+    {
+      "eng": "on the right",
+      "rus": "справа"
+    },
+    {
+      "eng": "on the phone",
+      "rus": "на телефоне"
+    },
+    {
+      "eng": "talk on the phone",
+      "rus": "говорить по телефону"
+    },
+    {
+      "eng": "over there",
+      "rus": "вон там"
+    },
+    {
+      "eng": "pay for",
+      "rus": "платить за"
+    },
+    {
+      "eng": "phone call",
+      "rus": "телефонный звонок"
+    },
+    {
+      "eng": "phone number",
+      "rus": "телефонный номер"
+    },
+
+    {
+      "eng": "make plans",
+      "rus": "строить планы"
+    },
+    {
+      "eng": "What are you plans for next year?",
+      "rus": "Какие планы на следующий год?"
+    },
+    {
+      "eng": "play",
+      "rus": "играть"
+    },
+    {
+      "eng": "post office",
+      "rus": "почта"
+    },
+    {
+      "eng": "pretty good",
+      "rus": "вполне нормально"
+    },
+    {
+      "eng": "really enjoy",
+      "rus": "очень нравится"
+    },
+    {
+      "eng": "I really enjoyed it",
+      "rus": "Мне очень понравилось"
+    },
+    {
+      "eng": "really good",
+      "rus": "действительно хорошо"
+    },
+
+    {
+      "eng": "really like",
+      "rus": "очень нравится"
+    },
+    {
+      "eng": "right now",
+      "rus": "сейчас"
+    },
+    {
+      "eng": "see you",
+      "rus": "Увидимся"
+    },
+    {
+      "eng": "see you soon",
+      "rus": "до скорого"
+    },
+    {
+      "eng": "sit down",
+      "rus": "сядьте"
+    },
+    {
+      "eng": "someone else",
+      "rus": "кто-то еще"
+    },
+    {
+      "eng": "something else",
+      "rus": "что-то другое"
+    },
+    {
+      "eng": "speak to someone",
+      "rus": "говорить с кем-то"
+    },
+
+    {
+      "eng": "spend time",
+      "rus": "проводить время"
+    },
+    {
+      "eng": "spend time doing",
+      "rus": "тратить время на занятия"
+    },
+    {
+      "eng": "spend time with",
+      "rus": "проводить время с"
+    },
+    {
+      "eng": "stand up",
+      "rus": "до скорого"
+    },
+    {
+      "eng": "stay in",
+      "rus": "встаньте"
+    },
+    {
+      "eng": "stay in a hotel",
+      "rus": "оставайся в отеле"
+    },
+    {
+      "eng": "stay in bed",
+      "rus": "оставаться в постели"
+    },
+    {
+      "eng": "I’m staying in tonight",
+      "rus": "Я остаюсь сегодня вечером"
+    },
+    {
+      "eng": "swimming pool",
+      "rus": "бассейн"
+    },
+    {
+      "eng": "talk about",
+      "rus": "говорить о"
+    },
+    {
+      "eng": "thank you",
+      "rus": "Спасибо"
+    },
+    {
+      "eng": "thank you very much",
+      "rus": "большое Вам спасибо"
+    },
+    {
+      "eng": "that day",
+      "rus": "этот день"
+    },
+    {
+      "eng": "the next day",
+      "rus": "на следующий день"
+    },
+    {
+      "eng": "think about",
+      "rus": "думать о "
+    },
+
+    {
+      "eng": "This is my dad",
+      "rus": "Это мой папа"
+    },
+    {
+      "eng": "this morning",
+      "rus": "этим утром"
+    },
+    {
+      "eng": "this afternoon",
+      "rus": "сегодня днем"
+    },
+    {
+      "eng": "this evening",
+      "rus": "этим вечером"
+    },
+    {
+      "eng": "this summer",
+      "rus": "это лето"
+    },
+    {
+      "eng": "this weekend",
+      "rus": "эти выходные"
+    },
+    {
+      "eng": "thousands of",
+      "rus": "тысячи"
+    },
+    {
+      "eng": "too long",
+      "rus": "слишком долго"
+    },
+    {
+      "eng": "too far",
+      "rus": "очень далеко"
+    },
+    {
+      "eng": "too hard",
+      "rus": "слишком сложно"
+    },
+    {
+      "eng": "town center",
+      "rus": "центр города"
+    },
+    {
+      "eng": "wait for",
+      "rus": "ждать"
+    },
+
+
+    {
+      "eng": "wake up",
+      "rus": "вставай"
+    },
+    {
+      "eng": "Welcome",
+      "rus": "Добро пожаловать"
+    },
+    {
+      "eng": "What about?",
+      "rus": "Как насчет?"
+    },
+    {
+      "eng": "work together",
+      "rus": "работать вместе"
+    },
+    {
+      "eng": "work with",
+      "rus": "работать с"
+    },
+    {
+      "eng": "would like",
+      "rus": "эти выходные"
+    },
+    {
+      "eng": "I would like",
+      "rus": "Я бы хотел"
+    },
+    {
+      "eng": "Would you like?",
+      "rus": "Вы бы хотели?"
+    },
+    {
+      "eng": "X hours a day",
+      "rus": "Х часов в день"
+    },
+    {
+      "eng": "X times",
+      "rus": "X раз"
+    },
+    {
+      "eng": "X times a day",
+      "rus": "Х раз в день"
+    },
+    {
+      "eng": "X times a week",
+      "rus": "Х раз в неделю"
+    },
+    {
+      "eng": "X years ago",
+      "rus": "X лет назад"
+    },
+    {
+      "eng": "X days ago",
+      "rus": "X дней назад"
+    },
+    {
+      "eng": "X minutes later",
+      "rus": "Х минут спустя"
+    },
+    {
+      "eng": "X years old",
+      "rus": "X лет назад"
+    },
+    {
+      "eng": "You’re welcome",
+      "rus": "Пожалуйста"
+    }
+
+  ]
+}

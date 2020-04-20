@@ -7,7 +7,7 @@ import kotlin.reflect.KProperty
 class IntPreference(
     private val sharedPreferences: SharedPreferences,
     private val key: String,
-    private val defaultValue: Int = 0
+    private val defaultValue: Int = 5
 ) : ReadWriteProperty<Any, Int> {
 
     override fun getValue(thisRef: Any, property: KProperty<*>): Int =

@@ -10,6 +10,7 @@ import io.reactivex.Single
 class WordsCommonDataRepository(
     private val wordsBlockStorage: WordsBlockStorage
 ) : WordsCommonRepository {
+    override fun removeDeleteAllCommon(): Completable = wordsBlockStorage.removeDeleteAllCommon()
 
     override fun getWordsBlockListBy(dayOfLearning: Int): Single<List<PairRusEng>> =
         wordsBlockStorage.getWordsCommonListBy(dayOfLearning)

@@ -3,7 +3,6 @@ package com.szczecin.englishtamagotchi.view.learning
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.szczecin.englishtamagotchi.R
@@ -14,7 +13,11 @@ import com.szczecin.englishtamagotchi.viewmodel.learning.WordsWritingViewModel
 import com.szczecin.pointofinterest.common.extensions.viewModel
 import dagger.android.AndroidInjection
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import com.szczecin.englishtamagotchi.adapter.WordsWritingAdapter
 import kotlinx.android.synthetic.main.activity_words_writing.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -32,6 +35,7 @@ class WordsWritingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityWordsWritingBinding
     private val intentWordsWriting = Intent()
 
+    private lateinit var bindWordsWritingAdapter: WordsWritingAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -40,6 +44,7 @@ class WordsWritingActivity : AppCompatActivity() {
         observeLifecycleIn(wordsWritingViewModel)
         observeViewModel()
         intentWordsWriting.putExtra("activity_status", WRITING)
+        initRecycler()
     }
 
     private fun setBinding() {
@@ -59,8 +64,21 @@ class WordsWritingActivity : AppCompatActivity() {
 
     private fun observeViewModel() {
         wordsWritingViewModel.clearEditText.observe(this, Observer {
-            writing_words.text.clear()
+            writing_words.text = ""
         })
+    }
+
+    private fun initRecycler() {
+        val recyclerPairRus = binding.recyclerWordsWriting
+        recyclerPairRus.apply {
+            layoutManager =
+                GridLayoutManager(this.context, SPAN_COUNT, RecyclerView.HORIZONTAL, true)
+
+//            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            bindWordsWritingAdapter = WordsWritingAdapter()
+            this.adapter = bindWordsWritingAdapter
+            wordsWritingViewModel.subscribeForRusItemClick(bindWordsWritingAdapter.getClickItemObserver())
+        }
     }
 
 }

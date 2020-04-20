@@ -42,6 +42,10 @@ interface WordsBlockDao {
     @Query("DELETE FROM WordsCommonEntity WHERE eng = :eng")
     fun deleteRowByEngFromCommon(eng: String) : Completable
 
+
+    @Query("DELETE FROM WordsCommonEntity")
+    fun deleteAllCommon() : Completable
+
 //    @Query("SELECT COUNT(*) from WordsCommonEntity WHERE dayOfLearning = :dayOfLearning")
 //    fun getSizeOfCommonBy(dayOfLearning: Int) : Single<Int>
 

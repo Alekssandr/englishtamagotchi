@@ -24,7 +24,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-const val SPAN_COUNT = 2
+const val SPAN_COUNT = 3
 
 class ChooseCorrectWordsActivity : AppCompatActivity() {
 

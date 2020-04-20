@@ -2,22 +2,19 @@ package com.szczecin.englishtamagotchi.viewmodel.learning
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.szczecin.englishtamagotchi.model.PairRusEng
-import com.szczecin.englishtamagotchi.usecase.GetWordsBlockUseCase
 import com.szczecin.englishtamagotchi.common.rx.RxSchedulers
+import com.szczecin.englishtamagotchi.model.PairRusEng
 import com.szczecin.englishtamagotchi.preferencies.SettingsPreferences
 import com.szczecin.englishtamagotchi.usecase.learn.GetLearnWordsByDayUseCase
-import com.szczecin.englishtamagotchi.usecase.learn.GetLearnWordsUseCase
+import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
-import io.reactivex.rxkotlin.subscribeBy
 import javax.inject.Inject
 
 
 class WordsWritingViewModel @Inject constructor(
-    private val getLearnWordsUseCase: GetLearnWordsUseCase,
-    private val sharedPreferences: SettingsPreferences,
     private val getLearnWordsByDayUseCase: GetLearnWordsByDayUseCase,
+    private val sharedPreferences: SettingsPreferences,
     private val schedulers: RxSchedulers
 ) : ViewModel(), LifecycleObserver {
 
@@ -28,28 +25,30 @@ class WordsWritingViewModel @Inject constructor(
     val translateWordInCorrectVisibility = MutableLiveData<Boolean>()
     val clearEditText = MutableLiveData<Boolean>()
     val uiClosed = MutableLiveData<Unit>()
-    val blockWords: MutableList<PairRusEng> = mutableListOf()
-    var isTranslateFromEng = false
+    val letters: MutableLiveData<List<Char>> = MutableLiveData()
+    val writingText = MutableLiveData<Pair<String, Boolean>>()
+    private val blockWords: MutableList<PairRusEng> = mutableListOf()
+    private var writingTextEditText: StringBuilder = StringBuilder()
+    var countNotCorrect = 0
 
     private val disposables = CompositeDisposable()
     var indexWord = 0
 
-    //подумать мб добавить, что если заходим в setRusOrEng значит переходить на следующий блок
-    //а нехт не надо.
-    //также бааг когда с анг на рус перехожу слово на англ внизу уже открыто
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun onCreate() {
         translateWordCloseVisibility.value = false
         getAllWords()
     }
 
-    fun setRusOrEng(isFromEng: Boolean) {
-        isTranslateFromEng = isFromEng
-    }
-
     private fun loadBlock(index: Int) {
         translateWordOpen.value = blockWords[index].rus
         translateWordClose.value = blockWords[index].eng
+        fillLetters()
+    }
+
+    private fun fillLetters() {
+        val lettersList = blockWords[indexWord].eng.toCharArray()
+        letters.value = lettersList.distinct().toList().shuffled()
     }
 
     fun next() {
@@ -59,22 +58,19 @@ class WordsWritingViewModel @Inject constructor(
             translateWordCorrectVisibility.value = false
             indexWord++
             loadBlock(indexWord)
+            writingTextEditText.clear()
             clearEditText.value = true
+            countNotCorrect = 0
         } else {
             uiClosed.postValue(Unit)
         }
     }
 
-    fun afterUserNameChange(s: CharSequence) {
-        if (s.length >= blockWords[indexWord].eng.length) {
-            if (s.toString().equals(blockWords[indexWord].eng)) {
-                isTranslateFromEng = true
-            }
-        }
-    }
+    private fun checkWritingWords() =
+        writingTextEditText.toString().toLowerCase() == blockWords[indexWord].eng
 
     fun check() {
-        if (isTranslateFromEng) {
+        if (checkWritingWords()) {
             translateWordCorrectVisibility.value = true
         } else {
             translateWordCloseVisibility.value = true
@@ -96,31 +92,51 @@ class WordsWritingViewModel @Inject constructor(
             })
     }
 
-//    fun removeWord() {
-//        disposables += removeWordsBlockUseCase
-//            .execute(blockWords[indexWord].eng)
-//            .subscribeOn(schedulers.io())
-//            .observeOn(schedulers.mainThread())
-//            .subscribeBy(onComplete = {
-//                blockWords.drop(indexWord)
-//                next()
-//            }, onError = {
-//                Log.e("Error", it.message ?: "")
-//            })
-//    }
+    fun subscribeForRusItemClick(clickItemObserver: Observable<Char>) {
+        disposables +=
+            clickItemObserver
+                .subscribeOn(schedulers.io())
+                .observeOn(schedulers.mainThread())
+                .subscribe {
+                    writingTextEditText.append(it)
+                    refactorSpace()
+                    writingText.value = Pair(
+                        writingTextEditText.toString(),
+                        isCorrectLetter(writingTextEditText.toString())
+                    )
+                    if (!isCorrectLetter(writingTextEditText.toString())) countNotCorrect++
+                    if (countNotCorrect > 2) {
+                        check()
+                    }
+                }
+    }
 
-//    fun getTranslate() {
-//        disposables += translateWordUseCase
-//            .execute()
-//            .subscribeOn(schedulers.io())
-//            .observeOn(schedulers.mainThread())
-//            .subscribeBy(onSuccess = {
-//                val a = it
-//            }, onError = {
-//                Log.e("Error", it.message ?: "")
-//            })
-//    }
+    fun addListInccorrectIndexes(){
 
+    }
+
+    fun refactorSpace() {
+        if (!isCorrectLetter(writingTextEditText.toString())) {
+            if (writingTextEditText[writingTextEditText.length - 1] == ' ') {
+                writingTextEditText[writingTextEditText.length - 1] = '_'
+            }
+        }
+    }
+
+    private fun isCorrectLetter(writingTextEditText: String) =
+        if (writingTextEditText.length <= blockWords[indexWord].eng.length - 1)
+            writingTextEditText[writingTextEditText.length - 1] ==
+                    blockWords[indexWord].eng[writingTextEditText.length - 1] else false
+
+
+    fun removeLastLetter() {
+        if (writingTextEditText.isNotEmpty()) {
+            writingTextEditText.deleteCharAt(writingTextEditText.length - 1)
+            writingText.value = Pair(
+                writingTextEditText.toString(), true
+            )
+        }
+    }
 
     override fun onCleared() {
         super.onCleared()

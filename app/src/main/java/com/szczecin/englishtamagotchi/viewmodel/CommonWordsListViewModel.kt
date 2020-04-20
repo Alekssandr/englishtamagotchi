@@ -4,11 +4,9 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.szczecin.englishtamagotchi.common.rx.RxSchedulers
 import com.szczecin.englishtamagotchi.model.PairRusEng
+import com.szczecin.englishtamagotchi.preferencies.SettingsPreferences
 import com.szczecin.englishtamagotchi.usecase.LoadDataInDBUseCase
-import com.szczecin.englishtamagotchi.usecase.common.GetDataFromJSONUseCase
-import com.szczecin.englishtamagotchi.usecase.common.GetCommonWordsUseCase
-import com.szczecin.englishtamagotchi.usecase.common.LoadDataInDBCommonUseCase
-import com.szczecin.englishtamagotchi.usecase.common.UpdateCommonItemUseCase
+import com.szczecin.englishtamagotchi.usecase.common.*
 import com.szczecin.englishtamagotchi.usecase.learn.table.AddLearnTableListUseCase
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
@@ -23,6 +21,8 @@ class CommonWordsListViewModel @Inject constructor(
     private val loadDataInBlockDBUseCase: LoadDataInDBUseCase,
     private val loadDataInDBCommonUseCase: LoadDataInDBCommonUseCase,
     private val addLearnTableWordUseCase: AddLearnTableListUseCase,
+    private val removeAllCommonUseCase: RemoveAllCommonUseCase,
+    private val sharedPreferences: SettingsPreferences,
     private val schedulers: RxSchedulers
 ) : ViewModel(), LifecycleObserver {
 
@@ -38,15 +38,28 @@ class CommonWordsListViewModel @Inject constructor(
     }
 
     private fun loadCardsFromJSON() {
-        disposables += getDataFromJSONUseCase.fetchDataFromJSON()
+        disposables += getDataFromJSONUseCase.fetchDataFromJSON(sharedPreferences.level)
             .subscribeOn(schedulers.io())
             .observeOn(schedulers.mainThread())
             .subscribeBy(onSuccess = {
-                insertInCommon(it)
+                removeFromCommon(it)
+//                insertInCommon(it)
             }, onComplete = {
                 getAllWords()
             }, onError = {
                 Log.e("Error", it.message ?: "")
+            })
+    }
+
+    private fun removeFromCommon(it: List<PairRusEng>) {
+        disposables += removeAllCommonUseCase
+            .execute()
+            .subscribeOn(schedulers.io())
+            .observeOn(schedulers.mainThread())
+            .subscribeBy(onComplete = {
+                insertInCommon(it)
+            }, onError = {
+//                Log.e("Error", it.message ?: "")
             })
     }
 

@@ -10,7 +10,7 @@ class SettingsPreferences(sharedPreferences: SharedPreferences) {
     var isOpenRepeating: Boolean by BoolPreference(sharedPreferences, IS_OPEN_REPEATING)
     var dailyWords: Int by IntPreference(sharedPreferences, DAILY_WORDS)
     var numberOfLearningDay: Int by IntPreference(sharedPreferences, NUMBER_OF_DAY)
-    var isEngToRus: Boolean by BoolPreference(sharedPreferences, IS_ENG_TO_RUS)
+    var level: Int by IntPreference(sharedPreferences, LEVEL)
 
     private companion object Key {
         const val COMMON_BLOCK = "COMMON_BLOCK"
@@ -19,6 +19,6 @@ class SettingsPreferences(sharedPreferences: SharedPreferences) {
         const val DAILY_WORDS = "DAILY_WORDS"
         const val NUMBER_OF_DAY = "NUMBER_OF_DAY"
         const val IS_OPEN_REPEATING = "IS_OPEN_REPEATING"
-        const val IS_ENG_TO_RUS = "IS_ENG_TO_RUS"
+        const val LEVEL = "LEVEL"
     }
 }

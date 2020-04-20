@@ -54,6 +54,9 @@ class WordsBlockStorage(private val wordsBlockDao: WordsBlockDao) {
             }
         }
 
+    fun removeDeleteAllCommon(): Completable =
+        wordsBlockDao.deleteAllCommon()
+
     fun removePairRusEngFromCommon(eng: String): Completable =
         wordsBlockDao.deleteRowByEngFromCommon(eng)
 
