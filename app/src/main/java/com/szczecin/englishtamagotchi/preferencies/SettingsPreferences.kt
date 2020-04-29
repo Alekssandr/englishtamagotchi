@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 class SettingsPreferences(sharedPreferences: SharedPreferences) {
 
     var numberStart: Int by IntPreference(sharedPreferences, COMMON_BLOCK)
-    var newWordsPerDay: Int by IntPreference(sharedPreferences, NEW_WORDS_PER_DAY)
+    var newWordsPerDay: Int by IntPreference(sharedPreferences, NEW_WORDS_PER_DAY, 5)
     var lastOpenDayInMls: Long by LongPreference(sharedPreferences, LAST_OPEN_DAY_IN_MLS)
     var isOpenRepeating: Boolean by BoolPreference(sharedPreferences, IS_OPEN_REPEATING)
     var dailyWords: Int by IntPreference(sharedPreferences, DAILY_WORDS)

@@ -15,6 +15,8 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
 import javax.inject.Inject
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import java.util.*
 
 
 class MainViewModel @Inject constructor(
@@ -73,7 +75,7 @@ class MainViewModel @Inject constructor(
 
     }
 
-    fun repeating(){
+    fun repeating() {
         getAllLearningWords()
     }
 
@@ -81,12 +83,11 @@ class MainViewModel @Inject constructor(
     fun onStart() {
         sharedPreferences.isOpenRepeating = false
         val currentTime = System.currentTimeMillis()
-        val differenceCurrentAndLastTime = currentTime - sharedPreferences.lastOpenDayInMls
-        val seconds = differenceCurrentAndLastTime / 1000
-        val minutes = seconds / 60
-        val hours = minutes / 60
-        val days = hours / 24
-        if (days >= 1) {
+        val c = Calendar.getInstance()
+        val dayToday = c.get(Calendar.DAY_OF_MONTH)
+        c.timeInMillis = sharedPreferences.lastOpenDayInMls
+        val day = c.get(Calendar.DAY_OF_MONTH)
+        if (day != dayToday) {
             sharedPreferences.isOpenRepeating = true
             sharedPreferences.lastOpenDayInMls = currentTime
             sharedPreferences.dailyWords = sharedPreferences.newWordsPerDay
@@ -106,12 +107,14 @@ class MainViewModel @Inject constructor(
             .subscribeOn(schedulers.io())
             .observeOn(schedulers.mainThread())
             .subscribeBy(onSuccess = { words ->
-                words.forEach {
+                if (words.isNotEmpty()) {
+                    words.forEach {
 
-                    it.dayOfLearning = sharedPreferences.numberOfLearningDay
+                        it.dayOfLearning = sharedPreferences.numberOfLearningDay
+                    }
+                    insertLearningWordsToRepeating(words)
                 }
-                insertLearningWordsToRepeating(words)
-            }, onError = {it ->
+            }, onError = { it ->
                 Log.e("Error", it.message ?: "")
             })
     }
@@ -123,7 +126,6 @@ class MainViewModel @Inject constructor(
             .subscribeOn(schedulers.io())
             .observeOn(schedulers.mainThread())
             .subscribeBy(onComplete = {
-                Log.d("test1111", words.toString())
                 sharedPreferences.isOpenRepeating = true
                 updatedLearnedWords.postValue(Unit)
             }, onError = {

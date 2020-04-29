@@ -11,6 +11,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import javax.inject.Inject
 
+const val ATTEMPTS = 4
 
 class WordsWritingViewModel @Inject constructor(
     private val getLearnWordsByDayUseCase: GetLearnWordsByDayUseCase,
@@ -26,9 +27,10 @@ class WordsWritingViewModel @Inject constructor(
     val clearEditText = MutableLiveData<Boolean>()
     val uiClosed = MutableLiveData<Unit>()
     val letters: MutableLiveData<List<Char>> = MutableLiveData()
-    val writingText = MutableLiveData<Pair<String, Boolean>>()
+    val writingText = MutableLiveData<Pair<String, List<Int>>>()
     private val blockWords: MutableList<PairRusEng> = mutableListOf()
     private var writingTextEditText: StringBuilder = StringBuilder()
+    var incorrectIndexes: MutableList<Int> = mutableListOf()
     var countNotCorrect = 0
 
     private val disposables = CompositeDisposable()
@@ -98,20 +100,32 @@ class WordsWritingViewModel @Inject constructor(
                 .subscribeOn(schedulers.io())
                 .observeOn(schedulers.mainThread())
                 .subscribe {
-                    writingTextEditText.append(it)
-                    refactorSpace()
-                    writingText.value = Pair(
-                        writingTextEditText.toString(),
-                        isCorrectLetter(writingTextEditText.toString())
-                    )
-                    if (!isCorrectLetter(writingTextEditText.toString())) countNotCorrect++
-                    if (countNotCorrect > 2) {
-                        check()
+                    if (writingTextEditText.length < blockWords[indexWord].eng.length) {
+                        writingTextEditText.append(it)
+                        refactorSpace()
+                        writingText.value = Pair(
+                            writingTextEditText.toString(), addListIncorrectIndexes()
+                        )
+                        if (!isCorrectLetter(writingTextEditText.toString())) countNotCorrect++
+                        if (countNotCorrect > ATTEMPTS) {
+                            check()
+                        }
                     }
                 }
     }
 
-    fun addListInccorrectIndexes(){
+    fun addListIncorrectIndexes(): MutableList<Int> {
+        if (writingTextEditText.length <= blockWords[indexWord].eng.length) {
+            incorrectIndexes.clear()
+            writingTextEditText.forEachIndexed { index, c ->
+                if (c != blockWords[indexWord].eng[index]) {
+                    incorrectIndexes.add(index)
+                }
+            }
+        } else {
+            incorrectIndexes.add(writingTextEditText.lastIndex)
+        }
+        return incorrectIndexes
 
     }
 
@@ -131,10 +145,29 @@ class WordsWritingViewModel @Inject constructor(
 
     fun removeLastLetter() {
         if (writingTextEditText.isNotEmpty()) {
-            writingTextEditText.deleteCharAt(writingTextEditText.length - 1)
-            writingText.value = Pair(
-                writingTextEditText.toString(), true
-            )
+            if (incorrectIndexes.size > 0) {
+                if (incorrectIndexes[incorrectIndexes.lastIndex] == writingTextEditText.lastIndex
+                ) {
+                    incorrectIndexes.removeAt(incorrectIndexes.lastIndex)
+                    writingTextEditText.deleteCharAt(writingTextEditText.lastIndex)
+
+                    writingText.value = Pair(
+                        writingTextEditText.toString(), incorrectIndexes
+                    )
+                } else {
+                    writingTextEditText.deleteCharAt(writingTextEditText.lastIndex)
+                    writingText.value = Pair(
+                        writingTextEditText.toString(), incorrectIndexes
+                    )
+                }
+            } else {
+                writingTextEditText.deleteCharAt(writingTextEditText.lastIndex)
+                writingText.value = Pair(
+                    writingTextEditText.toString(), incorrectIndexes
+                )
+            }
+
+
         }
     }
 

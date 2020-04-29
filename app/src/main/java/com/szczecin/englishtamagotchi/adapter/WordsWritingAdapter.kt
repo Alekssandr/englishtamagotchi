@@ -45,15 +45,6 @@ class WordsWritingAdapter : RecyclerView.Adapter<WordsWritingAdapter.ItemViewHol
         notifyDataSetChanged()
     }
 
-//    fun updateItem(pairRusEng: WordsBindViewModel.ButtonColorization) {
-//        if (pairRusEng.event != RED && pairRusEng.event != CHOICE) {
-//            previousPosition = DEFAULT
-//        }
-//        val correctIndex = stepsListShuffled.indexOf(stepsList[pairRusEng.index])
-//        stepsListShuffled[correctIndex].dayOfLearning = pairRusEng.event
-//        notifyItemChanged(stepsListShuffled.indexOf(stepsList[pairRusEng.index]))
-//    }
-
     class ItemViewHolder(private val binding: WritingLetterBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(pairRusEng: Char) {

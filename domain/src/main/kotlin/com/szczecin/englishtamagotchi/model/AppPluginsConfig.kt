@@ -5,7 +5,7 @@ data class AppPluginsConfig(
 )
 
 data class PairRusEng(
-    var id: Long = 0,
+    var id: Int = 0,
     var eng: String = "",
     var rus: String = "",
     var isChecked: Boolean = false,

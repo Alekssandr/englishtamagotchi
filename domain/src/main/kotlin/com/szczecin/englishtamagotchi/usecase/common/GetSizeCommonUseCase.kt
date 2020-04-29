@@ -4,17 +4,13 @@ import com.szczecin.englishtamagotchi.TranslateRepository
 import com.szczecin.englishtamagotchi.model.PairRusEng
 import com.szczecin.englishtamagotchi.repo.WordsCommonRepository
 import io.reactivex.Maybe
+import io.reactivex.Single
 import javax.inject.Inject
 
-class GetDataFromJSONUseCase @Inject constructor(
-    private val routeRepository: TranslateRepository,
+class GetSizeCommonUseCase @Inject constructor(
     private val wordsBlockRepository: WordsCommonRepository
 
 ) {
-    fun fetchDataFromJSON(level: Int): Maybe<List<PairRusEng>> =
-        wordsBlockRepository.getSizeOfCommon().filter {
-            it == 0
-        }.flatMap {
-            Maybe.just(routeRepository.loadTranslate(level))
-        }
+    fun getSizeOfCommon(): Single<Int> =
+        wordsBlockRepository.getSizeOfCommon()
 }

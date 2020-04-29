@@ -98,16 +98,29 @@
 <!--            binding:layout_constraintStart_toStartOf="parent"-->
 <!--            binding:layout_constraintTop_toBottomOf="@+id/button4" />-->
 
-        <!--        <Button-->
-<!--            android:id="@+id/button2"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="32dp"-->
-<!--            android:onClick="@{()->ordinaryCardViewModel.removeWord()}"-->
-<!--            android:text="Remove Block"-->
-<!--            binding:layout_constraintEnd_toEndOf="parent"-->
-<!--            binding:layout_constraintStart_toStartOf="parent"-->
-<!--            binding:layout_constraintTop_toBottomOf="@+id/button4" />-->
+        <Button
+            android:id="@+id/btn_remove"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:onClick="@{()->ordinaryCardViewModel.removeWord()}"
+            android:visibility="@{ordinaryCardViewModel.isRusHideVisibility ? View.VISIBLE : View.INVISIBLE}"
+            android:text="Я знаю"
+            binding:layout_constraintEnd_toEndOf="parent"
+            binding:layout_constraintStart_toStartOf="parent"
+            binding:layout_constraintTop_toBottomOf="@+id/button4" />
+
+        <Button
+            android:id="@+id/btn_listen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{()->ordinaryCardViewModel.listenWord()}"
+            android:visibility="@{ordinaryCardViewModel.isRusHideVisibility ? View.VISIBLE : View.INVISIBLE}"
+            android:text="Слушать"
+            binding:layout_constraintBottom_toBottomOf="@+id/button"
+            binding:layout_constraintEnd_toEndOf="parent"
+            binding:layout_constraintStart_toEndOf="@+id/button"
+            binding:layout_constraintTop_toTopOf="@+id/button" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

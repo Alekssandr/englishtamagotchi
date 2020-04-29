@@ -19,22 +19,44 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_common_words"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             binding:commonWordsList="@{commonWordsListViewModel.pairRusEngList}"
-            binding:layout_constraintBottom_toBottomOf="parent"
+            binding:layout_constraintEnd_toEndOf="parent"
+            binding:layout_constraintStart_toStartOf="parent"
+            binding:layout_constraintTop_toBottomOf="@+id/recycler_common_group"
+            tools:listitem="@layout/common_list_item" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_common_group"
+            android:layout_width="wrap_content"
+            android:layout_height="64dp"
+            binding:allGroups="@{commonWordsListViewModel.allGroups}"
             binding:layout_constraintEnd_toEndOf="parent"
             binding:layout_constraintStart_toStartOf="parent"
             binding:layout_constraintTop_toBottomOf="@+id/btn_move_to_know"
-            tools:listitem="@layout/common_list_item" />
+            tools:listitem="@layout/common_list_group_item" />
 
         <Button
             android:id="@+id/btn_move_to_know"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="79dp"
             android:onClick="@{()->commonWordsListViewModel.fillAllFolders()}"
             android:text="ДОбавить в уже изученные слова"
+            binding:layout_constraintEnd_toEndOf="parent"
+            binding:layout_constraintStart_toStartOf="parent"
+            binding:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:visibility="@{commonWordsListViewModel.progressBarVisibility ? View.VISIBLE : View.INVISIBLE}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            binding:layout_constraintBottom_toBottomOf="parent"
             binding:layout_constraintEnd_toEndOf="parent"
             binding:layout_constraintStart_toStartOf="parent"
             binding:layout_constraintTop_toTopOf="parent" />

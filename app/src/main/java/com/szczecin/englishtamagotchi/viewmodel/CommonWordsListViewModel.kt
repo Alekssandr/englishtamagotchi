@@ -17,11 +17,13 @@ import javax.inject.Inject
 class CommonWordsListViewModel @Inject constructor(
     private val getDataFromJSONUseCase: GetDataFromJSONUseCase,
     private val getCommonWordsUseCase: GetCommonWordsUseCase,
+    private val getCommonWordsRangeUseCase: GetCommonWordsRangeUseCase,
     private val updateCommonItemUseCase: UpdateCommonItemUseCase,
     private val loadDataInBlockDBUseCase: LoadDataInDBUseCase,
     private val loadDataInDBCommonUseCase: LoadDataInDBCommonUseCase,
     private val addLearnTableWordUseCase: AddLearnTableListUseCase,
     private val removeAllCommonUseCase: RemoveAllCommonUseCase,
+    private val getSizeCommonUseCase: GetSizeCommonUseCase,
     private val sharedPreferences: SettingsPreferences,
     private val schedulers: RxSchedulers
 ) : ViewModel(), LifecycleObserver {
@@ -32,20 +34,45 @@ class CommonWordsListViewModel @Inject constructor(
 
     private val allWords: MutableList<PairRusEng> = mutableListOf()
 
+    val uiClosed = MutableLiveData<Unit>()
+
+    var numberGroup = 0
+
+    val allGroups: MutableLiveData<Int> = MutableLiveData<Int>()
+
+    val progressBarVisibility = MutableLiveData<Boolean>()
+
+
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun onCreate() {
         loadCardsFromJSON()
     }
 
     private fun loadCardsFromJSON() {
+        progressBarVisibility.value = true
         disposables += getDataFromJSONUseCase.fetchDataFromJSON(sharedPreferences.level)
             .subscribeOn(schedulers.io())
             .observeOn(schedulers.mainThread())
             .subscribeBy(onSuccess = {
+                allGroups.value = it.size / 100
                 removeFromCommon(it)
 //                insertInCommon(it)
             }, onComplete = {
-                getAllWords()
+                getSizeOfCommon()
+            }, onError = {
+                Log.e("Error", it.message ?: "")
+            })
+    }
+
+    private fun getSizeOfCommon() {
+        disposables += getSizeCommonUseCase
+            .getSizeOfCommon()
+            .subscribeOn(schedulers.io())
+            .observeOn(schedulers.mainThread())
+            .subscribeBy(onSuccess = {
+                allGroups.value = it / 100
+                allWords.clear()
+                getAllWords(0)
             }, onError = {
                 Log.e("Error", it.message ?: "")
             })
@@ -59,7 +86,7 @@ class CommonWordsListViewModel @Inject constructor(
             .subscribeBy(onComplete = {
                 insertInCommon(it)
             }, onError = {
-//                Log.e("Error", it.message ?: "")
+                //                Log.e("Error", it.message ?: "")
             })
     }
 
@@ -69,20 +96,22 @@ class CommonWordsListViewModel @Inject constructor(
             .subscribeOn(schedulers.io())
             .observeOn(schedulers.mainThread())
             .subscribeBy(onComplete = {
-                getAllWords()
+                getAllWords(0)
             }, onError = {
                 Log.e("Error", it.message ?: "")
             })
     }
 
-    private fun getAllWords() {
-        disposables += getCommonWordsUseCase
-            .execute()
+    private fun getAllWords(group: Int) {
+        disposables += getCommonWordsRangeUseCase
+            .execute(group)
             .subscribeOn(schedulers.io())
             .observeOn(schedulers.mainThread())
             .subscribeBy(onSuccess = {
+                allWords.clear()
                 pairRusEngList.value = it
                 allWords.addAll(it)
+                progressBarVisibility.value = false
             }, onError = {
                 Log.e("Error", it.message ?: "")
             })
@@ -102,6 +131,16 @@ class CommonWordsListViewModel @Inject constructor(
                 }
     }
 
+    fun subscribeForItemGroupClick(clickObserver: Observable<Int>) {
+        disposables +=
+            clickObserver
+                .subscribeOn(schedulers.io())
+                .observeOn(schedulers.mainThread())
+                .subscribe {
+                    getAllWords(it)
+                }
+    }
+
     private fun updateItem(eng: String, isChecked: Boolean) {
         disposables +=
             updateCommonItemUseCase.updateItemBy(eng, isChecked)
@@ -117,7 +156,7 @@ class CommonWordsListViewModel @Inject constructor(
     fun fillAllFolders() {
         allWords.filter { it.isChecked }
         fillKnowTable(allWords.filter { it.isChecked })
-        fillLearnTable(allWords.filter { !it.isChecked })
+        fillLearnTable(allWords.filter { !it.isChecked }.shuffled())
     }
 
     private fun fillKnowTable(knowWords: List<PairRusEng>) {
@@ -140,6 +179,7 @@ class CommonWordsListViewModel @Inject constructor(
             .observeOn(schedulers.mainThread())
             .subscribeBy(onComplete = {
                 Log.d("Test111", "learnWords: ${learnWords.size}")
+                uiClosed.postValue(Unit)
                 //progressbar
             }, onError = {
                 Log.e("Error", it.message ?: "")
@@ -148,6 +188,7 @@ class CommonWordsListViewModel @Inject constructor(
 
     private fun updateListItem(it: Int, isChecked: Boolean) {
         allWords[it].isChecked = isChecked
+        Log.d("Test", "lo : " + allWords[it].toString())
         updateItem(allWords[it].eng, isChecked)
     }
 

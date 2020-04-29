@@ -14,7 +14,7 @@ import io.reactivex.Observable
 @Dao
 interface WordsBlockDao {
 
-    @Query("SELECT * from WordsBlockEntity order by RANDOM()")
+    @Query("SELECT * from WordsBlockEntity ORDER BY eng")
     fun getWordsBlockList(): Single<List<WordsBlockEntity>>
 
     @Query("SELECT * from WordsBlockEntity WHERE dayOfLearning = :dayOfLearning")
@@ -55,6 +55,9 @@ interface WordsBlockDao {
     @Query("SELECT * from WordsCommonEntity")
     fun getWordsCommonList(): Single<List<WordsCommonEntity>>
 
+    @Query("SELECT * from WordsCommonEntity WHERE id > :from AND id < :to")
+    fun getWordsCommonListByGroup(from: Int, to: Int): Single<List<WordsCommonEntity>>
+
     @Query("UPDATE WordsCommonEntity SET isCheckbox = :isCheckbox WHERE eng = :eng")
     fun changeItemForCommon(eng: String, isCheckbox: Boolean) : Completable
 
@@ -70,7 +73,7 @@ interface WordsBlockDao {
 //    fun getLearnListByDayOfLearning(dayOfLearning: Int): Single<List<LearnWordsBlockEntity>>
 
     @Query("SELECT * from LearnWordsBlockEntity WHERE dayOfLearning == 0 LIMIT :newWordsPerDay")
-    fun getLearnListToday(newWordsPerDay: Int): Observable<List<LearnWordsBlockEntity>>
+    fun getLearnListToday(newWordsPerDay: Int): Single<List<LearnWordsBlockEntity>>
 
     @Query("UPDATE LearnWordsBlockEntity SET dayOfLearning = :dayOfLearning WHERE eng = :eng")
     fun updateLearnListBy(eng: String, dayOfLearning: Int)

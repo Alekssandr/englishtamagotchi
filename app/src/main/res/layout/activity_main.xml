@@ -66,10 +66,10 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="24dp"
                     android:onClick="chooseCorrectExercise"
-                    android:text="Start learning"
+                    android:text="@string/learning"
                     binding:layout_constraintStart_toStartOf="parent"
-                    binding:layout_constraintTop_toBottomOf="@+id/new_words_per_day_10" />
-
+                    binding:layout_constraintTop_toBottomOf="@+id/new_words_per_day_10"
+                    tools:text = "Start learning"/>
 
                 <Button
                     android:id="@+id/btn_lvl_a1"

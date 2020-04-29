@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "LearnWordsTableEntity")
 data class LearnWordsTableEntity(
     @PrimaryKey @ColumnInfo val eng: String,
+    @ColumnInfo val id: Int,
     @ColumnInfo val rus: String,
     @ColumnInfo val dayOfLearning: Int
 )

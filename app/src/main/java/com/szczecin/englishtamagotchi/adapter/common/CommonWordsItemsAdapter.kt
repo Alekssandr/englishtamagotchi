@@ -56,7 +56,8 @@ class CommonWordsItemsAdapter :
     class ItemViewHolder(private val binding: CommonListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(pairRusEng: PairRusEng) {
-            this.binding.text = pairRusEng.eng
+            this.binding.textEng = pairRusEng.eng
+            this.binding.textRus = pairRusEng.rus
             if (pairRusEng.isChecked) {
                 this.binding.item.setBackgroundColor(
                     ContextCompat.getColor(this.binding.item.context, R.color.green)

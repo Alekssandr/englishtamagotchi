@@ -7,6 +7,7 @@ import android.text.style.ForegroundColorSpan
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.szczecin.englishtamagotchi.adapter.common.CommonGroupItemsAdapter
 import com.szczecin.englishtamagotchi.adapter.common.CommonWordsItemsAdapter
 import com.szczecin.englishtamagotchi.adapter.know.KnowLearnTableItemsAdapter
 import com.szczecin.englishtamagotchi.adapter.repeat.ChooseCorrectWordsItemsAdapter
@@ -33,6 +34,23 @@ fun RecyclerView.bindCommonWords(items: List<PairRusEng>?) {
     items?.let {
         val adapter = adapter as CommonWordsItemsAdapter
         adapter.update(items)
+    }
+}
+
+@BindingAdapter("allGroups")
+fun RecyclerView.allGroups(items: Int?) {
+    items?.let {
+        val adapter = adapter as CommonGroupItemsAdapter
+        var i = 0
+        var listItems = mutableListOf<Int>()
+
+        while (i <= items) {
+            println("Line $i")
+            listItems.add(i)
+            i += 1
+
+        }
+        adapter.update(listItems)
     }
 }
 
@@ -69,31 +87,51 @@ fun RecyclerView.bindWordsWriting(items: MutableList<Char>?) {
 }
 
 @BindingAdapter("changeColor")
-fun TextView.changeColor(writingTextEditText: Pair<String, Boolean>?) {
+fun TextView.changeColor(writingTextEditText: Pair<String, List<Int>>?) {
     writingTextEditText?.let {
         val word = SpannableString(writingTextEditText.first)
+        if (word.isNotEmpty()) {
+            word.setSpan(
+                ForegroundColorSpan(Color.DKGRAY),
+                0,
+                word.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
 
-        if (writingTextEditText.second) {
-            word.setSpan(
-                ForegroundColorSpan(Color.DKGRAY),
-                0,
-                word.length,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-        } else {
-            word.setSpan(
-                ForegroundColorSpan(Color.DKGRAY),
-                0,
-                word.length - 1,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-            word.setSpan(
-                ForegroundColorSpan(Color.RED),
-                word.length - 1,
-                word.length,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
+//            if(word.length<writingTextEditText.second.size){
+//
+//            }
+            writingTextEditText.second.forEach {
+                word.setSpan(
+                    ForegroundColorSpan(Color.RED),
+                    it,
+                    it + 1,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            }
         }
+
+//        if (writingTextEditText.second) {
+//            word.setSpan(
+//                ForegroundColorSpan(Color.DKGRAY),
+//                0,
+//                word.length,
+//                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+//            )
+//        } else {
+//            word.setSpan(
+//                ForegroundColorSpan(Color.DKGRAY),
+//                0,
+//                word.length - 1,
+//                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+//            )
+//            word.setSpan(
+//                ForegroundColorSpan(Color.RED),
+//                word.length - 1,
+//                word.length,
+//                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+//            )
+//        }
         text = word
     }
 }

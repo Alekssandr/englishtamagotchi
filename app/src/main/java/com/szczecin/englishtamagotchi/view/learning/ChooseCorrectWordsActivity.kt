@@ -3,6 +3,8 @@ package com.szczecin.englishtamagotchi.view.learning
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -18,10 +20,12 @@ import com.szczecin.englishtamagotchi.viewmodel.learning.RepeatingItemColor
 import com.szczecin.englishtamagotchi.viewmodel.repeat.RepeatViewModel
 import com.szczecin.pointofinterest.common.extensions.viewModel
 import dagger.android.AndroidInjection
+import kotlinx.android.synthetic.main.activity_repeating.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 const val SPAN_COUNT = 3

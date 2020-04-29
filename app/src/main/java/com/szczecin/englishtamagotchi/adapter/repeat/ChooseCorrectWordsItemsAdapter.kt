@@ -19,6 +19,7 @@ class ChooseCorrectWordsItemsAdapter :
     private var repeatItemsList: List<PairRusEng> = emptyList()
     private val publishSubjectItem = PublishSubject.create<PairRusEng>()
     var previousPosition = DEFAULT
+    var isclicked = false
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -37,10 +38,12 @@ class ChooseCorrectWordsItemsAdapter :
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         holder.bind(repeatItemsList[position])
-
         holder.itemView.buttonEngRepeat.setOnClickListener {
+            if (!isclicked) {
+                isclicked = true
                 publishSubjectItem.onNext(repeatItemsList[position])
                 previousPosition = position
+            }
         }
     }
 
@@ -50,6 +53,7 @@ class ChooseCorrectWordsItemsAdapter :
     }
 
     fun updateItem(repeatingItemColor: RepeatingItemColor) {
+        isclicked = repeatingItemColor.color == RepeatingItemColor.RED.color || repeatingItemColor.color == RepeatingItemColor.GREEN.color
         repeatItemsList[previousPosition].buttonColor = repeatingItemColor.color
         notifyItemChanged(previousPosition)
     }

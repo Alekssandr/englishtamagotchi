@@ -25,6 +25,7 @@ import com.szczecin.englishtamagotchi.viewmodel.MainViewModel
 import com.szczecin.pointofinterest.common.extensions.viewModel
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_learning.*
+import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 const val ENG_TO_RUS = "ENG_TO_RUS"
@@ -66,6 +67,7 @@ class MainActivity : AppCompatActivity() {
     private fun openRepeatExercise() {
         mainViewModel.updatedLearnedWords.observe(this, Observer {
             isOpenRepeat = true
+            btn_start_learning.text = resources.getText(R.string.exam)
         })
     }
 
@@ -91,10 +93,22 @@ class MainActivity : AppCompatActivity() {
             R.id.new_words_per_day_5 -> mainViewModel.perDay5Words.value = PER_DAY_5_WORDS
             R.id.new_words_per_day_10 -> mainViewModel.perDay10Words.value = PER_DAY_10_WORDS
             R.id.new_words_per_day_15 -> mainViewModel.perDay15Words.value = PER_DAY_15_WORDS
-            R.id.btn_lvl_a1 -> mainViewModel.level_a1.value = LEVEL_A_1
-            R.id.btn_lvl_a2 -> mainViewModel.level_a1.value = LEVEL_A_2
-            R.id.btn_lvl_b1 -> mainViewModel.level_a1.value = LEVEL_B_1
-            R.id.btn_lvl_b2 -> mainViewModel.level_a1.value = LEVEL_B_2
+            R.id.btn_lvl_a1 -> {
+                mainViewModel.level_a1.value = LEVEL_A_1
+                startActivity(Intent(this, CommonWordsActivity::class.java))
+            }
+            R.id.btn_lvl_a2 -> {
+                mainViewModel.level_a1.value = LEVEL_A_2
+                startActivity(Intent(this, CommonWordsActivity::class.java))
+            }
+            R.id.btn_lvl_b1 -> {
+                mainViewModel.level_a1.value = LEVEL_B_1
+                startActivity(Intent(this, CommonWordsActivity::class.java))
+            }
+            R.id.btn_lvl_b2 -> {
+                mainViewModel.level_a1.value = LEVEL_B_2
+                startActivity(Intent(this, CommonWordsActivity::class.java))
+            }
         }
     }
 
@@ -104,8 +118,11 @@ class MainActivity : AppCompatActivity() {
         if (requestCode == SECOND_ACTIVITY_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 when (data!!.getIntExtra("activity_status", DEFAULT)) {
-                    REPEATING ->
+                    REPEATING -> {
                         isOpenRepeat = false
+                        btn_start_learning.text = resources.getText(R.string.learning)
+                    }
+
 //                        startActivity(
 //                            Intent(
 //                                this,
@@ -114,9 +131,10 @@ class MainActivity : AppCompatActivity() {
 //                        )
                     LEARNING -> {
                         val completedTasks = (data.getIntExtra("completed_tasks", DEFAULT))
-                        if(completedTasks>0){
+                        if (completedTasks > 0) {
                             mainViewModel.updatedRepeating.postValue(Unit)
                             isOpenRepeat = true
+                            btn_start_learning.text = resources.getText(R.string.exam)
                         }
                     }
 

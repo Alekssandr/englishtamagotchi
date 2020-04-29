@@ -127,7 +127,7 @@ class LearningActivity : AppCompatActivity() {
                     BIND -> btn_binding.setBackgroundColor(
                         ContextCompat.getColor(this, R.color.green)
                     )
-                    CHOOSE -> btn_binding.setBackgroundColor(
+                    CHOOSE -> btn_choose.setBackgroundColor(
                         ContextCompat.getColor(this, R.color.green)
                     )
                 }
