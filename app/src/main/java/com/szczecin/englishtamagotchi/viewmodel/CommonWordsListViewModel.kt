@@ -45,7 +45,12 @@ class CommonWordsListViewModel @Inject constructor(
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun onCreate() {
-        loadCardsFromJSON()
+        if(sharedPreferences.lastlevel!=sharedPreferences.level){
+            loadCardsFromJSON()
+        } else {
+            getSizeOfCommon()
+        }
+
     }
 
     private fun loadCardsFromJSON() {
@@ -56,9 +61,10 @@ class CommonWordsListViewModel @Inject constructor(
             .subscribeBy(onSuccess = {
                 allGroups.value = it.size / 100
                 removeFromCommon(it)
+                sharedPreferences.lastlevel = sharedPreferences.level
 //                insertInCommon(it)
             }, onComplete = {
-                getSizeOfCommon()
+//                getSizeOfCommon()
             }, onError = {
                 Log.e("Error", it.message ?: "")
             })

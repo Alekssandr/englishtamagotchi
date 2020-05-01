@@ -7,15 +7,10 @@ import com.szczecin.englishtamagotchi.model.PairRusEng
 import com.szczecin.englishtamagotchi.preferencies.SettingsPreferences
 import com.szczecin.englishtamagotchi.usecase.learn.GetLearnWordsUseCase
 import com.szczecin.englishtamagotchi.usecase.repeating.RepeatingInsertWordsUseCase
-import com.szczecin.englishtamagotchi.utils.LEVEL_A_1
-import com.szczecin.englishtamagotchi.utils.LEVEL_A_2
-import com.szczecin.englishtamagotchi.utils.LEVEL_B_1
-import com.szczecin.englishtamagotchi.utils.LEVEL_B_2
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
 import javax.inject.Inject
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import java.util.*
 
 
@@ -29,10 +24,7 @@ class MainViewModel @Inject constructor(
     val perDay5Words = MutableLiveData<Int>()
     val perDay10Words = MutableLiveData<Int>()
     val perDay15Words = MutableLiveData<Int>()
-    val level_a1 = MutableLiveData<Int>()
-    val level_a2 = MutableLiveData<Int>()
-    val level_b1 = MutableLiveData<Int>()
-    val level_b2 = MutableLiveData<Int>()
+    val level = MutableLiveData<Int>()
     val numberOfLearningDay = MutableLiveData<Int>().apply { value = 1 }
     val updatedLearnedWords = MutableLiveData<Unit>()
     val updatedRepeating = MutableLiveData<Unit>()
@@ -53,16 +45,7 @@ class MainViewModel @Inject constructor(
             sharedPreferences.newWordsPerDay = it
             sharedPreferences.dailyWords = it
         }
-        level_a1.observeForever {
-            sharedPreferences.level = it
-        }
-        level_a2.observeForever {
-            sharedPreferences.level = it
-        }
-        level_b1.observeForever {
-            sharedPreferences.level = it
-        }
-        level_b2.observeForever {
+        level.observeForever {
             sharedPreferences.level = it
         }
 

@@ -46,6 +46,14 @@ class CommonWordsActivity : AppCompatActivity() {
         })
     }
 
+    override fun onStart() {
+        super.onStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
     private fun initRecycler() {
         binding.recyclerCommonWords.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)

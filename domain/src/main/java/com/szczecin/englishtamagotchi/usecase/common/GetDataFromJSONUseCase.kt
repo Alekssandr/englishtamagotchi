@@ -12,9 +12,8 @@ class GetDataFromJSONUseCase @Inject constructor(
 
 ) {
     fun fetchDataFromJSON(level: Int): Maybe<List<PairRusEng>> =
-        wordsBlockRepository.getSizeOfCommon().filter {
-            it == 0
-        }.flatMap {
+
+
             Maybe.just(routeRepository.loadTranslate(level))
-        }
+
 }

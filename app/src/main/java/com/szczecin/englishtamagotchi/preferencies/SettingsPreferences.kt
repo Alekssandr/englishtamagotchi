@@ -11,6 +11,7 @@ class SettingsPreferences(sharedPreferences: SharedPreferences) {
     var dailyWords: Int by IntPreference(sharedPreferences, DAILY_WORDS)
     var numberOfLearningDay: Int by IntPreference(sharedPreferences, NUMBER_OF_DAY)
     var level: Int by IntPreference(sharedPreferences, LEVEL)
+    var lastlevel: Int by IntPreference(sharedPreferences, LEVEL_LAST, -1)
 
     private companion object Key {
         const val COMMON_BLOCK = "COMMON_BLOCK"
@@ -20,5 +21,6 @@ class SettingsPreferences(sharedPreferences: SharedPreferences) {
         const val NUMBER_OF_DAY = "NUMBER_OF_DAY"
         const val IS_OPEN_REPEATING = "IS_OPEN_REPEATING"
         const val LEVEL = "LEVEL"
+        const val LEVEL_LAST = "LEVEL_LAST"
     }
 }

@@ -24,6 +24,7 @@ class LocalCommonTranslateRepository(private val context: Context): TranslateRep
     }
 
     override fun loadTranslate(level: Int): List<PairRusEng> {
+        if(level == 4)return emptyList()
         var currentLevel = BuildConfig.LEVEL_A1
         when(level){
             1 -> currentLevel = BuildConfig.LEVEL_A2

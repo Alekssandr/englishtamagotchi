@@ -37,6 +37,9 @@
         <activity android:name=".view.common.CommonWordsActivity"
             android:launchMode="singleTop"
             android:noHistory="true"/>
+        <activity android:name=".view.addNewWord.AddOwnWordActivity"
+            android:launchMode="singleTop"
+            android:noHistory="true"/>
         <activity android:name=".view.know.KnowTableActivity"
             android:launchMode="singleTop"
             android:noHistory="true"/>

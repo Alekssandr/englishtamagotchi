@@ -2,6 +2,7 @@ package com.szczecin.englishtamagotchi.di
 
 import com.szczecin.englishtamagotchi.app.di.scopes.PerActivity
 import com.szczecin.englishtamagotchi.view.MainActivity
+import com.szczecin.englishtamagotchi.view.addNewWord.AddOwnWordActivity
 import com.szczecin.englishtamagotchi.view.common.CommonWordsActivity
 import com.szczecin.englishtamagotchi.view.know.KnowTableActivity
 import com.szczecin.englishtamagotchi.view.learn.LearnTableActivity
@@ -56,6 +57,10 @@ abstract class MainActivitiesBinder {
     @ContributesAndroidInjector(modules = [MainActivitiesModule::class])
     @PerActivity
     abstract fun bindChooseCorrectWordsActivity(): ChooseCorrectWordsActivity
+
+    @ContributesAndroidInjector(modules = [MainActivitiesModule::class])
+    @PerActivity
+    abstract fun bindAddOwnWordActivity(): AddOwnWordActivity
 
 
 

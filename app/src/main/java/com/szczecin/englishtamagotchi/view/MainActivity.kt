@@ -5,17 +5,14 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.szczecin.englishtamagotchi.R
 import com.szczecin.englishtamagotchi.common.ViewModelFactory
 import com.szczecin.englishtamagotchi.common.extensions.lifecircle.observeLifecycleIn
 import com.szczecin.englishtamagotchi.databinding.ActivityMainBinding
-import com.szczecin.englishtamagotchi.utils.LEVEL_A_1
-import com.szczecin.englishtamagotchi.utils.LEVEL_A_2
-import com.szczecin.englishtamagotchi.utils.LEVEL_B_1
-import com.szczecin.englishtamagotchi.utils.LEVEL_B_2
+import com.szczecin.englishtamagotchi.utils.*
+import com.szczecin.englishtamagotchi.view.addNewWord.AddOwnWordActivity
 import com.szczecin.englishtamagotchi.view.common.CommonWordsActivity
 import com.szczecin.englishtamagotchi.view.know.KnowTableActivity
 import com.szczecin.englishtamagotchi.view.learn.LearnTableActivity
@@ -24,7 +21,6 @@ import com.szczecin.englishtamagotchi.view.repeat.RepeatingActivity
 import com.szczecin.englishtamagotchi.viewmodel.MainViewModel
 import com.szczecin.pointofinterest.common.extensions.viewModel
 import dagger.android.AndroidInjection
-import kotlinx.android.synthetic.main.activity_learning.*
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
@@ -94,22 +90,30 @@ class MainActivity : AppCompatActivity() {
             R.id.new_words_per_day_10 -> mainViewModel.perDay10Words.value = PER_DAY_10_WORDS
             R.id.new_words_per_day_15 -> mainViewModel.perDay15Words.value = PER_DAY_15_WORDS
             R.id.btn_lvl_a1 -> {
-                mainViewModel.level_a1.value = LEVEL_A_1
+                mainViewModel.level.value = LEVEL_A_1
                 startActivity(Intent(this, CommonWordsActivity::class.java))
             }
             R.id.btn_lvl_a2 -> {
-                mainViewModel.level_a1.value = LEVEL_A_2
+                mainViewModel.level.value = LEVEL_A_2
                 startActivity(Intent(this, CommonWordsActivity::class.java))
             }
             R.id.btn_lvl_b1 -> {
-                mainViewModel.level_a1.value = LEVEL_B_1
+                mainViewModel.level.value = LEVEL_B_1
                 startActivity(Intent(this, CommonWordsActivity::class.java))
             }
             R.id.btn_lvl_b2 -> {
-                mainViewModel.level_a1.value = LEVEL_B_2
+                mainViewModel.level.value = LEVEL_B_2
+                startActivity(Intent(this, CommonWordsActivity::class.java))
+            }
+            R.id.btn_lvl_own_word -> {
+                mainViewModel.level.value = LEVEL_OWN
                 startActivity(Intent(this, CommonWordsActivity::class.java))
             }
         }
+    }
+
+    fun addNewWord(view: View) {
+        startActivity(Intent(this, AddOwnWordActivity::class.java))
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

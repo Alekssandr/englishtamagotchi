@@ -115,6 +115,27 @@
                     binding:layout_constraintStart_toEndOf="@+id/btn_lvl_b1"
                     binding:layout_constraintTop_toBottomOf="@+id/btn_start_learning" />
 
+                <Button
+                    android:id="@+id/btn_lvl_own_word"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:onClick="chooseCorrectExercise"
+                    android:text="for Karina Level"
+                    binding:layout_constraintStart_toStartOf="parent"
+                    binding:layout_constraintTop_toBottomOf="@+id/btn_lvl_a1" />
+
+                <Button
+                    android:id="@+id/btn_open_add_new_word"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:onClick="addNewWord"
+                    android:text="add new word"
+                    binding:layout_constraintStart_toEndOf="@+id/btn_lvl_own_word"
+                    binding:layout_constraintTop_toBottomOf="@+id/btn_lvl_a1" />
+
                 <TextView
                     android:id="@+id/day_learning_txt"
                     android:layout_width="wrap_content"
