@@ -1,4 +1,50 @@
-apply plugin: 'kotlin'
+apply plugin: 'com.android.library'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion androidCompileSdkVersion
+    buildToolsVersion androidBuildToolsVersion
+
+    defaultConfig {
+        minSdkVersion androidMinSdkVersion
+        targetSdkVersion androidTargetSdkVersion
+        versionCode 1
+        versionName "0.0.1"
+        ext.a1 = "rusEng/a1.json"
+        ext.a2 = "rusEng/a2.json"
+        ext.b1 = "rusEng/b1.json"
+        ext.b2 = "rusEng/b2.json"
+        buildConfigField "String", "LEVEL_A1", "\"${ext.a1}\""
+        buildConfigField "String", "LEVEL_A2", "\"${ext.a2}\""
+        buildConfigField "String", "LEVEL_B1", "\"${ext.b1}\""
+        buildConfigField "String", "LEVEL_B2", "\"${ext.b2}\""
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+            minifyEnabled false
+        }
+
+        develop {
+            debuggable false
+            minifyEnabled false
+        }
+
+        beta {
+            debuggable false
+            minifyEnabled false
+        }
+
+        production {
+            debuggable false
+            minifyEnabled false
+        }
+    }
+}
 
 dependencies {
     implementation domainDependencies.kotlin

@@ -19,9 +19,11 @@ class OrdinaryCardViewModel @Inject constructor(
     private val getLearnWordsByDayUseCase: GetLearnWordsByDayUseCase,
     private val removeLearnItemUseCase: RemoveLearnItemUseCase,
     private val addWordKnowUseCase: AddWordKnowUseCase,
+    private val getListFromTableWordUseCase: GetListFromTableWordUseCase,
     private val addLearnWordUseCase: AddLearnWordUseCase,
     private val removeTableLearnItemUseCase: RemoveTableLearnItemUseCase,
     private val addDifferenceToLearnUseCase: AddDifferenceToLearnUseCase,
+    private val insertToToLearnUseCase: InsertToToLearnUseCase,
     private val sharedPreferences: SettingsPreferences,
     private val schedulers: RxSchedulers
 ) : ViewModel(), LifecycleObserver {
@@ -71,6 +73,8 @@ class OrdinaryCardViewModel @Inject constructor(
 
         when {
             blockWords.size - 1 > indexWord -> {
+                Log.d("test1111", "blockWords.size - 1 > indexWord")
+
                 translateWordCloseVisibility.value = false
                 indexWord++
                 loadBlock(indexWord)
@@ -78,7 +82,34 @@ class OrdinaryCardViewModel @Inject constructor(
             }
             //осталось одно слово в blockWords лернинг тейбли и лернинг
             blockWords.size < sharedPreferences.newWordsPerDay -> {
-                indexWord = sharedPreferences.newWordsPerDay - 1
+//                indexWord = sharedPreferences.newWordsPerDay - 1
+                Log.d("test1111", "blockWords.size < sharedPreferences.newWordsPerDa")
+
+                addNewData = sharedPreferences.newWordsPerDay - blockWords.size
+                addWordsFromTableToLearning()
+            }
+            else -> uiClosed.postValue(Unit)
+        }
+
+    }
+
+    fun nextRemove() {
+        Log.d("test1111", "next: ${blockWords.size} && $indexWord")
+
+        when {
+            blockWords.size - 1 > indexWord -> {
+                Log.d("test1111", "blockWords.size - 1 > indexWord")
+
+                translateWordCloseVisibility.value = false
+//                indexWord++
+                loadBlock(indexWord)
+
+            }
+            //осталось одно слово в blockWords лернинг тейбли и лернинг
+            blockWords.size < sharedPreferences.newWordsPerDay -> {
+//                indexWord = sharedPreferences.newWordsPerDay - 1
+                Log.d("test1111", "blockWords.size < sharedPreferences.newWordsPerDa")
+
                 addNewData = sharedPreferences.newWordsPerDay - blockWords.size
                 addWordsFromTableToLearning()
             }
@@ -89,27 +120,38 @@ class OrdinaryCardViewModel @Inject constructor(
 
 
     private fun addWordsFromTableToLearning() {
-        disposables += addLearnWordUseCase
+        disposables += getListFromTableWordUseCase
             .execute(sharedPreferences.newWordsPerDay)
             .subscribeOn(schedulers.io())
             .observeOn(schedulers.mainThread())
-            .subscribeBy(onComplete = {
-                Log.d("test1111", "addWordsFromTableToLearning")
-                getAllWords()
-            }, onError = {
+            .subscribe( {
+                Log.d("test1111", "addWordsFromTableToLearning it: $it")
+                insertToToLearn(it)
+            },{
                 Log.e("test1111", "BUUUUG:${it.message}")
             })
     }
 
-    //почему добавилось только 4 слова при удалении
-    //subscribe getAllWords запускается 3 раза, как, кто вызывает?
+    private fun insertToToLearn(wordsForLearning: List<PairRusEng>) {
+        disposables += insertToToLearnUseCase
+            .execute(wordsForLearning)
+            .subscribeOn(schedulers.io())
+            .observeOn(schedulers.mainThread())
+            .subscribeBy(onComplete = {
+                Log.d("test111", "insertToToLearn")
+                getAllWords()
+            }, onError = {
+                Log.e("test1111", it.message ?: "")
+            })
+    }
+
     fun getAllWords() {
         disposables += getLearnWordsByDayUseCase
-            .execute(sharedPreferences.newWordsPerDay)
+            .execute(addNewData)
             .subscribeOn(schedulers.io())
             .observeOn(schedulers.mainThread())
             .subscribe({
-                blockWords.clear()
+//                blockWords.clear()
                 blockWords.addAll(it)
                 Log.d("test1111", "getAllWords: ${blockWords.size}")
                 loadBlock(indexWord)
@@ -131,6 +173,7 @@ class OrdinaryCardViewModel @Inject constructor(
             .subscribeOn(schedulers.io())
             .observeOn(schedulers.mainThread())
             .subscribeBy(onComplete = {
+                Log.d("test111", "removeWordFromLearn^: ${blockWords[indexWord].eng} $indexWord")
                 removeWordFromLearnTable(blockWords[indexWord].eng)
             }, onError = {
                 Log.e("test1111", it.message ?: "")
@@ -151,7 +194,7 @@ class OrdinaryCardViewModel @Inject constructor(
 
                 if (indexWord < sharedPreferences.newWordsPerDay - 1 && indexWord != 0) indexWord--
                 Log.d("test111", "removeWordFromLearn^: ${indexWord}")
-                next()
+                nextRemove()
             }, onError = {
                 Log.e("Error 11", it.message ?: "")
             })
@@ -184,7 +227,20 @@ class OrdinaryCardViewModel @Inject constructor(
 //    }
 
     fun listenWord() {
-        listen.value = blockWords[indexWord].eng
+        disposables += getLearnWordsByDayUseCase
+            .execute(sharedPreferences.newWordsPerDay)
+            .subscribeOn(schedulers.io())
+            .observeOn(schedulers.mainThread())
+            .subscribe({
+                //                blockWords.clear()
+//                blockWords.addAll(it)
+                val a = it
+                Log.d("test1111", "listenWord: ${blockWords.size}")
+//                loadBlock(indexWord)
+            }, {
+                Log.e("test1111", it.message ?: "")
+            })
+//        listen.value = blockWords[indexWord].eng
     }
 
     override fun onCleared() {
