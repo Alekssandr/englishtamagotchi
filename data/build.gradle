@@ -13,8 +13,14 @@ android {
         targetSdkVersion androidTargetSdkVersion
         versionCode 1
         versionName "0.0.1"
-        ext.rusEngTraslate = "rusEng/rusEngTraslate.json"
-        buildConfigField "String", "RU_ENG_TRANSLATE", "\"${ext.rusEngTraslate}\""
+        ext.a1 = "rusEng/a1.json"
+        ext.a2 = "rusEng/a2.json"
+        ext.b1 = "rusEng/b1.json"
+        ext.b2 = "rusEng/b2.json"
+        buildConfigField "String", "LEVEL_A1", "\"${ext.a1}\""
+        buildConfigField "String", "LEVEL_A2", "\"${ext.a2}\""
+        buildConfigField "String", "LEVEL_B1", "\"${ext.b1}\""
+        buildConfigField "String", "LEVEL_B2", "\"${ext.b2}\""
     }
 
     buildTypes {

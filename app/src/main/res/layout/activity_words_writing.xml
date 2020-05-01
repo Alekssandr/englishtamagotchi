@@ -18,7 +18,7 @@
         android:layout_height="match_parent">
 
 
-        <EditText
+        <TextView
             android:id="@+id/writing_words"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -27,10 +27,9 @@
             binding:layout_constraintHorizontal_bias="0.498"
             binding:layout_constraintStart_toStartOf="parent"
             binding:layout_constraintTop_toTopOf="parent"
-            tools:text="open word"
-            android:afterTextChanged="@{(edtitable)->wordsWritingViewModel.afterUserNameChange(edtitable)}"
-            android:inputType="text"
-            android:autofillHints="test" />
+            android:textAllCaps="true"
+            tools:text="test"
+            binding:changeColor="@{wordsWritingViewModel.writingText}"/>
 
         <TextView
             android:id="@+id/open_word"
@@ -107,6 +106,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:text="Не правильно"
+            android:textColor="@android:color/holo_red_dark"
             android:visibility="@{wordsWritingViewModel.translateWordInCorrectVisibility ? View.VISIBLE : View.INVISIBLE}"
             binding:layout_constraintEnd_toEndOf="parent"
             binding:layout_constraintStart_toStartOf="parent"
@@ -116,6 +116,7 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@android:color/holo_green_dark"
             android:layout_marginTop="32dp"
             android:text="Правильно"
             android:visibility="@{wordsWritingViewModel.translateWordCorrectVisibility ? View.VISIBLE : View.INVISIBLE}"
@@ -123,6 +124,26 @@
             binding:layout_constraintStart_toStartOf="parent"
             binding:layout_constraintTop_toBottomOf="@+id/textView2" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_words_writing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            binding:layout_constraintBottom_toBottomOf="parent"
+            binding:layout_constraintEnd_toEndOf="parent"
+            binding:layout_constraintStart_toStartOf="parent"
+            binding:layout_constraintTop_toBottomOf="@+id/textView"
+            binding:wordsWriting="@{wordsWritingViewModel.letters}"
+            tools:listitem="@layout/writing_letter" />
+
+        <Button
+            android:id="@+id/remove_last_letter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="&lt;"
+            android:onClick="@{()->wordsWritingViewModel.removeLastLetter()}"
+            binding:layout_constraintEnd_toEndOf="parent"
+            binding:layout_constraintStart_toEndOf="@+id/button"
+            binding:layout_constraintTop_toTopOf="@+id/button" />
 
         <!--        <Button-->
 <!--            android:id="@+id/button3"-->

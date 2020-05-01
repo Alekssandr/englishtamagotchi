@@ -10,7 +10,7 @@ class LoadDataInDBUseCase @Inject constructor(
 
 ) {
     fun execute(pairRusEng: List<PairRusEng>): Completable =
-        wordsBlockRepository.removeAll().andThen(wordsBlockRepository.insert(pairRusEng))
+        wordsBlockRepository.insert(pairRusEng)
 
 //    }
 }

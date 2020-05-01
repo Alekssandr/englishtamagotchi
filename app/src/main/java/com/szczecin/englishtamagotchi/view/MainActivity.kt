@@ -12,6 +12,10 @@ import com.szczecin.englishtamagotchi.R
 import com.szczecin.englishtamagotchi.common.ViewModelFactory
 import com.szczecin.englishtamagotchi.common.extensions.lifecircle.observeLifecycleIn
 import com.szczecin.englishtamagotchi.databinding.ActivityMainBinding
+import com.szczecin.englishtamagotchi.utils.LEVEL_A_1
+import com.szczecin.englishtamagotchi.utils.LEVEL_A_2
+import com.szczecin.englishtamagotchi.utils.LEVEL_B_1
+import com.szczecin.englishtamagotchi.utils.LEVEL_B_2
 import com.szczecin.englishtamagotchi.view.common.CommonWordsActivity
 import com.szczecin.englishtamagotchi.view.know.KnowTableActivity
 import com.szczecin.englishtamagotchi.view.learn.LearnTableActivity
@@ -21,6 +25,7 @@ import com.szczecin.englishtamagotchi.viewmodel.MainViewModel
 import com.szczecin.pointofinterest.common.extensions.viewModel
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_learning.*
+import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 const val ENG_TO_RUS = "ENG_TO_RUS"
@@ -49,14 +54,20 @@ class MainActivity : AppCompatActivity() {
         openRepeatExercise()
     }
 
-    override fun onResume() {
-        super.onResume()
-        isOpenRepeat = false
-    }
+//    override fun onStart() {
+//        super.onStart()
+//        isOpenRepeat = false
+//
+//    }
+//    override fun OnStart() {
+//        super.onResume()
+//        isOpenRepeat = false
+//    }
 
     private fun openRepeatExercise() {
         mainViewModel.updatedLearnedWords.observe(this, Observer {
             isOpenRepeat = true
+            btn_start_learning.text = resources.getText(R.string.exam)
         })
     }
 
@@ -76,12 +87,28 @@ class MainActivity : AppCompatActivity() {
                 Intent(
                     this,
                     if (isOpenRepeat) RepeatingActivity::class.java else LearningActivity::class.java
-                ),
+                ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP),
                 SECOND_ACTIVITY_REQUEST_CODE
             )
             R.id.new_words_per_day_5 -> mainViewModel.perDay5Words.value = PER_DAY_5_WORDS
             R.id.new_words_per_day_10 -> mainViewModel.perDay10Words.value = PER_DAY_10_WORDS
             R.id.new_words_per_day_15 -> mainViewModel.perDay15Words.value = PER_DAY_15_WORDS
+            R.id.btn_lvl_a1 -> {
+                mainViewModel.level_a1.value = LEVEL_A_1
+                startActivity(Intent(this, CommonWordsActivity::class.java))
+            }
+            R.id.btn_lvl_a2 -> {
+                mainViewModel.level_a1.value = LEVEL_A_2
+                startActivity(Intent(this, CommonWordsActivity::class.java))
+            }
+            R.id.btn_lvl_b1 -> {
+                mainViewModel.level_a1.value = LEVEL_B_1
+                startActivity(Intent(this, CommonWordsActivity::class.java))
+            }
+            R.id.btn_lvl_b2 -> {
+                mainViewModel.level_a1.value = LEVEL_B_2
+                startActivity(Intent(this, CommonWordsActivity::class.java))
+            }
         }
     }
 
@@ -90,10 +117,27 @@ class MainActivity : AppCompatActivity() {
 
         if (requestCode == SECOND_ACTIVITY_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
-//                allTaskCount += 1
                 when (data!!.getIntExtra("activity_status", DEFAULT)) {
-                    REPEATING ->
-                        startActivity(Intent(this, LearningActivity::class.java))
+                    REPEATING -> {
+                        isOpenRepeat = false
+                        btn_start_learning.text = resources.getText(R.string.learning)
+                    }
+
+//                        startActivity(
+//                            Intent(
+//                                this,
+//                                LearningActivity::class.java
+//                            ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+//                        )
+                    LEARNING -> {
+                        val completedTasks = (data.getIntExtra("completed_tasks", DEFAULT))
+                        if (completedTasks > 0) {
+                            mainViewModel.updatedRepeating.postValue(Unit)
+                            isOpenRepeat = true
+                            btn_start_learning.text = resources.getText(R.string.exam)
+                        }
+                    }
+
                 }
             }
         }

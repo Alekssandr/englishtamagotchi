@@ -14,22 +14,39 @@
         <activity
             android:name=".view.learning.OrdinaryCardActivity"
             android:label="@string/title_activity_ordinary_card"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".view.MainActivity">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTop"
+            android:noHistory="true"/>
+        <activity android:name=".view.MainActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.repeat.RepeatingActivity"/>
-        <activity android:name=".view.learning.WordsWritingActivity"/>
-        <activity android:name=".view.learning.BindWordsActivity"/>
-        <activity android:name=".view.common.CommonWordsActivity"/>
-        <activity android:name=".view.know.KnowTableActivity"/>
-        <activity android:name=".view.learn.LearnTableActivity"/>
+        <activity android:name=".view.repeat.RepeatingActivity"
+            android:launchMode="singleTop"
+            android:noHistory="true"/>
+        <activity android:name=".view.learning.WordsWritingActivity"
+            android:launchMode="singleTop"
+            android:noHistory="true"/>
+        <activity android:name=".view.learning.BindWordsActivity"
+            android:launchMode="singleTop"
+            android:noHistory="true"/>
+        <activity android:name=".view.common.CommonWordsActivity"
+            android:launchMode="singleTop"
+            android:noHistory="true"/>
+        <activity android:name=".view.know.KnowTableActivity"
+            android:launchMode="singleTop"
+            android:noHistory="true"/>
+        <activity android:name=".view.learn.LearnTableActivity"
+            android:launchMode="singleTop"
+            android:noHistory="true"/>
         <activity android:name=".view.learning.LearningActivity"/>
-        <activity android:name=".view.learning.ChooseCorrectWordsActivity"/>
+        <activity android:name=".view.learning.ChooseCorrectWordsActivity"
+            android:launchMode="singleTop"
+            android:noHistory="true"/>
     </application>
 
 </manifest>

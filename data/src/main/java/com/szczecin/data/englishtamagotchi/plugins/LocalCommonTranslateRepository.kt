@@ -16,15 +16,21 @@ class LocalCommonTranslateRepository(private val context: Context): TranslateRep
 //    }
 
     override fun loadTranslate20InCommon(numberStart: Int, addNewData: Int) : List<PairRusEng> {//
-        val jsonResponse = getJson(context, BuildConfig.RU_ENG_TRANSLATE)
+        val jsonResponse = getJson(context, BuildConfig.LEVEL_A1)
         val appPluginsConfig: AppPluginsConfig = gson.fromJson(jsonResponse, AppPluginsConfig::class.java)
 //        val startIndex = numberBlock * 10 * 2 - 20
 //        val startIndex = numberBlock * 5 - 5
         return  appPluginsConfig.pairRusEng.subList(numberStart, numberStart + addNewData)//10
     }
 
-    override fun loadTranslate() : List<PairRusEng> {
-        val jsonResponse = getJson(context, BuildConfig.RU_ENG_TRANSLATE)
+    override fun loadTranslate(level: Int): List<PairRusEng> {
+        var currentLevel = BuildConfig.LEVEL_A1
+        when(level){
+            1 -> currentLevel = BuildConfig.LEVEL_A2
+            2 -> currentLevel = BuildConfig.LEVEL_B1
+            3 -> currentLevel = BuildConfig.LEVEL_B2
+        }
+        val jsonResponse = getJson(context, currentLevel)
         val appPluginsConfig: AppPluginsConfig = gson.fromJson(jsonResponse, AppPluginsConfig::class.java)
 
         return appPluginsConfig.pairRusEng

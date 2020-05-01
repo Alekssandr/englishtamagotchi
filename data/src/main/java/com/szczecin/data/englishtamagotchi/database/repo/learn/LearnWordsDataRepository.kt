@@ -12,7 +12,7 @@ import io.reactivex.Single
 class LearnWordsDataRepository(
     private val wordsBlockStorage: WordsBlockStorage
 ) : LearnWordsRepository {
-    override fun getLearnListToday(newWordsPerDay: Int): Observable<List<PairRusEng>>
+    override fun getLearnListToday(newWordsPerDay: Int): Single<List<PairRusEng>>
     = wordsBlockStorage.getLearnListToday(newWordsPerDay)
 
     override fun getLearnListBy(dayOfLearning: Int): Single<List<PairRusEng>> {

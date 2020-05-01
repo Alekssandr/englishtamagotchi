@@ -3,6 +3,8 @@ package com.szczecin.englishtamagotchi.view.learning
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -16,13 +18,15 @@ import com.szczecin.pointofinterest.common.extensions.viewModel
 import dagger.android.AndroidInjection
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_repeating.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
-class OrdinaryCardActivity : AppCompatActivity() {
+class OrdinaryCardActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     @Inject
     lateinit var factory: ViewModelFactory<OrdinaryCardViewModel>
@@ -33,14 +37,20 @@ class OrdinaryCardActivity : AppCompatActivity() {
 
     private val intentOrdinaryCard = Intent()
 
+    private var tts: TextToSpeech? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setBinding()
         observeLifecycleIn(ordinaryCardViewModel)
+        tts = TextToSpeech(this, this)
         val isEngToRus = intent.getBooleanExtra(ENG_TO_RUS, true)
         ordinaryCardViewModel.setRusOrEng(isEngToRus)
         intentOrdinaryCard.putExtra("activity_status", if (isEngToRus) ENG_RUS else RUS_ENG)
+        ordinaryCardViewModel.listen.observe(this, Observer {
+            speakOut(it)
+        })
     }
 
     private fun setBinding() {
@@ -56,6 +66,28 @@ class OrdinaryCardActivity : AppCompatActivity() {
                 finish()
             }
         })
+    }
+
+    override fun onInit(status: Int) {
+
+        if (status == TextToSpeech.SUCCESS) {
+            // set US English as language for tts
+            val result = tts!!.setLanguage(Locale.US)
+
+            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                Log.e("TTS", "The Language specified is not supported!")
+            } else {
+                button_listen?.isEnabled = true
+            }
+
+        } else {
+            Log.e("TTS", "Initilization Failed!")
+        }
+
+    }
+
+    private fun speakOut(eng: String) {
+        tts?.speak(eng, TextToSpeech.QUEUE_FLUSH, null, "")
     }
 
 }

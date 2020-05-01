@@ -9,9 +9,5 @@ import javax.inject.Inject
 class RemoveTableLearnItemUseCase @Inject constructor(
     private val learnWordsTableRepository: LearnWordsTableRepository
 ) {
-    fun execute(eng: String) = learnWordsTableRepository.removeItemFromLearnTable(eng).doOnComplete {
-        val a = 0
-    }.doOnError {
-        val b = it
-    }
+    fun execute(eng: String) = learnWordsTableRepository.removeItemFromLearnTable(eng)
 }

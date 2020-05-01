@@ -1,20 +1,14 @@
 package com.szczecin.englishtamagotchi.viewmodel.learning
 
 import android.util.Log
-import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.*
 import com.szczecin.englishtamagotchi.common.rx.RxSchedulers
 import com.szczecin.englishtamagotchi.model.PairRusEng
 import com.szczecin.englishtamagotchi.preferencies.SettingsPreferences
 import com.szczecin.englishtamagotchi.usecase.learn.GetLearnWordsByDayUseCase
-import com.szczecin.englishtamagotchi.usecase.learn.GetLearnWordsUseCase
-import com.szczecin.englishtamagotchi.usecase.learn.UpdateLearnWordUseCase
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import javax.inject.Inject
-import com.szczecin.englishtamagotchi.R
-import com.szczecin.englishtamagotchi.viewmodel.learning.WordsBindViewModel
 import io.reactivex.Observable
 
 class ChooseCorrectWordsViewModel @Inject constructor(
@@ -59,11 +53,24 @@ class ChooseCorrectWordsViewModel @Inject constructor(
                 })
     }
 
+    private fun get5Words(
+        pairRusEng: PairRusEng,
+        repeatWords: MutableList<PairRusEng>
+    ): MutableList<PairRusEng> {
+        val repeatWordsBlockList: MutableList<PairRusEng> = repeatWords.shuffled().take(5).toMutableList()
+        if (!repeatWordsBlockList.contains(pairRusEng)) {
+            repeatWordsBlockList.removeAt(0)
+            repeatWordsBlockList.add(pairRusEng)
+            repeatWordsBlockList.shuffle()
+        }
+        return repeatWordsBlockList
+    }
+
 
     private fun nextWords() {
         if (round < repeatWords.size) {
             openedWord.value = repeatWords[round].rus
-            pairRusEngList.value = repeatWords.shuffled()
+            pairRusEngList.value = get5Words(repeatWords[round], repeatWords)
             round++
         } else {
             finishLesson.postValue(Unit)

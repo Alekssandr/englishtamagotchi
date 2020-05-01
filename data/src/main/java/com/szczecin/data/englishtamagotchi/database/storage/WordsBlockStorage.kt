@@ -54,6 +54,9 @@ class WordsBlockStorage(private val wordsBlockDao: WordsBlockDao) {
             }
         }
 
+    fun removeDeleteAllCommon(): Completable =
+        wordsBlockDao.deleteAllCommon()
+
     fun removePairRusEngFromCommon(eng: String): Completable =
         wordsBlockDao.deleteRowByEngFromCommon(eng)
 
@@ -63,6 +66,9 @@ class WordsBlockStorage(private val wordsBlockDao: WordsBlockDao) {
 
     fun getWordsCommonList(): Single<List<PairRusEng>> =
         wordsBlockDao.getWordsCommonList().map { Mapper().mapFromCommonEntity(it) }
+
+    fun getWordsCommonListByGroup(from: Int, to: Int): Single<List<PairRusEng>> =
+    wordsBlockDao.getWordsCommonListByGroup(from, to).map { Mapper().mapFromCommonEntity(it) }
 
     fun getWordsCommonListBy(dayOfLearning: Int): Single<List<PairRusEng>> =
 //        wordsBlockDao.getWordsCommonListBy(dayOfLearning).map { Mapper().mapFromCommonEntity(it) }
@@ -120,8 +126,7 @@ class WordsBlockStorage(private val wordsBlockDao: WordsBlockDao) {
 //            )
 //        }
 
-    //don't get new words when click on the don;t know, - only words from repeating why?
-    fun getLearnListToday(newWordsPerDay: Int): Observable<List<PairRusEng>> =
+    fun getLearnListToday(newWordsPerDay: Int): Single<List<PairRusEng>> =
         wordsBlockDao.getLearnListToday(newWordsPerDay).map {
             Mapper().mapFromLearnEntity(
                 it

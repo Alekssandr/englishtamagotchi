@@ -22,14 +22,15 @@ class Mapper {
 
     fun mapToEntity(pairRusEng: PairRusEng) = WordsBlockEntity(pairRusEng.eng, pairRusEng.rus, pairRusEng.dayOfLearning)
 
-    fun mapCommonToEntity(pairRusEng: PairRusEng) = WordsCommonEntity(pairRusEng.eng, pairRusEng.rus, pairRusEng.isChecked)
+    fun mapCommonToEntity(pairRusEng: PairRusEng) = WordsCommonEntity(id = pairRusEng.id, eng = pairRusEng.eng, rus = pairRusEng.rus, isCheckbox = pairRusEng.isChecked)
 
-    fun mapLearnToEntity(pairRusEng: PairRusEng) = LearnWordsBlockEntity(pairRusEng.eng, pairRusEng.rus, pairRusEng.dayOfLearning)
+    fun mapLearnToEntity(pairRusEng: PairRusEng) = LearnWordsBlockEntity(pairRusEng.eng, pairRusEng.id, pairRusEng.rus, pairRusEng.dayOfLearning)
 
     fun mapFromCommonEntity(wordsCommonEntity: List<WordsCommonEntity>) =
         mutableListOf<PairRusEng>().apply {
             wordsCommonEntity.forEach {
                 PairRusEng().run {
+                    this.id = it.id
                     this.eng = it.eng
                     this.rus = it.rus
                     this.isChecked = it.isCheckbox
@@ -42,6 +43,7 @@ class Mapper {
         mutableListOf<PairRusEng>().apply {
             wordsLeanringEntity.forEach {
                 PairRusEng().run {
+                    this.id = it.id
                     this.eng = it.eng
                     this.rus = it.rus
                     this.dayOfLearning = it.dayOfLearning
@@ -78,12 +80,13 @@ class Mapper {
         }
 
     //table learn
-    fun mapLearnTableToEntity(pairRusEng: PairRusEng) = LearnWordsTableEntity(pairRusEng.eng, pairRusEng.rus, pairRusEng.dayOfLearning)
+    fun mapLearnTableToEntity(pairRusEng: PairRusEng) = LearnWordsTableEntity(pairRusEng.eng, pairRusEng.id, pairRusEng.rus, pairRusEng.dayOfLearning)
 
     fun mapFromLearnTableEntity(learnWordsTableEntity: List<LearnWordsTableEntity>) =
         mutableListOf<PairRusEng>().apply {
             learnWordsTableEntity.forEach {
                 PairRusEng().run {
+                    this.id = it.id
                     this.eng = it.eng
                     this.rus = it.rus
                     this.dayOfLearning = it.dayOfLearning

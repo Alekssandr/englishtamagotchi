@@ -66,10 +66,54 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="24dp"
                     android:onClick="chooseCorrectExercise"
-                    android:text="Start learning"
+                    android:text="@string/learning"
                     binding:layout_constraintStart_toStartOf="parent"
-                    binding:layout_constraintTop_toBottomOf="@+id/new_words_per_day_10" />
+                    binding:layout_constraintTop_toBottomOf="@+id/new_words_per_day_10"
+                    tools:text = "Start learning"/>
 
+                <Button
+                    android:id="@+id/btn_lvl_a1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="32dp"
+                    android:onClick="chooseCorrectExercise"
+                    android:text="level A1"
+                    binding:layout_constraintStart_toStartOf="parent"
+                    binding:layout_constraintTop_toBottomOf="@+id/btn_start_learning" />
+
+                <Button
+                    android:id="@+id/btn_lvl_a2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="32dp"
+                    android:onClick="chooseCorrectExercise"
+                    android:text="level A2"
+                    binding:layout_constraintStart_toEndOf="@+id/btn_lvl_a1"
+                    binding:layout_constraintTop_toBottomOf="@+id/btn_start_learning" />
+
+                <Button
+                    android:id="@+id/btn_lvl_b1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="32dp"
+                    android:onClick="chooseCorrectExercise"
+                    android:text="level b1"
+                    binding:layout_constraintStart_toEndOf="@+id/btn_lvl_a2"
+                    binding:layout_constraintTop_toBottomOf="@+id/btn_start_learning" />
+
+                <Button
+                    android:id="@+id/btn_lvl_b2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="32dp"
+                    android:onClick="chooseCorrectExercise"
+                    android:text="level b2"
+                    binding:layout_constraintStart_toEndOf="@+id/btn_lvl_b1"
+                    binding:layout_constraintTop_toBottomOf="@+id/btn_start_learning" />
 
                 <TextView
                     android:id="@+id/day_learning_txt"

@@ -15,13 +15,3 @@ class LoadDataInDBCommonUseCase @Inject constructor(
 
 //    }
 }
-
-//fun execute(id: String): Single<Pair<String,String>> = routeRepository.loadTranslate()
-
-
-//class GetTranslateUseCase @Inject constructor(
-//    private val markerDetailsRepository: MarkerDetailsRepository
-//) {
-//    fun execute(id: String): Single<MarkerDetails> =
-//        markerDetailsRepository.fetchMarkerDetails(id)
-//}

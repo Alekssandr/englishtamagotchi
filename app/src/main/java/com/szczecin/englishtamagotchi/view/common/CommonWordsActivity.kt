@@ -3,10 +3,10 @@ package com.szczecin.englishtamagotchi.view.common
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.szczecin.englishtamagotchi.R
-import com.szczecin.englishtamagotchi.adapter.BindWordsEngItemsAdapter
-import com.szczecin.englishtamagotchi.adapter.BindWordsRusItemsAdapter
+import com.szczecin.englishtamagotchi.adapter.common.CommonGroupItemsAdapter
 import com.szczecin.englishtamagotchi.adapter.common.CommonWordsItemsAdapter
 import com.szczecin.englishtamagotchi.common.ViewModelFactory
 import com.szczecin.englishtamagotchi.common.extensions.lifecircle.observeLifecycleIn
@@ -40,14 +40,25 @@ class CommonWordsActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_common_words)
         binding.commonWordsListViewModel = commonWordsListViewModel
         binding.lifecycleOwner = this@CommonWordsActivity
+
+        commonWordsListViewModel.uiClosed.observe(this, Observer {
+            finish()
+        })
     }
 
     private fun initRecycler() {
         binding.recyclerCommonWords.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             commonWordsItemsAdapter = CommonWordsItemsAdapter()
+                smoothScrollToPosition(top)
             this.adapter = commonWordsItemsAdapter
             commonWordsListViewModel.subscribeForItemClick(commonWordsItemsAdapter.getClickItemObserver())
+        }
+        binding.recyclerCommonGroup.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            val commonWordsGroupAdapter = CommonGroupItemsAdapter()
+            this.adapter = commonWordsGroupAdapter
+            commonWordsListViewModel.subscribeForItemGroupClick(commonWordsGroupAdapter.getClickItemGroupObserver())
         }
     }
 
