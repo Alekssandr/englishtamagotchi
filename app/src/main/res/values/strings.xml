@@ -3,4 +3,7 @@
     <string name="title_activity_ordinary_card">OrdinaryCardActivity</string>
     <string name="learning">Learning</string>
     <string name="exam">Exam</string>
+    <string name="i_know">Я знаю</string>
+    <string name="check">проверь</string>
+    <string name="next">далее</string>
 </resources>

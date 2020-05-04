@@ -31,6 +31,7 @@ class OrdinaryCardViewModel @Inject constructor(
     val translateWordOpen = MutableLiveData<String>()
     val translateWordClose = MutableLiveData<String>()
     val translateWordCloseVisibility = MutableLiveData<Boolean>()
+    val completeImageUrl = MutableLiveData<String>().apply { value = "https://avatars.mds.yandex.net/get-pdb/467185/834f9135-f2b8-4b8e-84bc-dda42bf1789d/s1200?webp=false" }
     val listen = MutableLiveData<String>()
     val isRusHideVisibility = MutableLiveData<Boolean>()
     val uiClosed = MutableLiveData<Unit>()
@@ -155,6 +156,7 @@ class OrdinaryCardViewModel @Inject constructor(
                 blockWords.addAll(it)
                 Log.d("test1111", "getAllWords: ${blockWords.size}")
                 loadBlock(indexWord)
+                completeImageUrl.value = "https://avatars.mds.yandex.net/get-pdb/467185/834f9135-f2b8-4b8e-84bc-dda42bf1789d/s1200?webp=false"
             }, {
                 Log.e("test1111", it.message ?: "")
             })
@@ -240,7 +242,7 @@ class OrdinaryCardViewModel @Inject constructor(
             }, {
                 Log.e("test1111", it.message ?: "")
             })
-//        listen.value = blockWords[indexWord].eng
+        listen.value = blockWords[indexWord].eng
     }
 
     override fun onCleared() {

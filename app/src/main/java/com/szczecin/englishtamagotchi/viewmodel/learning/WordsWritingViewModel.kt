@@ -29,7 +29,7 @@ class WordsWritingViewModel @Inject constructor(
     val letters: MutableLiveData<List<Char>> = MutableLiveData()
     val writingText = MutableLiveData<Pair<String, List<Int>>>()
     private val blockWords: MutableList<PairRusEng> = mutableListOf()
-    private var writingTextEditText: StringBuilder = StringBuilder()
+    var writingTextEditText: StringBuilder = StringBuilder()
     var incorrectIndexes: MutableList<Int> = mutableListOf()
     var countNotCorrect = 0
 
@@ -69,7 +69,7 @@ class WordsWritingViewModel @Inject constructor(
     }
 
     private fun checkWritingWords() =
-        writingTextEditText.toString().toLowerCase() == blockWords[indexWord].eng
+        writingTextEditText.toString().toUpperCase() == blockWords[indexWord].eng.toUpperCase()
 
     fun check() {
         if (checkWritingWords()) {
@@ -104,7 +104,7 @@ class WordsWritingViewModel @Inject constructor(
                         writingTextEditText.append(it)
                         refactorSpace()
                         writingText.value = Pair(
-                            writingTextEditText.toString(), addListIncorrectIndexes()
+                            writingTextEditText.toString().toUpperCase(), addListIncorrectIndexes()
                         )
                         if (!isCorrectLetter(writingTextEditText.toString())) countNotCorrect++
                         if (countNotCorrect > ATTEMPTS) {
@@ -152,7 +152,7 @@ class WordsWritingViewModel @Inject constructor(
                     writingTextEditText.deleteCharAt(writingTextEditText.lastIndex)
 
                     writingText.value = Pair(
-                        writingTextEditText.toString(), incorrectIndexes
+                        writingTextEditText.toString().toUpperCase(), incorrectIndexes
                     )
                 } else {
                     writingTextEditText.deleteCharAt(writingTextEditText.lastIndex)

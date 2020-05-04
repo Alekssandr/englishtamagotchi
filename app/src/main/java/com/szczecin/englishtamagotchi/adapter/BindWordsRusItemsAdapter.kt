@@ -37,10 +37,12 @@ class BindWordsRusItemsAdapter : RecyclerView.Adapter<BindWordsRusItemsAdapter.I
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         holder.bind(stepsListShuffled[position])
-        holder.itemView.buttonEng.setOnClickListener {
-            if (previousPosition == DEFAULT) {
-                publishSubjectItem.onNext(stepsList.indexOf(stepsListShuffled[position]))
-                previousPosition = position
+        if(holder.itemView.buttonEng.isClickable) {
+            holder.itemView.buttonEng.setOnClickListener {
+                if (previousPosition == DEFAULT) {
+                    publishSubjectItem.onNext(stepsList.indexOf(stepsListShuffled[position]))
+                    previousPosition = position
+                }
             }
         }
     }
@@ -66,28 +68,21 @@ class BindWordsRusItemsAdapter : RecyclerView.Adapter<BindWordsRusItemsAdapter.I
             this.binding.text = pairRusEng.rus
             when {
                 pairRusEng.dayOfLearning == GREY -> {
-                    this.binding.buttonEng.setBackgroundColor(
-                        ContextCompat.getColor(this.binding.buttonEng.context, R.color.grey)
-                    )
-                    this.binding.buttonEng.isEnabled = true
+                    this.binding.buttonEng.setBackgroundResource(R.drawable.btn_idle_default)
+                    this.binding.buttonEng.isClickable = true
                 }
                 pairRusEng.dayOfLearning == GREEN -> {
-                    this.binding.buttonEng.setBackgroundColor(
-                        ContextCompat.getColor(this.binding.buttonEng.context, R.color.green)
-                    )
-                    this.binding.buttonEng.isEnabled = false
+                    this.binding.buttonEng.setBackgroundResource(R.drawable.audio_idle)
+                    this.binding.buttonEng.isClickable = false
                 }
                 pairRusEng.dayOfLearning == RED -> {
-                    this.binding.buttonEng.setBackgroundColor(
-                        ContextCompat.getColor(this.binding.buttonEng.context, R.color.red)
-                    )
-                    this.binding.buttonEng.isEnabled = false
+                    this.binding.buttonEng.setBackgroundResource(R.drawable.btn_idle_not_correct)
+
+                    this.binding.buttonEng.isClickable = false
                 }
                 else -> {
-                    this.binding.buttonEng.setBackgroundColor(
-                        ContextCompat.getColor(this.binding.buttonEng.context, R.color.choice)
-                    )
-                    this.binding.buttonEng.isEnabled = false
+                    this.binding.buttonEng.setBackgroundResource(R.drawable.btn_idle_choose)
+                    this.binding.buttonEng.isClickable = false
                 }
             }
         }

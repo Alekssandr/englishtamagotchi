@@ -115,21 +115,11 @@ class LearningActivity : AppCompatActivity() {
             if (resultCode == Activity.RESULT_OK) {
                 allTaskCount += 1
                 when (data!!.getIntExtra("activity_status", DEFAULT)) {
-                    ENG_RUS -> btn_eng_rus.setBackgroundColor(
-                        ContextCompat.getColor(this, R.color.green)
-                    )
-                    RUS_ENG -> btn_rus_eng.setBackgroundColor(
-                        ContextCompat.getColor(this, R.color.green)
-                    )
-                    WRITING -> btn_writing.setBackgroundColor(
-                        ContextCompat.getColor(this, R.color.green)
-                    )
-                    BIND -> btn_binding.setBackgroundColor(
-                        ContextCompat.getColor(this, R.color.green)
-                    )
-                    CHOOSE -> btn_choose.setBackgroundColor(
-                        ContextCompat.getColor(this, R.color.green)
-                    )
+                    ENG_RUS -> this.binding.btnEngRus.setBackgroundResource(R.drawable.audio_idle)
+                    RUS_ENG -> this.binding.btnRusEng.setBackgroundResource(R.drawable.audio_idle)
+                    WRITING -> this.binding.btnWriting.setBackgroundResource(R.drawable.audio_idle)
+                    BIND -> this.binding.btnBinding.setBackgroundResource(R.drawable.audio_idle)
+                    CHOOSE -> this.binding.btnChoose.setBackgroundResource(R.drawable.audio_idle)
                 }
                 intentLearning.putExtra("completed_tasks", allTaskCount)
                 setResult(Activity.RESULT_OK, intentLearning)

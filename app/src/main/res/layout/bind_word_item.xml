@@ -22,6 +22,7 @@
 
         <Button
             android:id="@+id/buttonEng"
+            android:background="@drawable/btn_idle_default"
             android:layout_width="175dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"

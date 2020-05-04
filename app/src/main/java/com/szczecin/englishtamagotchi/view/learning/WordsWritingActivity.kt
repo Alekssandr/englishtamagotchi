@@ -64,7 +64,7 @@ class WordsWritingActivity : AppCompatActivity() {
 
     private fun observeViewModel() {
         wordsWritingViewModel.clearEditText.observe(this, Observer {
-            writing_words.text = ""
+            writing_words.editableText.clear()
         })
     }
 

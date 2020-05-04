@@ -64,19 +64,13 @@ class ChooseCorrectWordsItemsAdapter :
             this.binding.text = pairRusEng.eng
             when {
                 pairRusEng.buttonColor == RepeatingItemColor.GREEN.color -> {
-                    this.binding.buttonEngRepeat.setBackgroundColor(
-                        ContextCompat.getColor(this.binding.buttonEngRepeat.context, R.color.green)
-                    )
+                    this.binding.buttonEngRepeat.setBackgroundResource(R.drawable.audio_idle)
                 }
                 pairRusEng.buttonColor == RepeatingItemColor.RED.color -> {
-                    this.binding.buttonEngRepeat.setBackgroundColor(
-                        ContextCompat.getColor(this.binding.buttonEngRepeat.context, R.color.red)
-                    )
+                    this.binding.buttonEngRepeat.setBackgroundResource(R.drawable.btn_idle_not_correct)
                 }
                 else -> {
-                    this.binding.buttonEngRepeat.setBackgroundColor(
-                        ContextCompat.getColor(this.binding.buttonEngRepeat.context, R.color.grey)
-                    )
+                    this.binding.buttonEngRepeat.setBackgroundResource(R.drawable.btn_idle_default)
                 }
             }
         }

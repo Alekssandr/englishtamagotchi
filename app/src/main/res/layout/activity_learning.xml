@@ -39,6 +39,7 @@
 
                 <Button
                     android:id="@+id/btn_eng_rus"
+                    android:background="@drawable/btn_idle_default"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
@@ -51,6 +52,7 @@
 
                 <Button
                     android:id="@+id/btn_rus_eng"
+                    android:background="@drawable/btn_idle_default"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
@@ -63,6 +65,7 @@
 
                 <Button
                     android:id="@+id/btn_writing"
+                    android:background="@drawable/btn_idle_default"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
@@ -75,6 +78,7 @@
 
                 <Button
                     android:id="@+id/btn_binding"
+                    android:background="@drawable/btn_idle_default"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
@@ -86,6 +90,7 @@
 
                 <Button
                     android:id="@+id/btn_choose"
+                    android:background="@drawable/btn_idle_default"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
